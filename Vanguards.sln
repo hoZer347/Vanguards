@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{486BD31C-95E5-114C-B3BB-FA4A3B093A58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyButtons.Editor", "EasyButtons.Editor.csproj", "{04756126-E586-B48E-6402-8A5FD43546AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{F493B01D-4FC0-E061-F1EF-945DB960C546}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyButtons", "EasyButtons.csproj", "{9FE15422-FE16-DBAE-ABD3-C9EF9FBD1A53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{486BD31C-95E5-114C-B3BB-FA4A3B093A58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486BD31C-95E5-114C-B3BB-FA4A3B093A58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486BD31C-95E5-114C-B3BB-FA4A3B093A58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486BD31C-95E5-114C-B3BB-FA4A3B093A58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04756126-E586-B48E-6402-8A5FD43546AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04756126-E586-B48E-6402-8A5FD43546AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04756126-E586-B48E-6402-8A5FD43546AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04756126-E586-B48E-6402-8A5FD43546AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F493B01D-4FC0-E061-F1EF-945DB960C546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F493B01D-4FC0-E061-F1EF-945DB960C546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F493B01D-4FC0-E061-F1EF-945DB960C546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F493B01D-4FC0-E061-F1EF-945DB960C546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FE15422-FE16-DBAE-ABD3-C9EF9FBD1A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE15422-FE16-DBAE-ABD3-C9EF9FBD1A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE15422-FE16-DBAE-ABD3-C9EF9FBD1A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE15422-FE16-DBAE-ABD3-C9EF9FBD1A53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
