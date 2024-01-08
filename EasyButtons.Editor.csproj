@@ -63,16 +63,16 @@
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\DrawUtility.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\ButtonWithoutParamsAsync.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\TypeExtensions.cs" />
-    <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Button.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\ButtonWithParams.cs" />
-    <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\DefaultValuesUtility.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\EnumExtensions.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\ObjectEditor.cs" />
-    <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\StringExtensions.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\ScriptableObjectCache.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\NonSerializedError.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\NoScriptFieldEditor.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\ButtonWithoutParams.cs" />
+    <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Button.cs" />
+    <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\DefaultValuesUtility.cs" />
+    <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\Utils\StringExtensions.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\ButtonWithParamsAsync.cs" />
     <Compile Include="Assets\EasyButtons\Assets\EasyButtons\Editor\ButtonsDrawer.cs" />
   </ItemGroup>

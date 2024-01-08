@@ -47,7 +47,5 @@ MonoBehaviour:
   attributes:
   - name: MT
     _base: 0
-  - name: MIN_RNG
-    _base: 1
-  - name: MAX_RNG
+  - name: RNG
     _base: 1

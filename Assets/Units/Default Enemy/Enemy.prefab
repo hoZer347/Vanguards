@@ -74,7 +74,6 @@ MonoBehaviour:
   equipped: {fileID: 0}
   weapons: []
   staves: []
-  items: []
 --- !u!114 &8361375011426957111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +142,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fd0e35f0ef7ccea48a0bf9b3fcf2bbbd, type: 2}
+  - {fileID: 2100000, guid: 26c5f1c834acd3242a70ff14073d58f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
