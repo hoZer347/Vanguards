@@ -1,0 +1,3979 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+OcclusionCullingSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: 0.25
+    backfaceThreshold: 100
+  m_SceneGUID: 00000000000000000000000000000000
+  m_OcclusionCullingData: {fileID: 0}
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 9
+  m_Fog: 0
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: 0.01
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_HaloStrength: 0.5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 705507994}
+  m_UseRadianceAmbientProbe: 0
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 12
+  m_GIWorkflowMode: 1
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
+  m_LightmapEditorSettings:
+    serializedVersion: 12
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_AtlasSize: 1024
+    m_AO: 0
+    m_AOMaxDistance: 1
+    m_CompAOExponent: 1
+    m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
+    m_Padding: 2
+    m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
+    m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
+    m_ReflectionCompression: 2
+    m_MixedBakeMode: 2
+    m_BakeBackend: 1
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 500
+    m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVREnvironmentMIS: 0
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 5
+    m_PVRFilteringGaussRadiusAO: 2
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
+  m_LightingDataAsset: {fileID: 0}
+  m_LightingSettings: {fileID: 0}
+--- !u!196 &4
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 3
+    agentTypeID: 0
+    agentRadius: 0.5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    buildHeightMesh: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
+    debug:
+      m_Flags: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1 &439649589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 439649590}
+  m_Layer: 0
+  m_Name: '#-- Lighting and Rendering'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &439649590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439649589}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.6999998, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 963194228}
+  - {fileID: 705507995}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &666961921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 666961922}
+  m_Layer: 0
+  m_Name: '# -- Objects'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &666961922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666961921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.6999998, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1489941795}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &705507993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 705507995}
+  - component: {fileID: 705507994}
+  - component: {fileID: 705507996}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &705507994
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 1
+  m_Shape: 0
+  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 1
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &705507995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 439649590}
+  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &705507996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+--- !u!1 &806561897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806561898}
+  m_Layer: 0
+  m_Name: '#-- Control'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &806561898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806561897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.6999998, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 959138701}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &959138700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 959138701}
+  - component: {fileID: 959138702}
+  m_Layer: 0
+  m_Name: State Machine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &959138701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959138700}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 806561898}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &959138702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959138700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 888f37281d52ce8418261217251fcee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &963194225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 963194228}
+  - component: {fileID: 963194227}
+  - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &963194226
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+--- !u!20 &963194227
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &963194228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 439649590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a129b011cf8de4484bdc4ae4cce760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1079645732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1079645733}
+  m_Layer: 0
+  m_Name: Highlights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1079645733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079645732}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.3578606, y: 3.959116, z: -7.976646}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1489941794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1489941795}
+  - component: {fileID: 1489941796}
+  m_Layer: 0
+  m_Name: Fog of War
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1489941795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489941794}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666961922}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1489941796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489941794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c03595a63796bd41abd777798a4ed55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1666503169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1666503170}
+  - component: {fileID: 1666503171}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1666503170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666503169}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1666503171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666503169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0210a8a5415396346b1345564830fa48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dimensions: {x: 32, y: 32}
+  height: 10
+  cellList:
+  - name: 'Cell at: 0, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 0, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 1, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 2, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 3, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 4, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 5, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 6, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 7, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 8, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 9, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 10, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 11, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 12, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 13, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 14, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 15, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 16, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 17, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 18, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 19, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 20, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 21, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 22, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 23, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 24, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 25, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 26, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 27, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 28, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 29, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 30, 31'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 0'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 1'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 2'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 3'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 4'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 5'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 6'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 7'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 8'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 9'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 10'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 11'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 12'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 13'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 14'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 15'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 16'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 17'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 18'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 19'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 20'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 21'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 22'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 23'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 24'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 25'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 26'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 27'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 28'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 29'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 30'
+    terrainType: 0
+    difficulty: 1
+  - name: 'Cell at: 31, 31'
+    terrainType: 0
+    difficulty: 1
+  showGizmos: 1
+  surfaceLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!1 &1669857087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1669857091}
+  - component: {fileID: 1669857092}
+  - component: {fileID: 1669857090}
+  - component: {fileID: 1669857089}
+  - component: {fileID: 1669857088}
+  m_Layer: 7
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1669857088
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669857087}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1669857089
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669857087}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6c9f572611a20b34bb3b2e540075031f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1669857090
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669857087}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1669857091
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669857087}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.091753736, y: -0, z: -0, w: 0.9957817}
+  m_LocalPosition: {x: 12, y: 1.75, z: 3.75}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 10.529, y: 0, z: 0}
+--- !u!114 &1669857092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669857087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119381a55c031c84593b84d341992d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &2035974891280928341
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 145329801177070504, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.2843876
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.99875855
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.049813703
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839036933429584659, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616663280124805386, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+      propertyPath: m_Name
+      value: Unit
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7bcbed24658f3bf45b91db2dd0729a51, type: 3}
+--- !u!1001 &2734935809345416122
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 527653359707086273, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_Name
+      value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.2000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.30000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9994099
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.016592694
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.02632379
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.014545198
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -1.857
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 3.045
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565930137993913550, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.717
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 761bdbffe9da1424684e7df7ab8d7ed8, type: 3}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 439649590}
+  - {fileID: 666961922}
+  - {fileID: 806561898}
+  - {fileID: 1666503170}
+  - {fileID: 2734935809345416122}
+  - {fileID: 2035974891280928341}
+  - {fileID: 1079645733}
+  - {fileID: 1669857091}
