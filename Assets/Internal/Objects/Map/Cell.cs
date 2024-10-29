@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -63,6 +64,11 @@ namespace Vanguards
 			this.difficulty = difficulty;
 		}
 
+		public void SetUnit(Unit unit)
+		{
+			this.unit = unit;
+		}
+
 		Unit unit = null;
 		public Unit @Unit => unit;
 
@@ -72,7 +78,18 @@ namespace Vanguards
 		public Vector2Int Coords => coords;
 		public Vector3 Position => position;
 
-
 		public Cell U = null, D = null, L = null, R = null;
+	};
+
+
+	public class CellComparer :
+		IComparer<Cell>
+	{
+		public int Compare(Cell x, Cell y)
+		{
+
+
+			return x.Difficulty.CompareTo(y.Difficulty);
+		}
 	};
 };

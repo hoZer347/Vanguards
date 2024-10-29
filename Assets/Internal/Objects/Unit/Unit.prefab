@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2839036933429584659}
   - component: {fileID: 145329801177070504}
+  - component: {fileID: 4554429463592614203}
   - component: {fileID: 6934416002542471074}
   - component: {fileID: 2197352029926008952}
   - component: {fileID: -2818254510639288947}
@@ -54,6 +55,23 @@ MonoBehaviour:
   path: []
   speed: 5
   turnThreshold: 0.5
+--- !u!114 &4554429463592614203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5616663280124805386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb78b8086b634914985544af036621ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attributeList:
+  - name: Move Range
+    base: 5
+  - name: Attack Range
+    base: 2
 --- !u!114 &6934416002542471074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,7 +1284,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 67210961f06d6274ea45dba8521f0ee1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

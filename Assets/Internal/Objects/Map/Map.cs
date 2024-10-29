@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
+using UnityEngine;
 
 
 namespace Vanguards
@@ -42,51 +41,9 @@ namespace Vanguards
 
 		static Cell[,] cells = new Cell[0, 0];
 
-		public delegate float FloodFillKernel(Cell cell, float amount, out bool shouldAdd);
-
-		public static void FloodFill(
-			ref Dictionary<Cell, float> cells,
-			FloodFillKernel kernel)
-		{
-			Dictionary<Cell, float> newCells = new(cells);
-
-			foreach (var element in newCells)
-			{
-				if (element.Value <= 0) continue;
-
-				var _cells =
-					new Cell[]
-					{
-						element.Key.U,
-						element.Key.D,
-						element.Key.L,
-						element.Key.R,
-					};
-
-				var amount = element.Value;
-
-				foreach (Cell _cell in _cells)
-					if (_cell != null)
-					{
-						var _amount = kernel(_cell, amount, out bool shouldAdd);
-
-						if (shouldAdd)
-							if (cells.ContainsKey(_cell))
-							{
-								cells[_cell] = Mathf.Max(
-									cells[_cell],
-									_amount);
-							}
-							else cells.Add(_cell, _amount);
-					};
-			};
-
-			if (newCells.Count == cells.Count) return;
-
-			FloodFill(ref cells, kernel);
-		}
-		
 		static public Dictionary<Cell, float> cells1 = new();
+		static public List<Cell> cells2 = new();
+		static public List<Cell> cells3 = new();
 
 		private void Start() => Refresh();
 		private void OnValidate() => Refresh();
@@ -96,7 +53,7 @@ namespace Vanguards
 		{
 			main = this;
 
-			State.SetState<St_Mp_Initial_State>();
+			State.SetState<St_Mp_InitialState>();
 
 			dimensions.x = Mathf.Max(1, dimensions.x);
 			dimensions.y = Mathf.Max(1, dimensions.y);
@@ -208,6 +165,30 @@ namespace Vanguards
 						cell.Position,
 
 						0.10001f);
+				};
+
+			foreach (Cell cell in cells2)
+				if (cell != null)
+				{
+					Gizmos.color = Color.cyan;
+
+					Gizmos.DrawSphere(
+						Vector3Int.FloorToInt(transform.position) +
+						cell.Position,
+
+						0.10002f);
+				};
+
+			foreach (Cell cell in cells3)
+				if (cell != null)
+				{
+					Gizmos.color = Color.red;
+
+					Gizmos.DrawSphere(
+						Vector3Int.FloorToInt(transform.position) +
+						cell.Position,
+
+						0.10002f);
 				};
 		}
 

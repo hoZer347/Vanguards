@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using  System.Linq;
 
 
 namespace Vanguards
 {
+	[RequireComponent(typeof(Attributes))]
 	public class Unit : MonoBehaviour
 	{
-		SpriteHost spriteManager;
+		SpriteHost spriteHost;
+
+		Attributes attributes;
 
 		#region State Management
 
@@ -58,7 +60,7 @@ namespace Vanguards
 		public void SetAnimationState(eAnimationState animationState)
 		{
 			this.animationState = animationState;
-			spriteManager.SetOffset((int)animationState + (int)team);
+			spriteHost.SetOffset((int)animationState + (int)team);
 		}
 
 		#endregion
@@ -79,7 +81,7 @@ namespace Vanguards
 		public void SetTeam(eTeam team)
 		{
 			this.team = team;
-			spriteManager.SetOffset((int)animationState + (int)team);
+			spriteHost.SetOffset((int)animationState + (int)team);
 		}
 
 		#endregion
@@ -122,23 +124,27 @@ namespace Vanguards
 			};
 		}
 
-		// TODO: Change this based on Cell properties
-		Map.FloodFillKernel movementFFKernel =
+		Pathing.FloodFillKernel movementFFKernel =
 			(Cell cell, float amount, out bool shouldAdd) =>
 			{
+				// TODO: Change this based on Cell properties
+
 				shouldAdd = true;
 				return amount -= cell.Difficulty;
 			};
-		public Map.FloodFillKernel MovementFFKernel => movementFFKernel;
+		public Pathing.FloodFillKernel MovementFFKernel => movementFFKernel;
 
 		#endregion
+
+		#region Refresh
 
 		private void Start() => Refresh();
 		private void OnValidate() => Refresh();
 
 		void Refresh()
 		{
-			spriteManager = GetComponent<SpriteHost>();
+			attributes = GetComponent<Attributes>();
+			spriteHost = GetComponent<SpriteHost>();
 
 			SetState(state);
 			SetAnimationState(animationState);
@@ -147,6 +153,17 @@ namespace Vanguards
 
 			LockToCell();
 		}
+
+		#endregion
+
+		public bool ActionUsed
+		{
+			get => spriteHost.IsGrayScale;
+			set => spriteHost.IsGrayScale = value;
+		}
+
+		[SerializeField]
+		public int MoveRange => attributes.GetValue("Move Range");
 
 		[EasyButtons.Button]
 		public void LockToCell()
@@ -175,6 +192,13 @@ namespace Vanguards
 		{
 			this.path.Clear();
 			this.path.AddRange(path);
+		}
+
+		public void SetPath(IEnumerable<Cell> path)
+		{
+			this.path.Clear();
+			foreach (Cell cell in path)
+				this.path.Add(cell.Position);
 		}
 
 		public Vector2Int coords =>
