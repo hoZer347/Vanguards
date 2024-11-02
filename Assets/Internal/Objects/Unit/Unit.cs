@@ -2,11 +2,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+
 namespace Vanguards
 {
 	[RequireComponent(typeof(Attributes))]
 	public class Unit : MonoBehaviour
 	{
+		public bool ActionUsed
+		{
+			get => spriteHost.IsGrayScale;
+			set => spriteHost.IsGrayScale = value;
+		}
+
+		public int TotalRange => attributes.GetValue("MoveRange") +
+				Mathf.Max(
+					attributes.GetValue("Move Range"),
+					attributes.GetValue("Staff Range"));
+
+		public int AttackRange => attributes.GetValue("AttackRange");
+		public int StaffRange => attributes.GetValue("StaffRange");
+		public int MoveRange => attributes.GetValue("MoveRange");
+
+		public void AddToPath(Vector3 position)
+		{
+			path.Add(position);
+		}
+
+		public void SetPath(IEnumerable<Vector3> path)
+		{
+			this.path.Clear();
+			this.path.AddRange(path);
+		}
+
+		public void SetPath(IEnumerable<Cell> path)
+		{
+			this.path.Clear();
+			foreach (Cell cell in path)
+				this.path.Add(cell.Position);
+		}
+
+		public Vector2Int coords =>
+			new Vector2Int(
+				(int)transform.position.x,
+				(int)transform.position.z);
+
+
 		SpriteHost spriteHost;
 
 		Attributes attributes;
@@ -63,156 +107,7 @@ namespace Vanguards
 			spriteHost.SetOffset((int)animationState + (int)team);
 		}
 
-		#endregion
-
-		#region Team Management
-
-		public enum eTeam
-		{
-			Enemy = 0,
-			Player = 1,
-			Ally = 2,
-		};
-
-		[SerializeField]
-		eTeam team = eTeam.Player;
-		eTeam Team => team;
-
-		public void SetTeam(eTeam team)
-		{
-			this.team = team;
-			spriteHost.SetOffset((int)animationState + (int)team);
-		}
-
-		#endregion
-
-		#region Movement
-
-		public enum eMovementType
-		{
-			Land,
-			Flying,
-			Mounted,
-		};
-
-		[SerializeField]
-		eMovementType movementType = eMovementType.Land;
-		public eMovementType MovementType => movementType;
-
-		void SetMovementType(eMovementType movementType)
-		{
-			switch (movementType)
-			{
-				case eMovementType.Land:
-					movementFFKernel = (Cell cell, float amount, out bool shouldAdd) =>
-					{
-						shouldAdd = true;
-
-						return amount -= cell.Difficulty;
-					};
-					break;
-
-				case eMovementType.Flying:
-					movementFFKernel =
-						(Cell cell, float amount, out bool shouldAdd) =>
-						{
-							shouldAdd = true;
-
-							return amount -= cell.Difficulty;
-						};
-					break;
-			};
-		}
-
-		Pathing.FloodFillKernel movementFFKernel =
-			(Cell cell, float amount, out bool shouldAdd) =>
-			{
-				// TODO: Change this based on Cell properties
-
-				shouldAdd = true;
-				return amount -= cell.Difficulty;
-			};
-		public Pathing.FloodFillKernel MovementFFKernel => movementFFKernel;
-
-		#endregion
-
-		#region Refresh
-
-		private void Start() => Refresh();
-		private void OnValidate() => Refresh();
-
-		void Refresh()
-		{
-			attributes = GetComponent<Attributes>();
-			spriteHost = GetComponent<SpriteHost>();
-
-			SetState(state);
-			SetAnimationState(animationState);
-			SetTeam(team);
-			SetMovementType(movementType);
-
-			LockToCell();
-		}
-
-		#endregion
-
-		public bool ActionUsed
-		{
-			get => spriteHost.IsGrayScale;
-			set => spriteHost.IsGrayScale = value;
-		}
-
-		[SerializeField]
-		public int MoveRange => attributes.GetValue("Move Range");
-
-		[EasyButtons.Button]
-		public void LockToCell()
-		{
-			if (Map.main == null) return;
-
-			Cell cell =
-				Map.main[
-					new Vector2Int(
-						(int)transform.position.x,
-						(int)transform.position.z)];
-
-			if (cell != null)
-				transform.position = cell.Position;
-		}
-
-		[SerializeField]
-		List<Vector3> path = new();
-
-		public void AddToPath(Vector3 position)
-		{
-			path.Add(position);
-		}
-
-		public void SetPath(IEnumerable<Vector3> path)
-		{
-			this.path.Clear();
-			this.path.AddRange(path);
-		}
-
-		public void SetPath(IEnumerable<Cell> path)
-		{
-			this.path.Clear();
-			foreach (Cell cell in path)
-				this.path.Add(cell.Position);
-		}
-
-		public Vector2Int coords =>
-			new Vector2Int(
-				(int)transform.position.x,
-				(int)transform.position.z);
-
-		[SerializeField]
-		float speed = 1;
-
-		[SerializeField]
-		float turnThreshold = 0.5f;
-
-		private void Update()
+		void HandleAnimationState()
 		{
 			if (path.Count > 0)
 			{
@@ -258,7 +153,159 @@ namespace Vanguards
 				};
 			}
 			else SetAnimationState(eAnimationState.Idle);
+		}
 
+		#endregion
+
+		#region Team Management
+
+		public enum eTeam
+		{
+			Enemy = 0,
+			Player = 1,
+			Ally = 2,
+		};
+
+		[SerializeField]
+		eTeam team = eTeam.Player;
+		eTeam Team => team;
+
+		public void SetTeam(eTeam team)
+		{
+			this.team = team;
+			spriteHost.SetOffset((int)animationState + (int)team);
+		}
+
+		#endregion
+
+		#region Movement
+
+		public enum eMovementType
+		{
+			Land,
+			Flying,
+			Mounted,
+		};
+
+		[SerializeField]
+		eMovementType movementType = eMovementType.Land;
+		public eMovementType MovementType => movementType;
+
+		void SetMovementType(eMovementType movementType)
+		{
+			switch (movementType)
+			{
+				case eMovementType.Land:
+					ff_Kernel = (Cell cell, float amount, out bool shouldAdd) =>
+					{
+						if (MoveRange <= amount)
+						{
+							shouldAdd = true;
+
+							return amount -= cell.Difficulty;
+						}
+						else if (amount - MoveRange < AttackRange)
+						{
+							cell.Highlight = Cell.eHighlight.AttackRange;
+
+							shouldAdd = true;
+
+							return amount - 1;
+						}
+						else if (amount - MoveRange < StaffRange)
+						{
+							cell.Highlight = Cell.eHighlight.StaffRange;
+
+							shouldAdd = true;
+
+							return amount - 1;
+						};
+
+						shouldAdd = false;
+
+						return amount - 1;
+					};
+
+					break;
+				case eMovementType.Flying:
+					ff_Kernel =
+						(Cell cell, float amount, out bool shouldAdd) =>
+						{
+							shouldAdd = true;
+
+							return amount -= cell.Difficulty;
+						};
+					break;
+			};
+		}
+
+		Algorithm.FloodFillHeuristic ff_Kernel =
+			(Cell cell, float amount, out bool shouldAdd) =>
+			{
+				// TODO: Change this to an error case
+
+				shouldAdd = true;
+				return amount -= cell.Difficulty;
+			};
+
+		public Algorithm.FloodFillHeuristic FF_Kernel => ff_Kernel;
+
+		public void LockToCell()
+		{
+			if (Map.main == null)
+				return;
+
+			Cell cell =
+				Map.main[
+					new Vector2Int(
+						(int)transform.position.x,
+						(int)transform.position.z)];
+
+			if (cell != null)
+				transform.position = cell.Position;
+
+			else transform.position =
+					new Vector3(
+						transform.position.x,
+						0,
+						transform.position.z);
+		}
+
+		[SerializeField]
+		List<Vector3> path = new();
+
+		#endregion
+
+		#region Refresh
+
+		private void Start() => Refresh();
+		private void OnValidate() => Refresh();
+
+		void Refresh()
+		{
+			attributes = GetComponent<Attributes>();
+			spriteHost = GetComponent<SpriteHost>();
+
+			SetState(state);
+			SetAnimationState(animationState);
+			SetTeam(team);
+			SetMovementType(movementType);
+		}
+
+		#endregion
+
+		[SerializeField]
+		float speed = 1;
+
+		[SerializeField]
+		float turnThreshold = 0.5f;
+
+		[SerializeField]
+		List<Item> items = new();
+
+		private void Update()
+		{
+			HandleAnimationState();
 
 			transform.rotation =
 				Quaternion.LookRotation(
@@ -266,5 +313,53 @@ namespace Vanguards
 						Camera.main.transform.eulerAngles) * Vector3.forward,
 				Vector3.up);
 		}
+
+		#region GUI
+
+#if UNITY_EDITOR
+
+		[SerializeField]
+		Color pathColor;
+
+		[SerializeField]
+		bool showPath;
+
+		public void DoGUI()
+		{
+			EditorGUILayout.BeginVertical();
+
+			if (showPath = GUILayout.Toggle(showPath, "Show Path"))
+			{
+				pathColor = EditorGUILayout.ColorField("Path Color", pathColor);
+			};
+
+			EditorGUILayout.EndVertical();
+
+			EditorUtility.SetDirty(this);
+		}
+
+		private void OnDrawGizmos()
+		{
+			if (showPath)
+			{
+				Gizmos.color = pathColor;
+
+				foreach (Vector3 position in path)
+					Gizmos.DrawSphere(
+						position,
+						0.4f);
+			};
+		}
+
+		[CustomEditor(typeof(Unit))]
+		public class UnitUI : Editor
+		{
+			public override void OnInspectorGUI()
+			{
+				((Unit)target).DoGUI();
+			}
+		};
+#endif
+		#endregion
 	};
 };

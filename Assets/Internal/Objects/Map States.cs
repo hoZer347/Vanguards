@@ -76,31 +76,12 @@ namespace Vanguards
 			range.Clear();
 			range.Add(
 				Map.main[selectedUnit.transform.position],
-				selectedUnit.MoveRange);
+				selectedUnit.TotalRange);
 
-			Pathing.FloodFill(
+			Algorithm.FloodFill(
 				ref range,
-				selectedUnit.MovementFFKernel);
+				selectedUnit.FF_Kernel);
 
-			float rangeToAdd = selectedUnit.GetComponent<Attributes>().GetValue("Attack Range");
-			attackRange = new(range);
-			var keys = attackRange.Keys.ToList();
-			foreach (Cell cell in keys)
-				attackRange[cell] += rangeToAdd;
-
-			Pathing.FloodFill(
-				ref attackRange,
-				selectedUnit.MovementFFKernel);
-
-			attackRange =
-				attackRange.Where(
-					kvp => !range.ContainsKey(kvp.Key))
-				.ToDictionary(
-					kvp => kvp.Key,
-					kvp => kvp.Value);
-
-			Map.cells1 = range;
-			Map.cells3 = attackRange.Keys.ToList();
 		}
 
 		public override void OnUpdate()
@@ -134,7 +115,7 @@ namespace Vanguards
 							Map.main[selectedUnit.transform.position]
 						};
 
-						Pathing.AStar(
+						Algorithm.AStar(
 							Map.main[selectedUnit.transform.position],
 							cell,
 							ref path,
@@ -146,13 +127,10 @@ namespace Vanguards
 								return Vector3.Distance(f.Position, t.Position);
 							});
 
-						Pathing.SmoothAStar(ref path);
+						Algorithm.SmoothAStar(ref path);
 
 						path.RemoveAt(0);
 						selectedUnit.SetPath(path);
-
-						Map.cells2.Clear();
-						Map.cells2 = path;
 					};
 				};
 			};
@@ -163,9 +141,7 @@ namespace Vanguards
 
 		public override void OnLeave()
 		{
-			Map.cells1.Clear();
-			Map.cells2.Clear();
-			Map.cells3.Clear();
+
 		}
 	};
 
@@ -183,8 +159,6 @@ namespace Vanguards
 		}
 
 		public override void OnLeave()
-		{
-
-		}
+		{ }
 	};
 };

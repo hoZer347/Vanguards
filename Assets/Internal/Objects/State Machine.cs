@@ -11,6 +11,7 @@ namespace Vanguards
 		string currentState;
 		static private State current;
 		static private StateMachine main;
+		static public State Current => current;
 
 		#region Refresh
 

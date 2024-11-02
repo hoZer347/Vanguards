@@ -5,11 +5,8 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class FogOfWar : MonoBehaviour
+	public class MapEditMode : State
 	{
-		public void DoGUI()
-		{
 
-		}
 	};
 };

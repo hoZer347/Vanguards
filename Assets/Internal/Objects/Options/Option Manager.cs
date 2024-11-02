@@ -65,8 +65,8 @@ namespace Vanguards
 
 		static public void Clear()
 		{
-			foreach (Transform child in main.transform)
-				Destroy(child.gameObject);
+			//foreach (Transform child in main.transform)
+			//	Destroy(child.gameObject);
 		}
 	};
 };
