@@ -45,11 +45,6 @@ namespace Vanguards
 			if (current != null)
 				current.OnEnter();
 		}
-
-		static public ref State Get()
-		{
-			return ref current;
-		}
 	};
 
 	public class State

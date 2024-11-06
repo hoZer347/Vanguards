@@ -11,6 +11,14 @@ namespace Vanguards
 		[SerializeField]
 		string name;
 
+		[SerializeField]
+		Color color;
+		public Color Color
+		{
+			get => color;
+			set => color = value;
+		}
+
 		#region Terrain Type
 
 		public enum eTerrainType
@@ -33,22 +41,22 @@ namespace Vanguards
 
         #region Highlighting
 
-        public enum eHighlight
-        {
-            None,			// Unhighlighted
-			Traverseable,   // Passable, but you can't stop on it
-			MoveRange,      // You can move to and over this cell
-			AttackRange,    // You can attack, but not move to this cell
-			StaffRange,     // You can use a staff, but not move to this cell
-		};
+  //      public enum eHighlight
+  //      {
+  //          None,			// Unhighlighted
+		//	Traverseable,   // Passable, but you can't stop on it
+		//	MoveRange,      // You can move to and over this cell
+		//	AttackRange,    // You can attack, but not move to this cell
+		//	StaffRange,     // You can use a staff, but not move to this cell
+		//};
 
-		[SerializeField]
-		public eHighlight highlight;
-		public eHighlight Highlight
-		{
-			get => highlight;
-			set => highlight = value;
-		}
+		//[SerializeField]
+		//public eHighlight highlight;
+		//public eHighlight Highlight
+		//{
+		//	get => highlight;
+		//	set => highlight = value;
+		//}
 
 		#endregion
 
@@ -80,6 +88,13 @@ namespace Vanguards
 			name = $"Cell at: {coords.x}, {coords.y}";
 		}
 
+		int meshIndex = 0;
+		public int MeshIndex
+		{
+			get => meshIndex;
+			set => meshIndex = value;
+		}
+		
 		[SerializeField]
 		float difficulty = 1;
 		public float Difficulty

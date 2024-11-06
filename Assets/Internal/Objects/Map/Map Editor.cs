@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Vanguards
 
 		bool mapFoldOut = false;
 		bool fogOfWarFoldOut = false;
-		//bool mapSelectionFoldOut = false;
+		bool mapSelectionFoldOut = false;
 
 		public void DoGUI()
 		{
@@ -60,8 +61,46 @@ namespace Vanguards
 			};
 			//
 
-			// Load New Map
-			// TODO: Load all prefabs from Assets/Map Prefabs
+			// Load New Map Dropdown
+			if (mapSelectionFoldOut = EditorGUILayout.Foldout(mapSelectionFoldOut, "Load New Map: "))
+			{
+				string[] files = Directory.GetFiles(
+					Application.dataPath + "/Map Prefabs/");
+
+				foreach (string file in files)
+				{
+					if (file.EndsWith(".meta"))
+						continue;
+
+					string shortenedFile =
+						file.Replace(
+							Application.dataPath + "/Map Prefabs/",
+							"").Replace(
+							".prefab",
+							"");
+
+					EditorGUILayout.BeginHorizontal();
+
+					EditorGUILayout.LabelField(shortenedFile);
+
+					if (GUILayout.Button("Load"))
+						Load(shortenedFile);
+
+					//Texture2D display =
+					//	AssetPreview.GetAssetPreview(
+					//		AssetDatabase.LoadAssetAtPath<GameObject>(
+					//			"/Assets/Map Prefabs/" + shortenedFile));
+
+					//if (display != null)
+					//{
+					//	EditorGUI.DrawPreviewTexture(
+					//		GUILayoutUtility.GetRect(64, 64),
+					//		display);
+					//};
+
+					EditorGUILayout.EndHorizontal();
+				};
+			};
 			//
 
 			EditorGUILayout.EndVertical();
@@ -74,6 +113,8 @@ namespace Vanguards
 			PrefabUtility.SaveAsPrefabAsset(
 				GetComponentInChildren<Map>().gameObject,
 				fullPath);
+
+			Load(file_name);
 		}
 
 		void Load(string file_name)
@@ -89,15 +130,15 @@ namespace Vanguards
 				AssetDatabase.LoadAssetAtPath<GameObject>(relPath),
 				transform);
 		}
-	};
 
-	[CustomEditor(typeof(MapEditor))]
-	public class MapEditorUI : Editor
-	{
-		public override void OnInspectorGUI()
+		[CustomEditor(typeof(MapEditor))]
+		public class MapEditorUI : Editor
 		{
-			((MapEditor)target).DoGUI();
-		}
+			public override void OnInspectorGUI()
+			{
+				((MapEditor)target).DoGUI();
+			}
+		};
 	};
 };
 

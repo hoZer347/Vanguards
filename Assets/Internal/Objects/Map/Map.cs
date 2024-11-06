@@ -25,9 +25,15 @@ namespace Vanguards
 
 		[SerializeField]
 		List<Cell> cellList;
+		public List<Cell> CellList => cellList;
+
+		[SerializeField]
+		Dictionary<Vector2Int, Cell> cellDict;
+		public Dictionary<Vector2Int, Cell> CellDict => cellDict;
 
 		[SerializeField]
 		Cell[,] cells = new Cell[0, 0];
+		public Cell[,] Cells => cells;
 
 		MeshFilter meshFilter = null;
 		//MeshRenderer meshRenderer = null;
@@ -84,19 +90,19 @@ namespace Vanguards
 		{
 			Refresh();
 			Build();
+
+			State.SetState<St_Mp_InitialState>();
 		}
 		private void OnValidate() => Refresh();
 
 		private void Refresh()
 		{
 			main = this;
-
-			State.SetState<St_Mp_InitialState>();
 		}
 
 		#endregion
 
-		void Build()
+		public void Build()
 		{
 			Cell[,] oldCells = cells;
 			cells = new Cell[dimensions.x, dimensions.y];
@@ -182,6 +188,8 @@ namespace Vanguards
 
 					if (hits.Count == 4)
 					{
+						cell.MeshIndex = vertices.Count;
+
 						foreach (RaycastHit hit in hits)
 						{
 							indices.Add(vertices.Count);
@@ -200,6 +208,10 @@ namespace Vanguards
 				};
 
 			cellList = cellHash.ToList();
+
+			cellDict = new();
+			foreach (Cell cell in cellList)
+				cellDict[cell.Coords] = cell;
 
 			meshFilter = GetComponent<MeshFilter>();
 			meshFilter.sharedMesh = new Mesh();
@@ -242,16 +254,44 @@ namespace Vanguards
 					height,
 					dimensions.y));
 
+			Gizmos.color = Color.green;
+
 			foreach (Cell cell in cells)
 				if (cell != null)
 				{
-					Gizmos.color = Color.green;
-
 					Gizmos.DrawSphere(
 						Vector3Int.FloorToInt(transform.position) +
 						cell.Position,
 
 						0.1f);
+
+					if (cell.U != null)
+						Gizmos.DrawLine(
+							Vector3Int.FloorToInt(transform.position) +
+							cell.Position,
+							Vector3Int.FloorToInt(transform.position) +
+							cell.U.Position);
+
+					if (cell.D != null)
+						Gizmos.DrawLine(
+							Vector3Int.FloorToInt(transform.position) +
+							cell.Position,
+							Vector3Int.FloorToInt(transform.position) +
+							cell.D.Position);
+
+					if (cell.L != null)
+						Gizmos.DrawLine(
+							Vector3Int.FloorToInt(transform.position) +
+							cell.Position,
+							Vector3Int.FloorToInt(transform.position) +
+							cell.L.Position);
+
+					if (cell.R != null)
+						Gizmos.DrawLine(
+							Vector3Int.FloorToInt(transform.position) +
+							cell.Position,
+							Vector3Int.FloorToInt(transform.position) +
+							cell.R.Position);
 				};
 		}
 
@@ -263,10 +303,13 @@ namespace Vanguards
 			// Dimensions
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField("Dimensions: ");
+			var oldDimensions = dimensions;
 			dimensions.x = EditorGUILayout.IntField(dimensions.x);
 			dimensions.y = EditorGUILayout.IntField(dimensions.y);
 			dimensions.x = Mathf.Max(1, dimensions.x);
 			dimensions.y = Mathf.Max(1, dimensions.y);
+			if (oldDimensions != dimensions)
+				EditorUtility.SetDirty(this);
 			EditorGUILayout.EndHorizontal();
 			//
 
@@ -274,8 +317,11 @@ namespace Vanguards
 			// Height
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField("Height: ");
+			var oldHeight = height;
 			height = EditorGUILayout.IntField(height);
 			height = Mathf.Max(1, height);
+			if (oldHeight != height)
+				EditorUtility.SetDirty(this);
 			EditorGUILayout.EndHorizontal();
 			//
 
@@ -297,8 +343,6 @@ namespace Vanguards
 
 
 			EditorGUILayout.EndVertical();
-
-			EditorUtility.SetDirty(this);
 		}
 
 		[CustomEditor(typeof(Map))]
@@ -310,6 +354,7 @@ namespace Vanguards
 			}
 		};
 #endif
+
 		#endregion
 	};
 };

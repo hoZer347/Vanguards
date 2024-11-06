@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+namespace Vanguards
+{
+	[RequireComponent(typeof(Attributes))]
+	public class Item : MonoBehaviour
+	{
+		[SerializeField]
+		Texture2D icon;
+
+		public Attributes attributes;
+
+		#region Refresh
+
+		void Refresh()
+		{
+			attributes = GetComponent<Attributes>();
+		}
+
+		private void Start() => Refresh();
+
+		private void OnValidate() => Refresh();
+
+		#endregion
+
+		virtual public void OnEquip()
+		{ }
+
+		virtual public void OnUnequip()
+		{ }
+	};
+};

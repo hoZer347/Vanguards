@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 
 namespace Vanguards
 {
 	public class SpriteHost : MonoBehaviour
 	{
-		SpriteRenderer spriteRenderer;
+		[SerializeField]
+		Texture2D texture;
+
+		SpriteRenderer spriteRenderer = null;
 
 		#region Refresh
 
@@ -18,6 +22,22 @@ namespace Vanguards
 		void Refresh()
 		{
 			spriteRenderer = GetComponent<SpriteRenderer>();
+
+			if (texture != null)
+			{
+				Object[] assets =
+					AssetDatabase.LoadAllAssetRepresentationsAtPath(
+						AssetDatabase.GetAssetPath(texture));
+
+				sprites = new Sprite[assets.Length];
+				for (int i = 0; i < assets.Length; i++)
+					sprites[i] = assets[i] as Sprite;
+
+#if UNITY_EDITOR
+				EditorApplication.delayCall += () =>
+#endif
+				UpdateSpriteIndex();
+			};
 		}
 
 		#endregion
@@ -37,6 +57,11 @@ namespace Vanguards
 			spriteSetOffset = newOffset;
 		}
 
+		void UpdateSpriteIndex()
+			=> spriteRenderer.sprite = sprites[
+				spriteSetOffset * spriteSetSize +
+				currentSprite % spriteSetSize];
+
 		[SerializeField, Range(1, 32), Tooltip("Amount of sprites in an animation clip")]
 		int spriteSetSize = 4;
 
@@ -48,7 +73,7 @@ namespace Vanguards
 
 		[SerializeField]
 		Sprite[] sprites;
-
+		
 		int currentSprite = 0;
 		float timeElapsed = 0;
 
@@ -56,10 +81,7 @@ namespace Vanguards
 		{
 			if (timeElapsed > 1 / frameRate)
 			{
-				spriteRenderer.sprite =
-					sprites[
-						spriteSetOffset * spriteSetSize +
-						currentSprite % spriteSetSize];
+				UpdateSpriteIndex();
 
 				timeElapsed -= 1 / frameRate;
 

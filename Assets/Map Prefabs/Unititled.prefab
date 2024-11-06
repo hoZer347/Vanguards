@@ -4145,9 +4145,6 @@ MonoBehaviour:
     terrainType: 0
     highlight: 0
     difficulty: 1
-  surfaceLayer:
-    serializedVersion: 2
-    m_Bits: 128
   showGizmos: 1
 --- !u!1 &5609779365414449083
 GameObject:

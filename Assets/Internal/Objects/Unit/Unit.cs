@@ -20,12 +20,15 @@ namespace Vanguards
 
 		public int TotalRange => attributes.GetValue("MoveRange") +
 				Mathf.Max(
-					attributes.GetValue("Move Range"),
-					attributes.GetValue("Staff Range"));
+					attributes.GetValue("MoveRange"),
+					attributes.GetValue("StaffRange"));
 
 		public int AttackRange => attributes.GetValue("AttackRange");
 		public int StaffRange => attributes.GetValue("StaffRange");
 		public int MoveRange => attributes.GetValue("MoveRange");
+
+		public bool hasStaff => attributes.GetValue("StaffRange") > 0;
+		public bool hasAttack => attributes.GetValue("AttackRange") > 0;
 
 		public void AddToPath(Vector3 position)
 		{
@@ -38,18 +41,10 @@ namespace Vanguards
 			this.path.AddRange(path);
 		}
 
-		public void SetPath(IEnumerable<Cell> path)
-		{
-			this.path.Clear();
-			foreach (Cell cell in path)
-				this.path.Add(cell.Position);
-		}
-
 		public Vector2Int coords =>
 			new Vector2Int(
 				(int)transform.position.x,
 				(int)transform.position.z);
-
 
 		SpriteHost spriteHost;
 
@@ -168,7 +163,7 @@ namespace Vanguards
 
 		[SerializeField]
 		eTeam team = eTeam.Player;
-		eTeam Team => team;
+		public eTeam Team => team;
 
 		public void SetTeam(eTeam team)
 		{
@@ -193,59 +188,60 @@ namespace Vanguards
 
 		void SetMovementType(eMovementType movementType)
 		{
-			switch (movementType)
-			{
-				case eMovementType.Land:
-					ff_Kernel = (Cell cell, float amount, out bool shouldAdd) =>
-					{
-						if (MoveRange <= amount)
-						{
-							shouldAdd = true;
+			//switch (movementType)
+			//{
+			//	case eMovementType.Land:
+			//		ff_Kernel = (Cell cell, float amount, out bool shouldAdd) =>
+			//		{
+			//			if (MoveRange <= amount)
+			//			{
+			//				shouldAdd = true;
 
-							return amount -= cell.Difficulty;
-						}
-						else if (amount - MoveRange < AttackRange)
-						{
-							cell.Highlight = Cell.eHighlight.AttackRange;
+			//				return amount -= cell.Difficulty;
+			//			}
+			//			else if (amount - MoveRange < AttackRange)
+			//			{
+			//				shouldAdd = true;
 
-							shouldAdd = true;
+			//				return amount - 1;
+			//			}
+			//			else if (amount - MoveRange < StaffRange)
+			//			{
+			//				shouldAdd = true;
 
-							return amount - 1;
-						}
-						else if (amount - MoveRange < StaffRange)
-						{
-							cell.Highlight = Cell.eHighlight.StaffRange;
+			//				return amount - 1;
+			//			};
 
-							shouldAdd = true;
+			//			shouldAdd = false;
 
-							return amount - 1;
-						};
+			//			return amount - 1;
+			//		};
 
-						shouldAdd = false;
+			//		break;
+			//	case eMovementType.Flying:
+			//		ff_Kernel =
+			//			(Cell cell, float amount, out bool shouldAdd) =>
+			//			{
+			//				shouldAdd = true;
 
-						return amount - 1;
-					};
-
-					break;
-				case eMovementType.Flying:
-					ff_Kernel =
-						(Cell cell, float amount, out bool shouldAdd) =>
-						{
-							shouldAdd = true;
-
-							return amount -= cell.Difficulty;
-						};
-					break;
-			};
+			//				return amount -= cell.Difficulty;
+			//			};
+			//		break;
+			//};
 		}
 
 		Algorithm.FloodFillHeuristic ff_Kernel =
 			(Cell cell, float amount, out bool shouldAdd) =>
 			{
-				// TODO: Change this to an error case
+				if (cell.Unit != null)
+					if (cell.Unit.Team == eTeam.Enemy)
+					{
+						shouldAdd = false;
+						return 0.0f;
+					};
 
 				shouldAdd = true;
-				return amount -= cell.Difficulty;
+				return amount - cell.Difficulty;
 			};
 
 		public Algorithm.FloodFillHeuristic FF_Kernel => ff_Kernel;
@@ -273,6 +269,7 @@ namespace Vanguards
 
 		[SerializeField]
 		List<Vector3> path = new();
+		public List<Vector3> Path => path;
 
 		#endregion
 
@@ -300,9 +297,6 @@ namespace Vanguards
 		[SerializeField]
 		float turnThreshold = 0.5f;
 
-		[SerializeField]
-		List<Item> items = new();
-
 		private void Update()
 		{
 			HandleAnimationState();
@@ -318,31 +312,12 @@ namespace Vanguards
 
 #if UNITY_EDITOR
 
-		[SerializeField]
-		Color pathColor;
-
-		[SerializeField]
-		bool showPath;
-
-		public void DoGUI()
-		{
-			EditorGUILayout.BeginVertical();
-
-			if (showPath = GUILayout.Toggle(showPath, "Show Path"))
-			{
-				pathColor = EditorGUILayout.ColorField("Path Color", pathColor);
-			};
-
-			EditorGUILayout.EndVertical();
-
-			EditorUtility.SetDirty(this);
-		}
-
+		bool showPath = true;
 		private void OnDrawGizmos()
 		{
 			if (showPath)
 			{
-				Gizmos.color = pathColor;
+				Gizmos.color = Color.green;
 
 				foreach (Vector3 position in path)
 					Gizmos.DrawSphere(
@@ -351,14 +326,6 @@ namespace Vanguards
 			};
 		}
 
-		[CustomEditor(typeof(Unit))]
-		public class UnitUI : Editor
-		{
-			public override void OnInspectorGUI()
-			{
-				((Unit)target).DoGUI();
-			}
-		};
 #endif
 		#endregion
 	};

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 145329801177070504}
   - component: {fileID: 4554429463592614203}
   - component: {fileID: 6934416002542471074}
-  - component: {fileID: 2197352029926008952}
   - component: {fileID: -2818254510639288947}
+  - component: {fileID: 3953845999268761055}
   m_Layer: 9
   m_Name: Base Unit
   m_TagString: Untagged
@@ -53,9 +53,11 @@ MonoBehaviour:
   team: 1
   movementType: 0
   path: []
-  speed: 5
+  speed: 7
   turnThreshold: 0.5
   items: []
+  pathColor: {r: 0, g: 0, b: 0, a: 0}
+  showPath: 0
 --- !u!114 &4554429463592614203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,10 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attributeList:
-  - name: Move Range
+  - name: MoveRange
     base: 5
-  - name: Attack Range
+  - name: AttackRange
     base: 2
+  - name: StaffRange
+    base: 5
 --- !u!114 &6934416002542471074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b86007f37ca274a8a6c75f9e61551a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texture: {fileID: 2800000, guid: 37c84856ee446ca40bcec65196139554, type: 3}
   spriteSetSize: 4
   spriteSetOffset: 1
   frameRate: 4
@@ -1265,7 +1270,28 @@ MonoBehaviour:
   - {fileID: 1992586255, guid: 37c84856ee446ca40bcec65196139554, type: 3}
   - {fileID: 976843959, guid: 37c84856ee446ca40bcec65196139554, type: 3}
   - {fileID: 91633058, guid: 37c84856ee446ca40bcec65196139554, type: 3}
---- !u!212 &2197352029926008952
+--- !u!65 &-2818254510639288947
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5616663280124805386}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9, y: 0.9, z: 0.2}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!212 &3953845999268761055
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1305,36 +1331,15 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: -505021373, guid: 37c84856ee446ca40bcec65196139554, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 1501638943, guid: 37c84856ee446ca40bcec65196139554, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &-2818254510639288947
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5616663280124805386}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9, y: 0.9, z: 0.2}
-  m_Center: {x: 0, y: 0.5, z: 0}

@@ -53,7 +53,7 @@ namespace Vanguards
 		public delegate float FloodFillHeuristic(Cell cell, float amount, out bool shouldAdd);
 
 
-		// Standard A* algorithm
+		// A* algorithm with impassable cell handling
 		public static void AStar(
 			Cell origin,
 			Cell goal,
@@ -62,21 +62,22 @@ namespace Vanguards
 		{
 			path.Clear();
 
-			// Priority queue to store cells with their total estimated cost (F = G + H)
-			var openSet = new SortedList<float, Cell>();
+			// Custom comparer for SortedSet to avoid duplicate keys
+			var openSet = new SortedSet<(float, Cell)>(Comparer<(float, Cell)>.Create((a, b) =>
+				a.Item1 == b.Item1 ? a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode()) : a.Item1.CompareTo(b.Item1)));
+
 			var cameFrom = new Dictionary<Cell, Cell>();
 			var gScore = new Dictionary<Cell, float> { [origin] = 0 };
 			var fScore = new Dictionary<Cell, float> { [origin] = heuristic(origin, goal) };
 
-			openSet.Add(fScore[origin], origin);
+			openSet.Add((fScore[origin], origin));
 
 			while (openSet.Count > 0)
 			{
 				// Get the cell with the lowest F score
-				Cell current = openSet.Values[0];
-				openSet.RemoveAt(0);
+				var current = openSet.Min.Item2;
+				openSet.Remove(openSet.Min);
 
-				// If reached the goal, reconstruct the path
 				if (current == goal)
 				{
 					var totalPath = new List<Cell> { current };
@@ -86,34 +87,29 @@ namespace Vanguards
 						totalPath.Insert(0, current);
 					};
 					path.AddRange(totalPath);
-
 					return;
 				};
 
-				// Explore neighbors
 				foreach (var neighbor in new[] { current.U, current.D, current.L, current.R })
 				{
-					if (neighbor == null)
+					if (neighbor == null || heuristic(neighbor, goal) == float.PositiveInfinity)
 						continue;
 
-					// Calculate tentative G score
-					float tentativeGScore = gScore[current] + 1; // assuming uniform cost to move to a neighbor
+					float tentativeGScore = gScore[current] + 1;
 
 					if (!gScore.ContainsKey(neighbor) || tentativeGScore < gScore[neighbor])
 					{
 						cameFrom[neighbor] = current;
 						gScore[neighbor] = tentativeGScore;
-						fScore[neighbor] = tentativeGScore + heuristic(neighbor, goal);
+						float neighborFScore = tentativeGScore + heuristic(neighbor, goal);
 
-						// Add neighbor to openSet if not already there with a lower F score
-						if (!openSet.ContainsValue(neighbor))
-						{
-							openSet.TryAdd(fScore[neighbor], neighbor);
-						};
+						if (!openSet.Any(e => e.Item2 == neighbor))
+							openSet.Add((neighborFScore, neighbor));
 					};
 				};
 			};
 		}
+
 
 		public delegate float AStarHeuristic(Cell from, Cell to);
 
@@ -144,13 +140,14 @@ namespace Vanguards
 
 
 		// Pathing that assumes you've already floodfilled an area
-		private static void PostFloodFillPath(
+		public static void PostFloodFillPath(
 			Cell origin,
 			Cell goal,
 			ref List<Cell> path,
 			ref Dictionary<Cell, float> floodfilled_cells)
 		{
-			if (!floodfilled_cells.ContainsKey(origin) || !floodfilled_cells.ContainsKey(goal))
+			if (!floodfilled_cells.ContainsKey(origin) ||
+				!floodfilled_cells.ContainsKey(goal))
 				return;
 
 			path.Clear();
