@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4431282968607033833}
   - component: {fileID: 1495141663375336780}
-  - component: {fileID: 5196036508805756347}
   m_Layer: 0
   m_Name: Base Item
   m_TagString: Untagged
@@ -45,20 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28911f5762f93ad408ddf9aa8c47164a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5196036508805756347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8350009156718449395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb78b8086b634914985544af036621ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attributeList:
-  - name: Attack Range
-    base: 3
-  - name: Minimum Attack Range
-    base: 2
+  icon: {fileID: 0}

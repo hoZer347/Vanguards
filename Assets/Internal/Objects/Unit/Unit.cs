@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,7 +8,6 @@ using UnityEditor;
 
 namespace Vanguards
 {
-	[RequireComponent(typeof(Attributes))]
 	public class Unit : MonoBehaviour
 	{
 		public bool ActionUsed
@@ -18,17 +16,45 @@ namespace Vanguards
 			set => spriteHost.IsGrayScale = value;
 		}
 
-		public int TotalRange => attributes.GetValue("MoveRange") +
+		#region Attributes
+
+		public int MaxHP => moveRange.Base;
+		public int CurrentHP => HP.Value;
+
+		public int TotalRange => moveRange.Value +
 				Mathf.Max(
-					attributes.GetValue("MoveRange"),
-					attributes.GetValue("StaffRange"));
+					attackRange.Value,
+					staffRange.Value);
 
-		public int AttackRange => attributes.GetValue("AttackRange");
-		public int StaffRange => attributes.GetValue("StaffRange");
-		public int MoveRange => attributes.GetValue("MoveRange");
+		public int AttackRange => attackRange.Value;
+		public int StaffRange => staffRange.Value;
 
-		public bool hasStaff => attributes.GetValue("StaffRange") > 0;
-		public bool hasAttack => attributes.GetValue("AttackRange") > 0;
+		public int MinAttackRange => minAttackRange.Value;
+		public int MinStaffRange => minStaffRange.Value;
+		
+		public int MoveRange => moveRange.Value;
+
+		public bool hasStaff => staffRange.Value > 0;
+		public bool hasAttack => attackRange.Value > 0;
+
+		[HideInInspector] public Attribute<int> HP = new();
+		[HideInInspector] public Attribute<int> STR = new();
+		[HideInInspector] public Attribute<int> MAG = new();
+		[HideInInspector] public Attribute<int> SPD = new();
+		[HideInInspector] public Attribute<int> SKL = new();
+		[HideInInspector] public Attribute<int> LCK = new();
+		[HideInInspector] public Attribute<int> DEF = new();
+		[HideInInspector] public Attribute<int> RES = new();
+
+		[HideInInspector] public Attribute<int> moveRange = new();
+		
+		[HideInInspector] public Attribute<int> minAttackRange = new();
+		[HideInInspector] public Attribute<int> attackRange = new();
+
+		[HideInInspector] public Attribute<int> minStaffRange = new();
+		[HideInInspector] public Attribute<int> staffRange = new();
+
+		#endregion
 
 		public void AddToPath(Vector3 position)
 		{
@@ -47,8 +73,6 @@ namespace Vanguards
 				(int)transform.position.z);
 
 		SpriteHost spriteHost;
-
-		Attributes attributes;
 
 		#region State Management
 
@@ -231,16 +255,14 @@ namespace Vanguards
 		}
 
 		Algorithm.FloodFillHeuristic ff_Kernel =
-			(Cell cell, float amount, out bool shouldAdd) =>
+			(Cell cell, float amount) =>
 			{
 				if (cell.Unit != null)
 					if (cell.Unit.Team == eTeam.Enemy)
 					{
-						shouldAdd = false;
 						return 0.0f;
 					};
 
-				shouldAdd = true;
 				return amount - cell.Difficulty;
 			};
 
@@ -280,13 +302,22 @@ namespace Vanguards
 
 		void Refresh()
 		{
-			attributes = GetComponent<Attributes>();
 			spriteHost = GetComponent<SpriteHost>();
 
 			SetState(state);
 			SetAnimationState(animationState);
 			SetTeam(team);
 			SetMovementType(movementType);
+
+			HP.SetModifier("Debug HP", (ref int hp) => { hp -= 10; });
+
+			moveRange.SetModifier("Move Range Base", (ref int range) => { range = 5; });
+
+			minAttackRange.SetModifier("Minimum Attack Range", (ref int range) => { range = 2; });
+			attackRange.SetModifier("Attack Range Base", (ref int range) => { range = 3; });
+
+			minStaffRange.SetModifier("Minimum Staff Range", (ref int range) => { range = 4; });
+			staffRange.SetModifier("Staff Range Base", (ref int range) => { range = 5; });
 		}
 
 		#endregion
@@ -324,6 +355,24 @@ namespace Vanguards
 						position,
 						0.4f);
 			};
+		}
+
+		void DoGUI()
+		{
+			AttributeGUI.DoAttributesGUI(this);
+		}
+
+		[CustomEditor(typeof(Unit))]
+		public class UnitEditor : Editor
+		{
+			public override void OnInspectorGUI()
+			{
+				base.OnInspectorGUI();
+
+				Unit unit = (Unit)target;
+
+				unit.DoGUI();
+			}
 		}
 
 #endif

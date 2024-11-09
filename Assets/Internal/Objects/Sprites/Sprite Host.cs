@@ -23,6 +23,7 @@ namespace Vanguards
 		{
 			spriteRenderer = GetComponent<SpriteRenderer>();
 
+#if UNITY_EDITOR
 			if (texture != null)
 			{
 				Object[] assets =
@@ -33,11 +34,12 @@ namespace Vanguards
 				for (int i = 0; i < assets.Length; i++)
 					sprites[i] = assets[i] as Sprite;
 
-#if UNITY_EDITOR
+
 				EditorApplication.delayCall += () =>
-#endif
+
 				UpdateSpriteIndex();
 			};
+#endif
 		}
 
 		#endregion
@@ -58,9 +60,12 @@ namespace Vanguards
 		}
 
 		void UpdateSpriteIndex()
-			=> spriteRenderer.sprite = sprites[
-				spriteSetOffset * spriteSetSize +
-				currentSprite % spriteSetSize];
+		{
+			if (spriteRenderer != null)
+				spriteRenderer.sprite = sprites[
+					spriteSetOffset * spriteSetSize +
+					currentSprite % spriteSetSize];
+		}
 
 		[SerializeField, Range(1, 32), Tooltip("Amount of sprites in an animation clip")]
 		int spriteSetSize = 4;

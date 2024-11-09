@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Vanguards
 {
@@ -16,9 +20,10 @@ namespace Vanguards
 
 			foreach (var element in newCells)
 			{
-				if (element.Value <= 0) continue;
+				if (element.Value <= 0)
+					continue;
 
-				var _cells =
+				Cell[] _cells =
 					new Cell[]
 					{
 						element.Key.U,
@@ -27,30 +32,33 @@ namespace Vanguards
 						element.Key.R,
 					};
 
-				var amount = element.Value;
+				float amount = element.Value;
 
 				foreach (Cell _cell in _cells)
 					if (_cell != null)
 					{
-						var _amount = kernel(_cell, amount, out bool shouldAdd);
+						float _amount =
+							kernel(
+								_cell,
+								amount);
 
-						if (shouldAdd)
-							if (cells.ContainsKey(_cell))
-							{
-								cells[_cell] = Mathf.Max(
+						if (cells.ContainsKey(_cell))
+							cells[_cell] =
+								Mathf.Max(
 									cells[_cell],
 									_amount);
-							}
-							else cells.Add(_cell, _amount);
+
+						else cells.Add(_cell, _amount);
 					};
 			};
 
-			if (newCells.Count == cells.Count) return;
+			if (newCells.Count == cells.Count)
+				return;
 
 			FloodFill(ref cells, kernel);
 		}
 
-		public delegate float FloodFillHeuristic(Cell cell, float amount, out bool shouldAdd);
+		public delegate float FloodFillHeuristic(Cell cell, float amount);
 
 
 		// A* algorithm with impassable cell handling
@@ -109,7 +117,6 @@ namespace Vanguards
 				};
 			};
 		}
-
 
 		public delegate float AStarHeuristic(Cell from, Cell to);
 
@@ -200,6 +207,19 @@ namespace Vanguards
 				currentCell = nextCell;
 				remainingDistance = floodfilled_cells[currentCell];
 			}
+		}
+
+
+		// Copies class A int B given B inherits from A
+		static public void CopyTo<A>(A source, A target)
+		{
+			foreach (FieldInfo field in typeof(A).GetFields())
+			{
+				if (field.IsStatic)
+					continue;
+
+				field.SetValue(target, field.GetValue(source));
+			};
 		}
 	};
 };

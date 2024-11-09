@@ -102,6 +102,14 @@ namespace Vanguards
 
 		#endregion
 
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Z))
+				StateMachine.Undo();
+			if (Input.GetKeyDown(KeyCode.Y))
+				StateMachine.Redo();
+		}
+
 		public void Build()
 		{
 			Cell[,] oldCells = cells;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 330939390914187411}
   - component: {fileID: 1721515652668486360}
   m_Layer: 5
-  m_Name: Option Manager
+  m_Name: Option Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

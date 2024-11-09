@@ -8,10 +8,14 @@ namespace Vanguards
 	public class StateMachine : MonoBehaviour
 	{
 		[SerializeField]
-		string currentState;
-		static private State current;
+		string currentStateName;
 		static private StateMachine main;
+
+		static public State current = null;
 		static public State Current => current;
+
+		static Stack<State> stateStack = new();
+		static Stack<State> memoryStack = new();
 
 		#region Refresh
 
@@ -27,23 +31,54 @@ namespace Vanguards
 
 		private void Update()
 		{
-			if (current != null)
-				current.OnUpdate();
+			if (Current != null)
+				Current.OnUpdate();
+			else Debug.Log("State is Null");
 		}
 
-		static public void Set<_State>()
+		static public void SetState<_State>()
 			where _State : State, new()
 		{
-			if (current != null)
-				current.OnLeave();
+			_State newState = new _State();
+			State oldState = Current;
 
-			current = new _State();
+			memoryStack.Clear();
+
+			newState.name = typeof(_State).ToString();
+
+			newState.OnEnter();
+
+			current = newState;
+
+			stateStack.Push(current);
+
+			if (oldState != null)
+				oldState.OnLeave();
 
 			if (main != null)
-				main.currentState = typeof(_State).Name;
+				main.currentStateName = current.name;
+		}
 
-			if (current != null)
-				current.OnEnter();
+		static public void Undo()
+		{
+			if (stateStack.Count > 1)
+			{
+				memoryStack.Push(stateStack.Pop());
+				stateStack.Peek().OnEnter();
+				current = stateStack.Peek();
+				main.currentStateName = stateStack.Peek().name;
+			};
+		}
+
+		static public void Redo()
+		{
+			if (memoryStack.Count > 0)
+			{
+				stateStack.Push(memoryStack.Pop());
+				stateStack.Peek().OnEnter();
+				current = stateStack.Peek();
+				main.currentStateName = stateStack.Peek().name;
+			};
 		}
 	};
 
@@ -51,10 +86,12 @@ namespace Vanguards
 	{
 		static public void SetState<_State>()
 			where _State : State, new()
-				=> StateMachine.Set<_State>();
+				=> StateMachine.SetState<_State>();
 
-		public virtual void OnEnter() { }
-		public virtual void OnUpdate() { }
-		public virtual void OnLeave() { }
-	}
+		public string name = "";
+
+		virtual public void OnEnter() { }
+		virtual public void OnUpdate() { }
+		virtual public void OnLeave() { }
+	};
 };
