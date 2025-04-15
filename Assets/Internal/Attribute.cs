@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
-using System.Text.RegularExpressions;
 using System.Globalization;
-
+using System.Text.RegularExpressions;
+using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
 
 namespace Vanguards
 {
@@ -21,141 +19,141 @@ namespace Vanguards
 		: AttributeGUI
 #endif
 	{
-		public void SetBase(ValueType newBase) => @base = newBase;
-
-		public void SetModifier(
-			string name,
-			Modifier<ValueType> modifier)
-			=> modifiers[name] = modifier;
-
-		public void RmvModifier(string name)
-		{
-			modifiers.Remove(name);
-		}
+		[SerializeField]
+		private string name;
 
 		[SerializeField]
-		string name;
-		public string Name => name;
+		private ValueType @base;
 
+		private Dictionary<string, Modifier<ValueType>> modifiers = new();
+
+#if UNITY_EDITOR
+		protected bool showModifiers = false;
+#endif
+
+		public string Name => name;
 		public ValueType Base => @base;
+
 		public ValueType Value
 		{
 			get
 			{
-				ValueType value = @Base;
-
+				ValueType value = @base;
 				foreach (var modifier in modifiers.Values)
 					modifier(ref value);
-
 				return value;
 			}
 		}
-		
-		[SerializeField]
-		ValueType @base;
 
-		Dictionary<string, Modifier<ValueType>> modifiers = new();
+		public void SetBase(ValueType newBase) => @base = newBase;
+
+		public void SetModifier(string name, Modifier<ValueType> modifier)
+			=> modifiers[name] = modifier;
+
+		public void RmvModifier(string name) => modifiers.Remove(name);
 
 #if UNITY_EDITOR
-
-		#region Editor GUI
-
-		protected bool showModifiers = false;
-
-		public override void DoGUI()
+		public override void DoGUI(string label)
 		{
 			EditorGUIUtility.labelWidth = 50;
 
-			// Display the name label
-			EditorGUILayout.LabelField(name, GUILayout.Width(100));
+			EditorGUILayout.BeginHorizontal();
+
+			GUILayout.Label(label, GUILayout.Width(120));
+
+			// Change check
+			EditorGUI.BeginChangeCheck();
+
+			ValueType newBase = @base;
 
 			if (typeof(ValueType) == typeof(int))
 			{
-				EditorGUILayout.LabelField("Base:", GUILayout.Width(40));
-				int oldBase = (int)(object)@base;
-				@base = (ValueType)(object)EditorGUILayout.IntField(oldBase, GUILayout.Width(50));
+				newBase = (ValueType)(object)EditorGUILayout.IntField("Base", (int)(object)@base, GUILayout.Width(150));
 			}
-
 			else if (typeof(ValueType) == typeof(float))
 			{
-				EditorGUILayout.LabelField("Base:", GUILayout.Width(40));
-				float oldBase = (float)(object)@base;
-				@base = (ValueType)(object)EditorGUILayout.FloatField(oldBase, GUILayout.Width(50));
-			};
-
-			EditorGUILayout.LabelField("Value: " + Value.ToString(), GUILayout.Width(100));
-
-			if (showModifiers = EditorGUILayout.Foldout(showModifiers, "Modifiers"))
+				newBase = (ValueType)(object)EditorGUILayout.FloatField("Base", (float)(object)@base, GUILayout.Width(150));
+			}
+			else if (typeof(ValueType) == typeof(string))
 			{
-				EditorGUILayout.BeginVertical();
+				newBase = (ValueType)(object)EditorGUILayout.TextField("Base", (string)(object)@base, GUILayout.Width(200));
+			}
+			else if (typeof(ValueType).IsEnum)
+			{
+				newBase = (ValueType)(object)EditorGUILayout.EnumPopup("Base", (Enum)(object)@base, GUILayout.Width(200));
+			}
+			else
+			{
+				EditorGUILayout.LabelField($"Unsupported: {typeof(ValueType).Name}", GUILayout.Width(200));
+			}
 
-				EditorGUI.indentLevel++;
+			if (EditorGUI.EndChangeCheck())
+			{
+				@base = newBase;
 
-				Dictionary<string, Modifier<ValueType>> newModifiers = new(modifiers);
-
-				foreach (var modifier in newModifiers)
+				if (AttributeGUI.CurrentTarget is UnityEngine.Object uo)
 				{
-					EditorGUILayout.BeginHorizontal();
+					Undo.RecordObject(uo, "Modify Attribute");
+					EditorUtility.SetDirty(uo);
+				}
+			}
 
-					EditorGUILayout.LabelField(modifier.Key);
+			GUILayout.Label("Value: " + Value?.ToString(), GUILayout.Width(150));
 
-					EditorGUILayout.EndHorizontal();
-				};
+			// Inline foldout at end of line
+			Rect foldoutRect = GUILayoutUtility.GetRect(15, EditorGUIUtility.singleLineHeight);
+			showModifiers = EditorGUI.Foldout(foldoutRect, showModifiers, GUIContent.none);
 
+			EditorGUILayout.EndHorizontal();
+
+			if (showModifiers)
+			{
+				EditorGUI.indentLevel++;
+				foreach (var modifier in modifiers)
+				{
+					EditorGUILayout.LabelField($"• {modifier.Key}");
+				}
 				EditorGUI.indentLevel--;
-
-				EditorGUILayout.EndVertical();
-			};
+			}
 		}
-
-		#endregion
-
 #endif
-	};
-
+	}
 
 #if UNITY_EDITOR
 
 	[Serializable]
-	abstract public class AttributeGUI
+	public abstract class AttributeGUI
 	{
-		virtual public void DoGUI()
-		{ }
+		public virtual void DoGUI(string label) { }
 
-		public static void DoAttributesGUI<AttributeHolderType>(
-			AttributeHolderType obj)
+		public static object CurrentTarget { get; private set; }
+
+		public static void DoAttributesGUI<AttributeHolderType>(AttributeHolderType obj)
 		{
+			CurrentTarget = obj;
+
 			EditorGUILayout.BeginVertical();
 
-			// Get the type of the provided object
 			Type objType = obj.GetType();
 
-			// Iterate through all fields and properties of the object
 			foreach (var member in objType.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
 			{
 				object value = null;
 
-				// Check if the member is a field
 				if (member is FieldInfo field && typeof(AttributeGUI).IsAssignableFrom(field.FieldType))
 					value = field.GetValue(obj);
-				// Check if the member is a property
 				else if (member is PropertyInfo property && typeof(AttributeGUI).IsAssignableFrom(property.PropertyType))
 					value = property.GetValue(obj);
 
-				// If the member is of type AttributeGUI, call DoGUI
 				if (value is AttributeGUI attribute)
 				{
-					EditorGUILayout.BeginHorizontal();
-
-					EditorGUILayout.LabelField(ConvertToReadableFormat(member.Name) + ": ", GUILayout.Width(100));
-
-					attribute.DoGUI();
-
-					EditorGUILayout.EndHorizontal();
-				};
-			};
+					string readableName = ConvertToReadableFormat(member.Name);
+					attribute.DoGUI(readableName);
+				}
+			}
 
 			EditorGUILayout.EndVertical();
+			CurrentTarget = null;
 		}
 
 		private static string ConvertToReadableFormat(string name)
@@ -163,13 +161,10 @@ namespace Vanguards
 			if (string.IsNullOrEmpty(name))
 				return string.Empty;
 
-			// Regex to insert spaces before capital letters, ignoring all-uppercase words
 			var readableName = Regex.Replace(name, "(?<=[a-z])([A-Z])", " $1");
-
-			// Capitalize the first letter of each word
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(readableName);
 		}
-	};
+	}
 
 #endif
-};
+}

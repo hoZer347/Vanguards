@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Vanguards
 {
-	public class Staff : Equippable
-	{ };
+	public class Consumable : Item
+	{
+
+	};
 };

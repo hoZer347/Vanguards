@@ -54,6 +54,8 @@ namespace Vanguards
 		[HideInInspector] public Attribute<int> minStaffRange = new();
 		[HideInInspector] public Attribute<int> staffRange = new();
 
+		public Equippable equipped = null;
+
 		#endregion
 
 		public void AddToPath(Vector3 position)

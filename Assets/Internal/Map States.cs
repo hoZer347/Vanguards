@@ -9,29 +9,14 @@ namespace Vanguards
 {
 	abstract public class St_MapState : State
 	{
-		public St_MapState()
-		{
-			last = curr;
-			curr = this;
-
-			if (last != null)
-			{
-				meshFilter = last.meshFilter;
-				selectedUnit = last.selectedUnit;
-				originalCell = last.originalCell;
-			};
-		}
-
 		protected MeshFilter meshFilter = Map.main.GetComponent<MeshFilter>();
-		protected Unit selectedUnit = null;
-		protected Cell originalCell = null;
-
-		protected St_MapState last;
-		static protected St_MapState curr;
 	};
 
 	public class St_Mp_InitialState : St_MapState
 	{
+		Unit selectedUnit;
+		Cell originalCell;
+
 		public override void OnEnter()
 		{
 			if (selectedUnit != null)
@@ -80,7 +65,7 @@ namespace Vanguards
 						selectedUnit = unit;
 						originalCell = Map.main[unit.transform.position];
 
-						SetState<St_Mp_ChooseAPosition>();
+						SetState<St_Mp_ChooseAPosition>(selectedUnit, originalCell);
 					};
 				};
 			};
@@ -97,6 +82,15 @@ namespace Vanguards
 		protected Dictionary<Cell, float> staffRange = new();
 
 		protected Cell goal;
+
+		Unit selectedUnit;
+		Cell originalCell;
+
+		public St_Mp_ChooseAPosition(Unit selectedUnit, Cell originalCell)
+		{
+			this.selectedUnit = selectedUnit;
+			this.originalCell = originalCell;
+		}
 
 		public override void OnEnter()
 		{
@@ -311,6 +305,15 @@ namespace Vanguards
 		Dictionary<Cell, float> attackRange;
 		Dictionary<Cell, float> staffRange;
 
+		Unit selectedUnit;
+		Cell originalCell;
+
+		public St_Mp_ChooseAnOption(Unit selectedUnit, Cell originalCell)
+		{
+			this.selectedUnit = selectedUnit;
+			this.originalCell = originalCell;
+		}
+
 		public override void OnEnter()
 		{
 			OptionMenu.Clear();
@@ -423,11 +426,16 @@ namespace Vanguards
 
 	public class St_End : St_MapState
 	{
+		Unit selectedUnit;
+		public St_End(Unit selectedUnit, Cell originalCell)
+		{
+			this.selectedUnit = selectedUnit;
+		}
+
 		public override void OnUpdate()
 		{
 			selectedUnit.ActionUsed = true;
 			Map.main[selectedUnit.transform.position].Unit = selectedUnit;
-			originalCell = Map.main[selectedUnit.transform.position];
 
 			SetState<St_Mp_InitialState>();
 		}

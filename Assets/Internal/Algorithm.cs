@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Vanguards
 {

@@ -9,6 +9,11 @@ namespace Vanguards
 {
 	public class St_Mp_Option : St_MapState
 	{
+		public St_Mp_Option(Unit unit)
+			=> this.selectedUnit = unit;
+
+		protected Unit selectedUnit;
+
 		virtual protected bool OptionIsAvailable(Unit unit)
 		{
 			return false;
@@ -17,7 +22,7 @@ namespace Vanguards
 		static public bool OptionIsAvailable<_Option>(Unit unit)
 			where _Option : St_Mp_Option, new()
 		{
-			_Option option = new(); // DON'T DO THIS IN ANY OTHER SITUATION, USE S
+			_Option option = new(); // DON'T DO THIS IN ANY OTHER SITUATION
 			return option.OptionIsAvailable(unit);
 		}
 
@@ -28,18 +33,23 @@ namespace Vanguards
 	};
 
 	public class Op_Wait : St_Mp_Option
-	{ };
+	{
+		public Op_Wait(Unit unit) : base(unit)
+		{ }
+	};
 
 	public class Op_Attack : St_Mp_Option
 	{
 		static Dictionary<Cell, float> attackRange;
+		Weapon weapon;
+
+		public Op_Attack(Unit unit, Weapon weapon) : base(unit)
+			=> this.weapon = weapon;
 
 		protected override bool OptionIsAvailable(Unit unit)
 		{
 			if (unit.AttackRange == 0)
 				return false;
-
-
 
 			return false;
 		}
@@ -109,6 +119,11 @@ namespace Vanguards
 	{
 		static Dictionary<Cell, float> staffRange;
 
+		Staff staff;
+
+		public Op_Staff(Unit unit, Staff staff) : base(unit)
+			=> this.staff = staff;
+
 		public override void OnEnter()
 		{
 			OptionMenu.Clear();
@@ -171,8 +186,22 @@ namespace Vanguards
 	};
 
 	public class Op_Equip : St_Mp_Option
-	{ };
+	{
+		Equippable equippable;
 
-	public class Op_Item : St_Mp_Option
-	{ };
+		public Op_Equip(Unit unit, Equippable equippable) : base(unit)
+			=> this.equippable = equippable;
+
+		public override void OnUpdate()
+		{
+			selectedUnit.equipped = equippable;
+			SetState<St_Mp_ChooseAnOption>();
+		}
+	};
+
+	public class Op_Consumable : St_Mp_Option
+	{
+		public Op_Consumable(Unit unit) : base(unit)
+		{ }
+	};
 };

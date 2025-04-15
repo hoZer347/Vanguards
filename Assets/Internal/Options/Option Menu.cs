@@ -30,8 +30,8 @@ namespace Vanguards
 
 		#endregion
 
-		static private void AddOption<T>()
-			where T : St_Mp_Option, new()
+		static private void AddOption<T>(string displayName, params dynamic[] args)
+			where T : St_Mp_Option
 		{
 			if (GameObject.Find(typeof(T).Name) != null)
 				return;
@@ -41,7 +41,7 @@ namespace Vanguards
 					main.optionTemplate,
 					main.transform);
 
-			option.name = typeof(T).Name;
+			option.name = displayName;
 
 			foreach (Transform child in main.transform)
 				option.transform.position +=
@@ -49,29 +49,36 @@ namespace Vanguards
 					child.GetComponent<RectTransform>().rect.height;
 
 			TextMeshProUGUI textMesh = option.GetComponentInChildren<TextMeshProUGUI>();
-			textMesh.SetText(typeof(T).Name, true);
+			textMesh.SetText(displayName, true);
 
 			option.GetComponent<Button>().
 				onClick.AddListener(
 					() =>
 					{
-						State.SetState<T>();
+						State.SetState<T>(args);
 						Clear();
 					});
 		}
 
 		static public void EnableOptions(Unit unit)
 		{
-			//for (int i = 0; i < main.transform.childCount; i++)
-			//	main.transform.GetChild(i).gameObject.SetActive(true);
+			AddOption<Op_Wait>("Wait", unit);
+			
+			foreach (Consumable consumable in unit.GetComponentsInChildren<Consumable>())
+				AddOption<Op_Consumable>("Consumable: ", consumable);
 
-			// TODO: Make this enable the options instead of create / destroy them
+			if (unit.equipped != null)
+				AddOption<Op_Equip>("Unequip: " + unit.equipped.NAME.Value, (Equippable)null);
 
-			AddOption<Op_Wait>();
-			AddOption<Op_Item>();
-			AddOption<Op_Equip>();
-			AddOption<Op_Attack>();
-			AddOption<Op_Staff>();
+			foreach (Equippable equippable in unit.GetComponentsInChildren<Equippable>())
+				if (unit.equipped != equippable)
+					AddOption<Op_Equip>("Equip: " + equippable.NAME.Value, unit, equippable);
+
+			if (unit.equipped is Staff staff)
+				AddOption<Op_Staff>("Staff: " + unit.equipped.NAME.Value, staff);
+
+			if (unit.equipped is Weapon weapon)
+				AddOption<Op_Attack>("Attack: " + unit.equipped.NAME.Value, weapon);	
 		}
 
 		static public void Clear()
