@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,21 +13,13 @@ namespace Vanguards
 
 		protected Unit selectedUnit;
 
-		virtual protected bool OptionIsAvailable(Unit unit)
-		{
-			return false;
-		}
-
-		static public bool OptionIsAvailable<_Option>(Unit unit)
-			where _Option : St_Mp_Option, new()
-		{
-			_Option option = new(); // DON'T DO THIS IN ANY OTHER SITUATION
-			return option.OptionIsAvailable(unit);
-		}
-
 		public override void OnUpdate()
 		{
-			SetState<St_End>();
+			if (Input.GetMouseButtonDown(1))
+				FallBack<St_Mp_ChooseAnOption>();
+
+			if (Input.GetKeyDown(KeyCode.Escape))
+				FallBack<St_Mp_InitialState>();
 		}
 	};
 
@@ -46,25 +37,17 @@ namespace Vanguards
 		public Op_Attack(Unit unit, Weapon weapon) : base(unit)
 			=> this.weapon = weapon;
 
-		protected override bool OptionIsAvailable(Unit unit)
-		{
-			if (unit.AttackRange == 0)
-				return false;
-
-			return false;
-		}
-
 		public override void OnEnter()
 		{
 			OptionMenu.Clear();
 
-			float maxAttackRange = selectedUnit.AttackRange;
-			float minAttackRange = selectedUnit.MinAttackRange;
+			float maxAttackRange = selectedUnit.GetAttackRange();
+			float minAttackRange = selectedUnit.GetMinAttackRange();
 
 			attackRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], selectedUnit.AttackRange }
+					{ Map.main[selectedUnit.transform.position], maxAttackRange }
 				};
 
 			Algorithm.FloodFill(
@@ -104,15 +87,6 @@ namespace Vanguards
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
 		}
-
-		public override void OnUpdate()
-		{
-			if (Input.GetMouseButtonDown(0))
-				SetState<St_End>();
-
-			if (Input.GetKeyDown(KeyCode.Escape))
-				SetState<St_Mp_InitialState>();
-		}
 	};
 
 	public class Op_Staff : St_Mp_Option
@@ -128,13 +102,13 @@ namespace Vanguards
 		{
 			OptionMenu.Clear();
 
-			float maxStaffRange = selectedUnit.StaffRange;
-			float minStaffRange = selectedUnit.MinStaffRange;
+			float maxStaffRange = selectedUnit.GetStaffRange();
+			float minStaffRange = selectedUnit.GetMinStaffRange();
 
 			staffRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], selectedUnit.StaffRange }
+					{ Map.main[selectedUnit.transform.position], maxStaffRange }
 				};
 
 			Algorithm.FloodFill(
@@ -174,15 +148,6 @@ namespace Vanguards
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
 		}
-
-		public override void OnUpdate()
-		{
-			if (Input.GetMouseButtonDown(0))
-				SetState<St_End>();
-
-			if (Input.GetKeyDown(KeyCode.Escape))
-				SetState<St_Mp_InitialState>();
-		}
 	};
 
 	public class Op_Equip : St_Mp_Option
@@ -195,7 +160,7 @@ namespace Vanguards
 		public override void OnUpdate()
 		{
 			selectedUnit.equipped = equippable;
-			SetState<St_Mp_ChooseAnOption>();
+			FallBack<St_Mp_ChooseAnOption>();
 		}
 	};
 

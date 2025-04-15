@@ -103,16 +103,16 @@ namespace Vanguards
 
 		void Play()
 		{
-			State.SetState<Dialogue>(
+			State.SetState(new Dialogue(
 				AssetDatabase.GetAssetPath(dialogueBox.textAsset),
-				new Action(() => State.SetState<St_Mp_InitialState>()));
+				new Action(() => State.SetState(new St_Mp_InitialState()))));
 		}
 
 		void Stop()
 		{
 			DialogueBox.End();
 
-			State.SetState<St_Mp_InitialState>();
+			State.SetState(new St_Mp_InitialState());
 		}
 	};
 

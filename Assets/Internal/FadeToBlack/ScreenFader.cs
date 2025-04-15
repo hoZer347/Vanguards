@@ -27,58 +27,64 @@ namespace Vanguards
 		[SerializeField]
 		bool drawOverUI; // TODO: Implement this
 
+		[SerializeField]
+		State afterState;
+
 		RawImage image;
 
-		static public void FadeToBlack<_AfterState>(params dynamic[] args)
+		static public void FadeToBlack<_AfterState>(_AfterState afterState)
 			where _AfterState : State
 		{
 			if (screenFader == null)
 				screenFader = FindAnyObjectByType<ScreenFader>();
 
 			if (screenFader != null)
-				State.SetState<St_Fade<_AfterState>>(
+				State.SetState(new St_Fade(
+					afterState,
 					new Color(
 						screenFader.color.r,
 						screenFader.color.g,
 						screenFader.color.g,
 						0),
 					screenFader.color,
-					screenFader.speed,
-					args);
+					screenFader.speed));
 		}
 
-		static public void FadeFromBlack<_AfterState>(params dynamic[] args)
+		static public void FadeFromBlack<_AfterState>(_AfterState afterState)
 			where _AfterState : State
 		{
 			if (screenFader == null)
 				screenFader = FindAnyObjectByType<ScreenFader>();
 			if (screenFader != null)
-				State.SetState<St_Fade<_AfterState>>(
+				State.SetState(new St_Fade(
+					afterState,
 					screenFader.color, 
 					new Color(
 						screenFader.color.r,
 						screenFader.color.g,
 						screenFader.color.g,
 						0),
-					screenFader.speed,
-					args);
+					screenFader.speed));
 		}
 	};
 
-	public class St_Fade<_AfterState> : State
-		where _AfterState : State
+	public class St_Fade : State
 	{
+
 		RawImage rawImage;
 		Color from, to;
 		float speed;
 		dynamic[] args;
+		State afterState;
 
 		public St_Fade(
+			State afterState,
 			Color from,
 			Color to,
 			float speed,
 			params dynamic[] args)
 		{
+			this.afterState = afterState;
 			this.from = from;
 			this.to = to;
 			this.speed = speed;
@@ -103,7 +109,7 @@ namespace Vanguards
 			rectTransform.offsetMax = Vector2.zero;   // Remove padding (right/top)
 
 			if (from == to)
-				SetState<_AfterState>(args);
+				SetState(afterState);
 			else
 			{
 				from = Color.Lerp(from, to, speed * Time.deltaTime);
@@ -132,10 +138,10 @@ namespace Vanguards
 			EditorGUILayout.BeginHorizontal();
 
 			if (GUILayout.Button("Fade to Black"))
-				ScreenFader.FadeToBlack<St_Mp_InitialState>();
+				ScreenFader.FadeToBlack(new St_Mp_InitialState());
 
 			if (GUILayout.Button("Fade from Black"))
-				ScreenFader.FadeFromBlack<St_Mp_InitialState>();
+				ScreenFader.FadeFromBlack(new St_Mp_InitialState());
 			
 			EditorGUILayout.EndHorizontal();
 

@@ -17,6 +17,18 @@ namespace Vanguards
 		Unit selectedUnit;
 		Cell originalCell;
 
+		public St_Mp_InitialState()
+		{
+			selectedUnit = null;
+			originalCell = null;
+		}
+
+		public St_Mp_InitialState(Unit selectedUnit, Cell originalCell)
+		{
+			this.selectedUnit = selectedUnit;
+			this.originalCell = originalCell;
+		}
+
 		public override void OnEnter()
 		{
 			if (selectedUnit != null)
@@ -65,13 +77,10 @@ namespace Vanguards
 						selectedUnit = unit;
 						originalCell = Map.main[unit.transform.position];
 
-						SetState<St_Mp_ChooseAPosition>(selectedUnit, originalCell);
+						SetState(new St_Mp_ChooseAPosition(selectedUnit, originalCell));
 					};
 				};
 			};
-
-			if (Input.GetKeyDown(KeyCode.Escape))
-				SetState<St_Mp_InitialState>();
 		}
 	};
 
@@ -94,8 +103,8 @@ namespace Vanguards
 
 		public override void OnEnter()
 		{
-			if (originalCell != null)
-				selectedUnit.transform.position = originalCell.Position;
+			//if (originalCell != null)
+			//	selectedUnit.transform.position = originalCell.Position;
 
 			OptionMenu.Clear();
 
@@ -115,7 +124,7 @@ namespace Vanguards
 			moveRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], selectedUnit.MoveRange }
+					{ originalCell, selectedUnit.MoveRange }
 				};
 
 			Algorithm.FloodFill(
@@ -132,14 +141,14 @@ namespace Vanguards
 			attackRange =
 				moveRange.ToDictionary(
 					moveRange => moveRange.Key,
-					moveRange => moveRange.Value + selectedUnit.AttackRange);
+					moveRange => moveRange.Value + selectedUnit.GetAttackRange());
 
 			Algorithm.FloodFill(ref attackRange, (Cell cell, float amount) => amount - 1);
 
 			staffRange = 
 				moveRange.ToDictionary(
 					moveRange => moveRange.Key,
-					moveRange => moveRange.Value + selectedUnit.StaffRange);
+					moveRange => moveRange.Value + selectedUnit.GetStaffRange());
 
 			Algorithm.FloodFill(ref staffRange, (Cell cell, float amount) => amount - 1);
 
@@ -250,7 +259,7 @@ namespace Vanguards
 								});
 						};
 
-						SetState<St_Mp_ChooseAnOption>();
+						SetState(new St_Mp_ChooseAnOption(selectedUnit));
 
 						return;
 					};
@@ -296,7 +305,7 @@ namespace Vanguards
 			// TODO: Change this to a generic "back" option
 			if (Input.GetKeyDown(KeyCode.Escape) ||
 				Input.GetMouseButtonDown((int)MouseButton.Right))
-				SetState<St_Mp_InitialState>();
+				FallBack<St_Mp_InitialState>();
 		}
 	};
 
@@ -306,26 +315,22 @@ namespace Vanguards
 		Dictionary<Cell, float> staffRange;
 
 		Unit selectedUnit;
-		Cell originalCell;
 
-		public St_Mp_ChooseAnOption(Unit selectedUnit, Cell originalCell)
-		{
-			this.selectedUnit = selectedUnit;
-			this.originalCell = originalCell;
-		}
+		public St_Mp_ChooseAnOption(Unit selectedUnit)
+			=> this.selectedUnit = selectedUnit;
 
 		public override void OnEnter()
 		{
 			OptionMenu.Clear();
 			OptionMenu.EnableOptions(selectedUnit);
 
-			float maxAttackRange = selectedUnit.AttackRange;
-			float minAttackRange = selectedUnit.MinAttackRange;
+			float maxAttackRange = selectedUnit.GetAttackRange();
+			float minAttackRange = selectedUnit.GetMinAttackRange();
 
 			attackRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], selectedUnit.AttackRange }
+					{ Map.main[selectedUnit.transform.position], maxAttackRange }
 				};
 
 			Algorithm.FloodFill(ref attackRange, (Cell cell, float amount) => amount - 1);
@@ -338,13 +343,13 @@ namespace Vanguards
 					attackRange => attackRange.Key,
 					attackRange => attackRange.Value);
 
-			float maxStaffRange = selectedUnit.StaffRange;
-			float minStaffRange = selectedUnit.MinStaffRange;
+			float maxStaffRange = selectedUnit.GetStaffRange();
+			float minStaffRange = selectedUnit.GetMinStaffRange();
 
 			staffRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], selectedUnit.StaffRange }
+					{ Map.main[selectedUnit.transform.position], maxStaffRange }
 				};
 
 			Algorithm.FloodFill( ref staffRange, (Cell cell, float amount) => amount - 1);
@@ -401,21 +406,27 @@ namespace Vanguards
 				{
 					if (unit.Team == Unit.eTeam.Enemy &&
 						attackRange.ContainsKey(cell))
-
-						SetState<Op_Attack>();
+					{
+						if (selectedUnit.equipped is Weapon weapon)
+							SetState(new Op_Attack(
+								selectedUnit,
+								weapon));
+					}
 
 					else
 					if ((unit.Team == Unit.eTeam.Player || unit.Team == Unit.eTeam.Ally) &&
 						staffRange.ContainsKey(cell))
-
-						SetState<Op_Staff>();
+						if (selectedUnit.equipped is Staff staff)
+							SetState(new Op_Staff(selectedUnit, staff));
 				};
 			};
 
 			// TODO: Change this to a generic "back" option
-			if (Input.GetKeyDown(KeyCode.Escape) ||
-				Input.GetMouseButton((int)MouseButton.Right))
-				SetState<St_Mp_InitialState>();
+			if (Input.GetKeyDown(KeyCode.Escape))
+				FallBack<St_Mp_InitialState>();
+
+			if (Input.GetMouseButtonDown((int)MouseButton.Right))
+				FallBack<St_Mp_ChooseAPosition>();
 		}
 
 		public override void OnLeave()
@@ -437,7 +448,7 @@ namespace Vanguards
 			selectedUnit.ActionUsed = true;
 			Map.main[selectedUnit.transform.position].Unit = selectedUnit;
 
-			SetState<St_Mp_InitialState>();
+			SetState(new St_Mp_InitialState());
 		}
 	};
 };

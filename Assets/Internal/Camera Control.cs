@@ -44,10 +44,10 @@ namespace Vanguards
 			if (Input.GetKey(KeyCode.Q)) movement += Vector3.down;
 			if (Input.GetKey(KeyCode.E)) movement += Vector3.up;
 
-			if (Input.GetMouseButtonDown(1))
+			if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
 				prevMousePosition = Input.mousePosition;
 
-			else if (Input.GetMouseButton(1))
+			else if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
 			{
 				currMousePosition = Input.mousePosition;
 

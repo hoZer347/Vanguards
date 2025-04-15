@@ -3,98 +3,90 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 
 namespace Vanguards
 {
 	public class StateMachine : MonoBehaviour
 	{
-		[SerializeField]
-		string currentStateName;
-		static private StateMachine main;
+		static public State Current => stateStack.Peek();
 
-		static public State current = null;
-		static public State Current => current;
-
-		static Stack<State> stateStack = new();
-		static Stack<State> memoryStack = new();
-
-		#region Refresh
-
-		private void OnValidate() => Refresh();
-		private void Start() => Refresh();
-
-		void Refresh()
-		{
-			main = this;
-		}
-
-		#endregion
+		static public Stack<State> stateStack = new();
 
 		private void Update()
-		{
-			if (Current != null)
-				Current.OnUpdate();
-			else Debug.Log("State is Null");
-		}
+			=> Current.OnUpdate();
 
-		static public void SetState<_State>(params dynamic[] args)
+		static public void SetState<_State>(_State state)
 			where _State : State
 		{
-			_State newState = (_State)Activator.CreateInstance(typeof(_State), args);
-			State oldState = Current;
+			State oldState;
+			if (stateStack.Count > 0) oldState = Current;
+			else oldState = null;
 
-			memoryStack.Clear();
+				state.type = typeof(_State);
 
-			newState.name = typeof(_State).ToString();
+			state.OnEnter();
 
-			newState.OnEnter();
-
-			current = newState;
-
-			stateStack.Push(current);
+			stateStack.Push(state);
 
 			if (oldState != null)
 				oldState.OnLeave();
-
-			if (main != null)
-				main.currentStateName = current.name;
 		}
 
-		static public void Undo()
+		static public void FallBack<_State>(bool undo = false)
+			where _State : State
 		{
-			if (stateStack.Count > 1)
+			while (stateStack.Count > 0)
 			{
-				memoryStack.Push(stateStack.Pop());
-				stateStack.Peek().OnEnter();
-				current = stateStack.Peek();
-				main.currentStateName = stateStack.Peek().name;
-			};
-		}
+				if (stateStack.Peek().type == typeof(_State))
+				{
+					Current.OnEnter();
+					return;
+				};
 
-		static public void Redo()
-		{
-			if (memoryStack.Count > 0)
-			{
-				stateStack.Push(memoryStack.Pop());
-				stateStack.Peek().OnEnter();
-				current = stateStack.Peek();
-				main.currentStateName = stateStack.Peek().name;
+				stateStack.Pop();
 			};
 		}
 	};
 
+	[Serializable]
 	public class State
 	{
-		static public void SetState<_State>(params dynamic[] args)
+		static public void SetState<_State>(_State state)
 			where _State : State
-				=> StateMachine.SetState<_State>(args);
+				=> StateMachine.SetState<_State>(state);
+
+		static public void FallBack<_State>(bool undo = false)
+			where _State : State
+			=> StateMachine.FallBack<_State>(undo);
 
 		static public State Current => StateMachine.Current;
 
-		public string name = "";
+		public Type type = typeof(State);
 
 		virtual public void OnEnter() { }
 		virtual public void OnUpdate() { }
 		virtual public void OnLeave() { }
 	};
+
+#if UNITY_EDITOR
+	[CustomEditor(typeof(StateMachine))]
+	public class StateMachineEditor : Editor
+	{
+		public override void OnInspectorGUI()
+		{
+			StateMachine stateMachine = ((StateMachine)target);
+
+			GUILayout.BeginVertical();
+
+			foreach (State state in StateMachine.stateStack)
+				EditorGUILayout.LabelField(state.type.FullName);
+
+			GUILayout.EndVertical();
+		}
+	};
+#endif
 };

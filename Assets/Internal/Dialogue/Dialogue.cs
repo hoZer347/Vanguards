@@ -32,7 +32,7 @@ namespace Vanguards
 
 			if (currLine >= lines.Length)
 			{
-				SetState<St_Mp_InitialState>();
+				SetState(new St_Mp_InitialState());
 				return;
 			};
 

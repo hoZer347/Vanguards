@@ -56,7 +56,7 @@ MonoBehaviour:
     base: 10
   RNG:
     name: 
-    base: 0
+    base: 1
   MIN_RNG:
     name: 
     base: 0

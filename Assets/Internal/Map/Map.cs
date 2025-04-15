@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -68,6 +67,7 @@ namespace Vanguards
 					Mathf.FloorToInt(j)];
 			}
 		}
+
 		public Cell this[Vector3 position]
 		{
 			get
@@ -91,7 +91,7 @@ namespace Vanguards
 			Refresh();
 			Build();
 
-			State.SetState<St_Mp_InitialState>();
+			State.SetState(new St_Mp_InitialState());
 		}
 		private void OnValidate() => Refresh();
 
@@ -101,14 +101,6 @@ namespace Vanguards
 		}
 
 		#endregion
-
-		private void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.Z))
-				StateMachine.Undo();
-			if (Input.GetKeyDown(KeyCode.Y))
-				StateMachine.Redo();
-		}
 
 		public void Build()
 		{

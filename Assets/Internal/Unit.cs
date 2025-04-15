@@ -18,24 +18,53 @@ namespace Vanguards
 
 		#region Attributes
 
-		public int MaxHP => moveRange.Base;
+		public int MaxHP => HP.Base;
 		public int CurrentHP => HP.Value;
 
-		public int TotalRange => moveRange.Value +
-				Mathf.Max(
-					attackRange.Value,
-					staffRange.Value);
+		public int GetAttackRange()
+		{
+			int max = 0;
 
-		public int AttackRange => attackRange.Value;
-		public int StaffRange => staffRange.Value;
+			foreach (Weapon weapon in GetComponentsInChildren<Weapon>())
+				max = Mathf.Max(max, weapon.RNG.Value);
 
-		public int MinAttackRange => minAttackRange.Value;
-		public int MinStaffRange => minStaffRange.Value;
-		
-		public int MoveRange => moveRange.Value;
+			return max;
+		}
 
-		public bool hasStaff => staffRange.Value > 0;
-		public bool hasAttack => attackRange.Value > 0;
+		public int GetStaffRange()
+		{
+			int max = 0;
+
+			foreach (Staff staff in GetComponentsInChildren<Staff>())
+				max = Mathf.Max(max, staff.RNG.Value);
+
+			return max;
+		}
+
+		public int GetMinAttackRange()
+		{
+			int max = 0;
+
+			foreach (Weapon weapon in GetComponentsInChildren<Weapon>())
+				max = Mathf.Min(max, weapon.MIN_RNG.Value);
+
+			return max;
+		}
+
+		public int GetMinStaffRange()
+		{
+			int max = 0;
+
+			foreach (Staff staff in GetComponentsInChildren<Staff>())
+				max = Mathf.Min(max, staff.MIN_RNG.Value);
+
+			return max;
+		}
+
+		public int MoveRange => MOV.Value;
+
+		public bool hasStaff => GetComponentInChildren<Staff>() != null;
+		public bool hasAttack => GetComponentInChildren<Weapon>() != null;
 
 		[HideInInspector] public Attribute<int> HP = new();
 		[HideInInspector] public Attribute<int> STR = new();
@@ -45,14 +74,7 @@ namespace Vanguards
 		[HideInInspector] public Attribute<int> LCK = new();
 		[HideInInspector] public Attribute<int> DEF = new();
 		[HideInInspector] public Attribute<int> RES = new();
-
-		[HideInInspector] public Attribute<int> moveRange = new();
-		
-		[HideInInspector] public Attribute<int> minAttackRange = new();
-		[HideInInspector] public Attribute<int> attackRange = new();
-
-		[HideInInspector] public Attribute<int> minStaffRange = new();
-		[HideInInspector] public Attribute<int> staffRange = new();
+		[HideInInspector] public Attribute<int> MOV = new();
 
 		public Equippable equipped = null;
 
@@ -310,16 +332,6 @@ namespace Vanguards
 			SetAnimationState(animationState);
 			SetTeam(team);
 			SetMovementType(movementType);
-
-			HP.SetModifier("Debug HP", (ref int hp) => { hp -= 10; });
-
-			moveRange.SetModifier("Move Range Base", (ref int range) => { range = 5; });
-
-			minAttackRange.SetModifier("Minimum Attack Range", (ref int range) => { range = 2; });
-			attackRange.SetModifier("Attack Range Base", (ref int range) => { range = 3; });
-
-			minStaffRange.SetModifier("Minimum Staff Range", (ref int range) => { range = 4; });
-			staffRange.SetModifier("Staff Range Base", (ref int range) => { range = 5; });
 		}
 
 		#endregion
