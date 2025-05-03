@@ -16,37 +16,35 @@ namespace Vanguards
 		{
 			Dictionary<Cell, float> newCells = new(cells);
 
-			foreach (var element in newCells)
+			foreach (var (cell, value) in newCells)
 			{
-				if (element.Value <= 0)
-					continue;
-
 				Cell[] _cells =
 					new Cell[]
 					{
-						element.Key.U,
-						element.Key.D,
-						element.Key.L,
-						element.Key.R,
+						cell.U,
+						cell.D,
+						cell.L,
+						cell.R,
 					};
-
-				float amount = element.Value;
 
 				foreach (Cell _cell in _cells)
 					if (_cell != null)
 					{
-						float _amount =
+						float amount =
 							kernel(
 								_cell,
-								amount);
+								value);
+
+						if (amount <= 0)
+							continue;
 
 						if (cells.ContainsKey(_cell))
 							cells[_cell] =
 								Mathf.Max(
 									cells[_cell],
-									_amount);
+									amount);
 
-						else cells.Add(_cell, _amount);
+						else cells.Add(_cell, amount);
 					};
 			};
 

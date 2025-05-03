@@ -72,21 +72,10 @@ MonoBehaviour:
   RES:
     name: 
     base: 0
-  moveRange:
+  MOV:
     name: 
-    base: 0
-  minAttackRange:
-    name: 
-    base: 0
-  attackRange:
-    name: 
-    base: 0
-  minStaffRange:
-    name: 
-    base: 0
-  staffRange:
-    name: 
-    base: 0
+    base: 5
+  equipped: {fileID: 0}
   state: 0
   animationState: 0
   team: 1

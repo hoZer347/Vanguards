@@ -41,26 +41,6 @@ namespace Vanguards
 			return max;
 		}
 
-		public int GetMinAttackRange()
-		{
-			int max = 0;
-
-			foreach (Weapon weapon in GetComponentsInChildren<Weapon>())
-				max = Mathf.Min(max, weapon.MIN_RNG.Value);
-
-			return max;
-		}
-
-		public int GetMinStaffRange()
-		{
-			int max = 0;
-
-			foreach (Staff staff in GetComponentsInChildren<Staff>())
-				max = Mathf.Min(max, staff.MIN_RNG.Value);
-
-			return max;
-		}
-
 		public int MoveRange => MOV.Value;
 
 		public bool hasStaff => GetComponentInChildren<Staff>() != null;

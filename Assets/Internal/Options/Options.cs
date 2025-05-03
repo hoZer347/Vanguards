@@ -42,12 +42,11 @@ namespace Vanguards
 			OptionMenu.Clear();
 
 			float maxAttackRange = selectedUnit.GetAttackRange();
-			float minAttackRange = selectedUnit.GetMinAttackRange();
 
 			attackRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], maxAttackRange }
+					{ Map.main[selectedUnit.transform.position], weapon.RNG.Value + 1 }
 				};
 
 			Algorithm.FloodFill(
@@ -58,12 +57,6 @@ namespace Vanguards
 				});
 
 			attackRange.Remove(Map.main[selectedUnit.transform.position]);
-
-			attackRange = attackRange
-				.Where(attackRange => attackRange.Value <= maxAttackRange - minAttackRange)
-				.ToDictionary(
-					attackRange => attackRange.Key,
-					attackRange => attackRange.Value);
 
 			Color[] colors = meshFilter.sharedMesh.colors;
 			
@@ -102,13 +95,10 @@ namespace Vanguards
 		{
 			OptionMenu.Clear();
 
-			float maxStaffRange = selectedUnit.GetStaffRange();
-			float minStaffRange = selectedUnit.GetMinStaffRange();
-
 			staffRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], maxStaffRange }
+					{ Map.main[selectedUnit.transform.position], staff.RNG.Value + 1 }
 				};
 
 			Algorithm.FloodFill(
@@ -119,12 +109,6 @@ namespace Vanguards
 				});
 
 			staffRange.Remove(Map.main[selectedUnit.transform.position]);
-
-			staffRange = staffRange
-				.Where(staffRange => staffRange.Value <= maxStaffRange - minStaffRange)
-				.ToDictionary(
-					staffRange => staffRange.Key,
-					staffRange => staffRange.Value);
 
 			Color[] colors = meshFilter.sharedMesh.colors;
 

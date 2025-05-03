@@ -26,7 +26,7 @@ namespace Vanguards
 			if (stateStack.Count > 0) oldState = Current;
 			else oldState = null;
 
-				state.type = typeof(_State);
+			state.type = typeof(_State);
 
 			state.OnEnter();
 

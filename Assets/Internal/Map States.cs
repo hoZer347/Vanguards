@@ -103,9 +103,6 @@ namespace Vanguards
 
 		public override void OnEnter()
 		{
-			//if (originalCell != null)
-			//	selectedUnit.transform.position = originalCell.Position;
-
 			OptionMenu.Clear();
 
 			// Assigning all units to their respective cells
@@ -121,10 +118,11 @@ namespace Vanguards
 			};
 			//
 
+			// Getting Move Range
 			moveRange =
 				new Dictionary<Cell, float>
 				{
-					{ originalCell, selectedUnit.MoveRange }
+					{ originalCell, selectedUnit.MoveRange + 1 }
 				};
 
 			Algorithm.FloodFill(
@@ -137,21 +135,35 @@ namespace Vanguards
 
 					return amount - cell.Difficulty;
 				});
+			//
+
+
+			// Getting Attack Range
+			int maxAttackRange = selectedUnit.GetAttackRange();
 
 			attackRange =
 				moveRange.ToDictionary(
 					moveRange => moveRange.Key,
-					moveRange => moveRange.Value + selectedUnit.GetAttackRange());
+					moveRange => moveRange.Value * 0 + maxAttackRange + 1);
 
 			Algorithm.FloodFill(ref attackRange, (Cell cell, float amount) => amount - 1);
+			//
 
-			staffRange = 
+
+			// Getting Staff Range
+			int maxStaffRange = selectedUnit.GetStaffRange();
+
+			staffRange =
 				moveRange.ToDictionary(
 					moveRange => moveRange.Key,
-					moveRange => moveRange.Value + selectedUnit.GetStaffRange());
+					moveRange => moveRange.Value * 0 + maxStaffRange + 1);
 
 			Algorithm.FloodFill(ref staffRange, (Cell cell, float amount) => amount - 1);
+			//
 
+
+			// Painting Cells
+			// TODO: Add a cell coloring function to Cell
 			Color[] colors = meshFilter.sharedMesh.colors;
 
 			foreach (Cell cell in Map.main.CellList)
@@ -187,10 +199,14 @@ namespace Vanguards
 			meshFilter.sharedMesh.colors = colors;
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
+			//
 
 			Unit[] units = GameObject.FindObjectsOfType<Unit>();
 			foreach (Unit unit in units)
 			{
+				if (unit == selectedUnit)
+					continue;
+
 				Cell cell = Map.main[unit.transform.position];
 				if (cell != null &&
 					moveRange.ContainsKey(cell))
@@ -325,7 +341,6 @@ namespace Vanguards
 			OptionMenu.EnableOptions(selectedUnit);
 
 			float maxAttackRange = selectedUnit.GetAttackRange();
-			float minAttackRange = selectedUnit.GetMinAttackRange();
 
 			attackRange =
 				new Dictionary<Cell, float>
@@ -337,14 +352,7 @@ namespace Vanguards
 
 			attackRange.Remove(Map.main[selectedUnit.transform.position]);
 
-			attackRange = attackRange
-				.Where(attackRange => attackRange.Value <= maxAttackRange - minAttackRange)
-				.ToDictionary(
-					attackRange => attackRange.Key,
-					attackRange => attackRange.Value);
-
 			float maxStaffRange = selectedUnit.GetStaffRange();
-			float minStaffRange = selectedUnit.GetMinStaffRange();
 
 			staffRange =
 				new Dictionary<Cell, float>
@@ -353,12 +361,6 @@ namespace Vanguards
 				};
 
 			Algorithm.FloodFill( ref staffRange, (Cell cell, float amount) => amount - 1);
-
-			staffRange = staffRange
-				.Where(staffRange => staffRange.Value <= maxStaffRange - minStaffRange)
-				.ToDictionary(
-					staffRange => staffRange.Key,
-					staffRange => staffRange.Value);
 
 			staffRange.Remove(Map.main[selectedUnit.transform.position]);
 
@@ -438,10 +440,9 @@ namespace Vanguards
 	public class St_End : St_MapState
 	{
 		Unit selectedUnit;
-		public St_End(Unit selectedUnit, Cell originalCell)
-		{
-			this.selectedUnit = selectedUnit;
-		}
+		public St_End(Unit selectedUnit)
+		 => this.selectedUnit = selectedUnit;
+		
 
 		public override void OnUpdate()
 		{
