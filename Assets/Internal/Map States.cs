@@ -110,7 +110,7 @@ namespace Vanguards
 				if (cell != null)
 					cell.Unit = null;
 
-			foreach (Unit unit in Component.FindObjectsOfType<Unit>())
+			foreach (Unit unit in GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None))
 			{
 				Cell cell = Map.main[unit.transform.position];
 				if (cell != null)
@@ -437,17 +437,22 @@ namespace Vanguards
 		}
 	};
 
-	public class St_End : St_MapState
+	public class St_Mp_End : St_MapState
 	{
 		Unit selectedUnit;
-		public St_End(Unit selectedUnit)
+
+		public St_Mp_End(Unit selectedUnit)
 		 => this.selectedUnit = selectedUnit;
 		
-
 		public override void OnUpdate()
 		{
 			selectedUnit.ActionUsed = true;
 			Map.main[selectedUnit.transform.position].Unit = selectedUnit;
+
+			if (Unit.CheckForTurnEnd())
+			{
+
+			};
 
 			SetState(new St_Mp_InitialState());
 		}

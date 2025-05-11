@@ -13,7 +13,22 @@ namespace Vanguards
 		public bool ActionUsed
 		{
 			get => spriteHost.IsGrayScale;
-			set => spriteHost.IsGrayScale = value;
+			set
+			{
+				spriteHost.IsGrayScale = value;
+				spriteHost.SetFrameRate(value ? 2 : 4);
+			}
+		}
+
+		static public bool CheckForTurnEnd()
+		{
+			Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
+
+			foreach (Unit unit in units)
+				if (unit.ActionUsed == true)
+					return false;
+
+			return true;
 		}
 
 		#region Attributes
@@ -78,9 +93,9 @@ namespace Vanguards
 
 		SpriteHost spriteHost;
 
-		#region State Management
+        #region Animation State Management
 
-		public enum eState
+        public enum eState
 		{
 			Idle,
 			Moving,
@@ -101,10 +116,6 @@ namespace Vanguards
 					break;
 			};
 		}
-
-		#endregion
-
-		#region Animation State Management
 
 		public enum eAnimationState
 		{

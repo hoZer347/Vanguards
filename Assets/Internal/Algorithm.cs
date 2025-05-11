@@ -206,6 +206,22 @@ namespace Vanguards
 		}
 
 
+		// Getting Ranges Post-Floodfill
+		static public void RangePostFloodFill(
+			ref Dictionary<Cell, float> cells,
+			float max,
+			float min = 0)
+		{
+			var oldCells = new Dictionary<Cell, float>(cells);
+
+			if (min != 0)
+				foreach ((Cell cell, float value) in cells)
+				{
+					
+				};
+		}
+
+
 		// Copies class A int B given B inherits from A
 		static public void CopyTo<A>(A source, A target)
 		{

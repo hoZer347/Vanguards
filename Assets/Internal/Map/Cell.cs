@@ -110,6 +110,13 @@ namespace Vanguards
 			set => unit = value;
 		}
 
+		static public int GridDistance(Cell c0, Cell c1)
+		{
+			Vector2Int d = c0.coords - c1.coords;
+
+			return Mathf.Abs(d.x) + Mathf.Abs(d.y);
+		}
+
 		private Vector2Int coords;
 		private Vector3 position;
 

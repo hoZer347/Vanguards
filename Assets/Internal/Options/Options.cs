@@ -27,6 +27,11 @@ namespace Vanguards
 	{
 		public Op_Wait(Unit unit) : base(unit)
 		{ }
+
+		public override void OnUpdate()
+		{
+			SetState(new St_Mp_End(selectedUnit));
+		}
 	};
 
 	public class Op_Attack : St_Mp_Option

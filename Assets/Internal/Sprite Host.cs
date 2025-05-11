@@ -52,6 +52,7 @@ namespace Vanguards
 			set => spriteRenderer.material.SetInt("_GrayScale", value ? 1 : 0);
 		}
 
+
 		#endregion
 
 		public void SetOffset(int newOffset)
@@ -75,6 +76,8 @@ namespace Vanguards
 
 		[SerializeField, Range(0, 32), Tooltip("Framerate of Animation Clip")]
 		float frameRate = 16;
+		public void SetFrameRate(float frameRate)
+			=> this.frameRate = frameRate;
 
 		[SerializeField]
 		Sprite[] sprites;
