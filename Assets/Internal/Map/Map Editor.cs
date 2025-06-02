@@ -83,8 +83,14 @@ namespace Vanguards
 
 					EditorGUILayout.LabelField(shortenedFile);
 
-					if (GUILayout.Button("Load"))
+					if (GUILayout.Button("Load", GUILayout.Width(70)))
+					{
 						Load(shortenedFile);
+						source_file = shortenedFile;
+					};
+
+					if (GUILayout.Button("X", GUILayout.Width(25)))
+						File.Delete(file);
 
 					//Texture2D display =
 					//	AssetPreview.GetAssetPreview(
@@ -135,9 +141,7 @@ namespace Vanguards
 		public class MapEditorUI : Editor
 		{
 			public override void OnInspectorGUI()
-			{
-				((MapEditor)target).DoGUI();
-			}
+				=> ((MapEditor)target).DoGUI();
 		};
 	};
 };

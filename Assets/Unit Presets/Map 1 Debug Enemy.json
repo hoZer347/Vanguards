@@ -1,0 +1,52 @@
+{
+    "NAME": {
+        "name": "",
+        "base": "Map 1 Debug Enemy"
+    },
+    "HP": {
+        "name": "",
+        "base": 50
+    },
+    "STR": {
+        "name": "",
+        "base": 0
+    },
+    "MAG": {
+        "name": "",
+        "base": 0
+    },
+    "SPD": {
+        "name": "",
+        "base": 35
+    },
+    "SKL": {
+        "name": "",
+        "base": 0
+    },
+    "LCK": {
+        "name": "",
+        "base": 0
+    },
+    "DEF": {
+        "name": "",
+        "base": 0
+    },
+    "RES": {
+        "name": "",
+        "base": 0
+    },
+    "MOV": {
+        "name": "",
+        "base": 5
+    },
+    "equipped": {
+        "instanceID": 0
+    },
+    "state": 0,
+    "animationState": 0,
+    "team": 0,
+    "movementType": 0,
+    "path": [],
+    "speed": 7.0,
+    "turnThreshold": 0.5
+}

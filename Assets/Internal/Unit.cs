@@ -25,7 +25,8 @@ namespace Vanguards
 			Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
 
 			foreach (Unit unit in units)
-				if (unit.ActionUsed == true)
+				if (unit.ActionUsed == false &&
+					unit.team == eTeam.Player)
 					return false;
 
 			return true;
@@ -36,31 +37,41 @@ namespace Vanguards
 		public int MaxHP => HP.Base;
 		public int CurrentHP => HP.Value;
 
-		public int GetAttackRange()
+		public (int, int) GetAttackRange()
 		{
-			int max = 0;
+			int max = 0, min = int.MaxValue;
 
 			foreach (Weapon weapon in GetComponentsInChildren<Weapon>())
+			{
+				min = Mathf.Min(min, weapon.MIN_RNG.Value);
 				max = Mathf.Max(max, weapon.RNG.Value);
+			};
 
-			return max;
+			return (min, max);
 		}
 
-		public int GetStaffRange()
+		public (int, int) GetStaffRange()
 		{
-			int max = 0;
+			int max = 0, min = int.MaxValue;
 
-			foreach (Staff staff in GetComponentsInChildren<Staff>())
-				max = Mathf.Max(max, staff.RNG.Value);
+			foreach (Staff weapon in GetComponentsInChildren<Staff>())
+			{
+				min = Mathf.Min(min, weapon.MIN_RNG.Value);
+				max = Mathf.Max(max, weapon.RNG.Value);
+			};
 
-			return max;
+			return (min, max);
 		}
+
+		public bool HasItem<_ItemType>()
+			=> GetComponentInChildren<_ItemType>() != null;
 
 		public int MoveRange => MOV.Value;
 
 		public bool hasStaff => GetComponentInChildren<Staff>() != null;
 		public bool hasAttack => GetComponentInChildren<Weapon>() != null;
 
+		[HideInInspector] public Attribute<string> NAME = new();
 		[HideInInspector] public Attribute<int> HP = new();
 		[HideInInspector] public Attribute<int> STR = new();
 		[HideInInspector] public Attribute<int> MAG = new();
@@ -104,7 +115,7 @@ namespace Vanguards
 
 		[SerializeField]
 		eState state = eState.Idle;
-		eState State => state;
+		public eState State => state;
 
 		public void SetState(eState state)
 		{
@@ -323,6 +334,11 @@ namespace Vanguards
 			SetAnimationState(animationState);
 			SetTeam(team);
 			SetMovementType(movementType);
+
+			name = NAME.Base;
+
+			if (equipped != null)
+				equipped.transform.SetAsLastSibling();
 		}
 
 		#endregion

@@ -56,16 +56,14 @@ namespace Vanguards
 		#endregion
 
 		public void SetOffset(int newOffset)
-		{
-			spriteSetOffset = newOffset;
-		}
+			=> spriteSetOffset = newOffset;
 
 		void UpdateSpriteIndex()
 		{
 			if (spriteRenderer != null)
 				spriteRenderer.sprite = sprites[
 					spriteSetOffset * spriteSetSize +
-					currentSprite % spriteSetSize];
+					(int)(Time.time * frameRate) % spriteSetSize];
 		}
 
 		[SerializeField, Range(1, 32), Tooltip("Amount of sprites in an animation clip")]
@@ -82,21 +80,7 @@ namespace Vanguards
 		[SerializeField]
 		Sprite[] sprites;
 		
-		int currentSprite = 0;
-		float timeElapsed = 0;
-
 		private void Update()
-		{
-			if (timeElapsed > 1 / frameRate)
-			{
-				UpdateSpriteIndex();
-
-				timeElapsed -= 1 / frameRate;
-
-				currentSprite++;
-			};
-
-			timeElapsed += Time.deltaTime;
-		}
+			=> UpdateSpriteIndex();
 	};
 };

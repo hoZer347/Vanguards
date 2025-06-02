@@ -13,7 +13,14 @@ namespace Vanguards
 			SWORD,
 			BOW,
 			DAGGER,
+			POTION,
 		};
+
+		public St_Option useOption;
+		public List<St_Option> alternateUseOptions = new();
+
+		[SerializeField]
+		string fileOrigin = string.Empty;
 
 		[SerializeField]
 		Texture2D icon;
@@ -21,18 +28,12 @@ namespace Vanguards
 		[HideInInspector] public Attribute<string> NAME;
 		[HideInInspector] public Attribute<Class> CLASS;
 
-		#region Refresh
-
-		void Refresh()
+		private void OnValidate()
 		{
-
+			name = NAME.Value;
+		
+			
 		}
-
-		private void Start() => Refresh();
-
-		private void OnValidate() => Refresh();
-
-		#endregion
 	};
 
 #if UNITY_EDITOR

@@ -89,7 +89,7 @@ namespace Vanguards
 			this.to = to;
 			this.speed = speed;
 
-			rawImage = GameObject.FindObjectOfType<ScreenFader>()
+			rawImage = GameObject.FindAnyObjectByType<ScreenFader>()
 					.GetComponentInChildren<RawImage>();
 
 			rawImage.color = from;

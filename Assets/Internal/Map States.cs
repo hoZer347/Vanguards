@@ -42,8 +42,6 @@ namespace Vanguards
 			selectedUnit = null;
 			originalCell = null;
 
-			OptionMenu.Clear();
-
 			if (meshFilter.sharedMesh != null)
 			{
 				Color[] colors = meshFilter.sharedMesh.colors;
@@ -103,8 +101,6 @@ namespace Vanguards
 
 		public override void OnEnter()
 		{
-			OptionMenu.Clear();
-
 			// Assigning all units to their respective cells
 			foreach (Cell cell in Map.main.Cells)
 				if (cell != null)
@@ -117,6 +113,7 @@ namespace Vanguards
 					cell.Unit = unit;
 			};
 			//
+
 
 			// Getting Move Range
 			moveRange =
@@ -139,26 +136,32 @@ namespace Vanguards
 
 
 			// Getting Attack Range
-			int maxAttackRange = selectedUnit.GetAttackRange();
+			if (selectedUnit.HasItem<Weapon>())
+			{
+				var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();
 
-			attackRange =
-				moveRange.ToDictionary(
-					moveRange => moveRange.Key,
-					moveRange => moveRange.Value * 0 + maxAttackRange + 1);
-
-			Algorithm.FloodFill(ref attackRange, (Cell cell, float amount) => amount - 1);
+				Algorithm.PostFloodFillRange(
+					ref moveRange,
+					ref attackRange,
+					(Cell cell) => true,
+					minAttackRange,
+					maxAttackRange);
+			};
 			//
 
 
 			// Getting Staff Range
-			int maxStaffRange = selectedUnit.GetStaffRange();
+			if (selectedUnit.HasItem<Staff>())
+			{
+				var (minStaffRange, maxStaffRange) = selectedUnit.GetStaffRange();
 
-			staffRange =
-				moveRange.ToDictionary(
-					moveRange => moveRange.Key,
-					moveRange => moveRange.Value * 0 + maxStaffRange + 1);
-
-			Algorithm.FloodFill(ref staffRange, (Cell cell, float amount) => amount - 1);
+				Algorithm.PostFloodFillRange(
+					ref moveRange,
+					ref staffRange,
+					(Cell cell) => true,
+					minStaffRange,
+					maxStaffRange);
+			};
 			//
 
 
@@ -201,7 +204,7 @@ namespace Vanguards
 			meshFilter.sharedMesh.RecalculateNormals();
 			//
 
-			Unit[] units = GameObject.FindObjectsOfType<Unit>();
+			Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
 			foreach (Unit unit in units)
 			{
 				if (unit == selectedUnit)
@@ -331,39 +334,58 @@ namespace Vanguards
 		Dictionary<Cell, float> staffRange;
 
 		Unit selectedUnit;
+		OptionMenu optionMenu = GameObject.FindAnyObjectByType<OptionMenu>();
 
 		public St_Mp_ChooseAnOption(Unit selectedUnit)
 			=> this.selectedUnit = selectedUnit;
 
 		public override void OnEnter()
 		{
-			OptionMenu.Clear();
-			OptionMenu.EnableOptions(selectedUnit);
+			if (optionMenu != null)
+				optionMenu.SetOptions(selectedUnit);
 
-			float maxAttackRange = selectedUnit.GetAttackRange();
+			// Getting Attack Range
+			var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();
 
 			attackRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], maxAttackRange }
+					{ Map.main[selectedUnit.transform.position], 0 }
 				};
 
-			Algorithm.FloodFill(ref attackRange, (Cell cell, float amount) => amount - 1);
+			Algorithm.PostFloodFillRange(
+				ref attackRange,
+				ref attackRange,
+				(Cell cell) => true,
+				minAttackRange,
+				maxAttackRange);
 
 			attackRange.Remove(Map.main[selectedUnit.transform.position]);
+			//
 
-			float maxStaffRange = selectedUnit.GetStaffRange();
+
+			// Getting Staff Range
+			var (minStaffRange, maxStaffRange) = selectedUnit.GetStaffRange();
 
 			staffRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], maxStaffRange }
+					{ Map.main[selectedUnit.transform.position], 0 }
 				};
 
-			Algorithm.FloodFill( ref staffRange, (Cell cell, float amount) => amount - 1);
+			Algorithm.PostFloodFillRange(
+				ref staffRange,
+				ref staffRange,
+				(Cell cell) => true,
+				minStaffRange,
+				maxStaffRange);
 
-			staffRange.Remove(Map.main[selectedUnit.transform.position]);
+			if (minStaffRange != 0)
+				staffRange.Remove(Map.main[selectedUnit.transform.position]);
+			//
 
+
+			// Coloring cells
 			Color[] colors = meshFilter.sharedMesh.colors;
 
 			foreach (Cell cell in Map.main.CellList)
@@ -392,6 +414,7 @@ namespace Vanguards
 			meshFilter.sharedMesh.colors = colors;
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
+			//
 		}
 
 		public override void OnUpdate()
@@ -414,7 +437,6 @@ namespace Vanguards
 								selectedUnit,
 								weapon));
 					}
-
 					else
 					if ((unit.Team == Unit.eTeam.Player || unit.Team == Unit.eTeam.Ally) &&
 						staffRange.ContainsKey(cell))
@@ -423,18 +445,21 @@ namespace Vanguards
 				};
 			};
 
-			// TODO: Change this to a generic "back" option
 			if (Input.GetKeyDown(KeyCode.Escape))
+			{
 				FallBack<St_Mp_InitialState>();
+				optionMenu.ClearOptions();
+			};
 
 			if (Input.GetMouseButtonDown((int)MouseButton.Right))
+			{
 				FallBack<St_Mp_ChooseAPosition>();
+				optionMenu.ClearOptions();
+			};
 		}
 
 		public override void OnLeave()
-		{
-			OptionMenu.Clear();
-		}
+			=> optionMenu.ClearOptions();
 	};
 
 	public class St_Mp_End : St_MapState
@@ -442,7 +467,7 @@ namespace Vanguards
 		Unit selectedUnit;
 
 		public St_Mp_End(Unit selectedUnit)
-		 => this.selectedUnit = selectedUnit;
+			=> this.selectedUnit = selectedUnit;
 		
 		public override void OnUpdate()
 		{
@@ -451,10 +476,14 @@ namespace Vanguards
 
 			if (Unit.CheckForTurnEnd())
 			{
+				Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
 
-			};
+				foreach (Unit unit in units)
+					unit.ActionUsed = false;
 
-			SetState(new St_Mp_InitialState());
+				SetState(new St_En_BeginTurn());
+			}
+			else SetState(new St_Mp_InitialState());
 		}
 	};
 };

@@ -1,0 +1,52 @@
+{
+    "NAME": {
+        "name": "",
+        "base": "Test Friendly Unit 1"
+    },
+    "HP": {
+        "name": "",
+        "base": 50
+    },
+    "STR": {
+        "name": "",
+        "base": 25
+    },
+    "MAG": {
+        "name": "",
+        "base": 25
+    },
+    "SPD": {
+        "name": "",
+        "base": 25
+    },
+    "SKL": {
+        "name": "",
+        "base": 25
+    },
+    "LCK": {
+        "name": "",
+        "base": 5
+    },
+    "DEF": {
+        "name": "",
+        "base": 5
+    },
+    "RES": {
+        "name": "",
+        "base": 25
+    },
+    "MOV": {
+        "name": "",
+        "base": 5
+    },
+    "equipped": {
+        "instanceID": -148706
+    },
+    "state": 0,
+    "animationState": 0,
+    "team": 1,
+    "movementType": 0,
+    "path": [],
+    "speed": 7.0,
+    "turnThreshold": 0.5
+}

@@ -1,0 +1,30 @@
+{
+    "fileOrigin": "",
+    "icon": {
+        "instanceID": 0
+    },
+    "NAME": {
+        "name": "",
+        "base": "Training Dagger"
+    },
+    "CLASS": {
+        "name": "",
+        "base": 0
+    },
+    "RNG": {
+        "name": "",
+        "base": 1
+    },
+    "MIN_RNG": {
+        "name": "",
+        "base": 1
+    },
+    "TYPE": {
+        "name": "",
+        "base": ""
+    },
+    "PWR": {
+        "name": "",
+        "base": 3
+    }
+}

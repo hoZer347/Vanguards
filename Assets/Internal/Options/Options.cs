@@ -6,11 +6,12 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class St_Mp_Option : St_MapState
+	public class St_Option : St_MapState
 	{
-		public St_Mp_Option(Unit unit)
+		public St_Option(Unit unit)
 			=> this.selectedUnit = unit;
 
+		protected string displayName;
 		protected Unit selectedUnit;
 
 		public override void OnUpdate()
@@ -21,20 +22,40 @@ namespace Vanguards
 			if (Input.GetKeyDown(KeyCode.Escape))
 				FallBack<St_Mp_InitialState>();
 		}
+
+		override public void OnLeave()
+		{
+
+		}
 	};
 
-	public class Op_Wait : St_Mp_Option
+	public class Op_Wait : St_Option
 	{
 		public Op_Wait(Unit unit) : base(unit)
 		{ }
 
-		public override void OnUpdate()
+		public override void OnEnter()
 		{
-			SetState(new St_Mp_End(selectedUnit));
+			Color[] colors = meshFilter.sharedMesh.colors;
+
+			foreach (Cell cell in Map.main.CellList)
+			{
+				colors[cell.MeshIndex + 0] = new();
+				colors[cell.MeshIndex + 1] = new();
+				colors[cell.MeshIndex + 2] = new();
+				colors[cell.MeshIndex + 3] = new();
+			};
+
+			meshFilter.sharedMesh.colors = colors;
+			meshFilter.sharedMesh.RecalculateBounds();
+			meshFilter.sharedMesh.RecalculateNormals();
 		}
+
+		public override void OnUpdate()
+			=> SetState(new St_Mp_End(selectedUnit));
 	};
 
-	public class Op_Attack : St_Mp_Option
+	public class Op_Attack : St_Option
 	{
 		static Dictionary<Cell, float> attackRange;
 		Weapon weapon;
@@ -44,9 +65,7 @@ namespace Vanguards
 
 		public override void OnEnter()
 		{
-			OptionMenu.Clear();
-
-			float maxAttackRange = selectedUnit.GetAttackRange();
+			var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();
 
 			attackRange =
 				new Dictionary<Cell, float>
@@ -54,12 +73,12 @@ namespace Vanguards
 					{ Map.main[selectedUnit.transform.position], weapon.RNG.Value + 1 }
 				};
 
-			Algorithm.FloodFill(
+			Algorithm.PostFloodFillRange(
 				ref attackRange,
-				(Cell cell, float amount) =>
-				{
-					return amount - 1;
-				});
+				ref attackRange,
+				(Cell cell) => true,
+				minAttackRange,
+				maxAttackRange);
 
 			attackRange.Remove(Map.main[selectedUnit.transform.position]);
 
@@ -87,7 +106,7 @@ namespace Vanguards
 		}
 	};
 
-	public class Op_Staff : St_Mp_Option
+	public class Op_Staff : St_Option
 	{
 		static Dictionary<Cell, float> staffRange;
 
@@ -95,23 +114,23 @@ namespace Vanguards
 
 		public Op_Staff(Unit unit, Staff staff) : base(unit)
 			=> this.staff = staff;
-
+		
 		public override void OnEnter()
 		{
-			OptionMenu.Clear();
+			var (minStaffRange, maxStaffRange) = selectedUnit.GetStaffRange();
 
 			staffRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], staff.RNG.Value + 1 }
+					{ Map.main[selectedUnit.transform.position], maxStaffRange }
 				};
 
-			Algorithm.FloodFill(
+			Algorithm.PostFloodFillRange(
 				ref staffRange,
-				(Cell cell, float amount) =>
-				{
-					return amount - 1;
-				});
+				ref staffRange,
+				(Cell cell) => true,
+				minStaffRange,
+				maxStaffRange);
 
 			staffRange.Remove(Map.main[selectedUnit.transform.position]);
 
@@ -139,21 +158,22 @@ namespace Vanguards
 		}
 	};
 
-	public class Op_Equip : St_Mp_Option
+	public class Op_Equip : St_Option
 	{
 		Equippable equippable;
 
 		public Op_Equip(Unit unit, Equippable equippable) : base(unit)
 			=> this.equippable = equippable;
-
+		
 		public override void OnUpdate()
 		{
 			selectedUnit.equipped = equippable;
+			equippable.transform.SetAsLastSibling();
 			FallBack<St_Mp_ChooseAnOption>();
 		}
 	};
 
-	public class Op_Consumable : St_Mp_Option
+	public class Op_Consumable : St_Option
 	{
 		public Op_Consumable(Unit unit) : base(unit)
 		{ }

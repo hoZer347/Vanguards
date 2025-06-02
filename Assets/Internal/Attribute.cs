@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using System.IO;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -67,25 +69,14 @@ namespace Vanguards
 			ValueType newBase = @base;
 
 			if (typeof(ValueType) == typeof(int))
-			{
 				newBase = (ValueType)(object)EditorGUILayout.IntField("Base", (int)(object)@base, GUILayout.Width(150));
-			}
 			else if (typeof(ValueType) == typeof(float))
-			{
 				newBase = (ValueType)(object)EditorGUILayout.FloatField("Base", (float)(object)@base, GUILayout.Width(150));
-			}
 			else if (typeof(ValueType) == typeof(string))
-			{
 				newBase = (ValueType)(object)EditorGUILayout.TextField("Base", (string)(object)@base, GUILayout.Width(200));
-			}
 			else if (typeof(ValueType).IsEnum)
-			{
 				newBase = (ValueType)(object)EditorGUILayout.EnumPopup("Base", (Enum)(object)@base, GUILayout.Width(200));
-			}
-			else
-			{
-				EditorGUILayout.LabelField($"Unsupported: {typeof(ValueType).Name}", GUILayout.Width(200));
-			}
+			else EditorGUILayout.LabelField($"Unsupported: {typeof(ValueType).Name}", GUILayout.Width(200));
 
 			if (EditorGUI.EndChangeCheck())
 			{
@@ -123,16 +114,21 @@ namespace Vanguards
 
 	[Serializable]
 	public abstract class AttributeGUI
-	{
+	{	
 		public virtual void DoGUI(string label) { }
 
 		public static object CurrentTarget { get; private set; }
 
-		public static void DoAttributesGUI<AttributeHolderType>(AttributeHolderType obj)
+		static public bool loadedAttributeHolderFoldoutToggle = false;
+
+		public static void DoAttributesGUI<_AttributeHolderType>(_AttributeHolderType obj)
+			where _AttributeHolderType : MonoBehaviour
 		{
 			CurrentTarget = obj;
 
 			EditorGUILayout.BeginVertical();
+
+			// Looping through all attached Attributes and making them editable
 
 			Type objType = obj.GetType();
 
@@ -146,11 +142,64 @@ namespace Vanguards
 					value = property.GetValue(obj);
 
 				if (value is AttributeGUI attribute)
-				{
-					string readableName = ConvertToReadableFormat(member.Name);
-					attribute.DoGUI(readableName);
-				}
-			}
+					attribute.DoGUI(ConvertToReadableFormat(member.Name));
+			};
+
+			//
+
+
+			// Saving, Loading, and Duplicating Attribute Presets
+
+			GUILayout.BeginHorizontal();
+
+			GameObject gameObject = (obj as MonoBehaviour).gameObject;
+
+			string dir = Path.Combine(Application.dataPath, $"{typeof(_AttributeHolderType).Name} Presets");
+			string path = Path.Combine(dir, gameObject.name + ".json");
+
+			if (!Directory.Exists(dir))
+				Directory.CreateDirectory(dir);
+
+			if (GUILayout.Button("Save"))
+			{
+				Save(obj, path);
+
+				_AttributeHolderType[] attributeHolders = GameObject.FindObjectsByType<_AttributeHolderType>(FindObjectsSortMode.None);
+
+				foreach (_AttributeHolderType attributeHolder in attributeHolders)
+					if (attributeHolder.gameObject.name == gameObject.name &&
+						attributeHolder.gameObject != gameObject)
+						Load(attributeHolder, path);
+			};
+
+			if (GUILayout.Button("Duplicate"))
+				GameObject.Instantiate(gameObject, gameObject.transform.parent).name = gameObject.name;
+
+			GUILayout.EndHorizontal();
+
+			if (loadedAttributeHolderFoldoutToggle = EditorGUILayout.Foldout(loadedAttributeHolderFoldoutToggle, "Saved Presets"))
+			{
+				foreach (string file in Directory.GetFiles(dir))
+					if (!file.EndsWith(".meta"))
+					{
+						GUILayout.BeginHorizontal();
+
+						GUILayout.TextField(Path.GetFileName(file));
+
+						if (GUILayout.Button("Load", GUILayout.Width(100)))
+							Load(obj, file);
+
+						if (GUILayout.Button("X", GUILayout.Width(25)))
+						{
+							File.Delete(file);
+							File.Delete(file.Replace(".json", ".meta"));
+						};
+
+						GUILayout.EndHorizontal();
+					};
+			};
+
+			//
 
 			EditorGUILayout.EndVertical();
 			CurrentTarget = null;
@@ -164,7 +213,23 @@ namespace Vanguards
 			var readableName = Regex.Replace(name, "(?<=[a-z])([A-Z])", " $1");
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(readableName);
 		}
-	}
+
+		static void Save<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
+		{
+			string json = JsonUtility.ToJson(attributeHolder, true);
+
+			File.WriteAllText(path, json);
+		}
+
+		static void Load<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
+		{
+			if (!File.Exists(path))
+				return;
+			
+			string json = File.ReadAllText(path);
+			JsonUtility.FromJsonOverwrite(json, attributeHolder);
+		}
+	};
 
 #endif
-}
+};

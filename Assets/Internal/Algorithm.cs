@@ -5,11 +5,14 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
+
 namespace Vanguards
 {
 	static public class Algorithm
 	{
 		// Standard heuristic based Flood Fill
+		public delegate float FloodFillHeuristic(Cell cell, float amount);
+
 		public static void FloodFill(
 			ref Dictionary<Cell, float> cells,
 			FloodFillHeuristic kernel)
@@ -53,11 +56,12 @@ namespace Vanguards
 
 			FloodFill(ref cells, kernel);
 		}
-
-		public delegate float FloodFillHeuristic(Cell cell, float amount);
+		//
 
 
 		// A* algorithm with impassable cell handling
+		public delegate float AStarHeuristic(Cell from, Cell to);
+
 		public static void AStar(
 			Cell origin,
 			Cell goal,
@@ -113,8 +117,7 @@ namespace Vanguards
 				};
 			};
 		}
-
-		public delegate float AStarHeuristic(Cell from, Cell to);
+		//
 
 
 		// Smooths Diagonal A* paths
@@ -140,6 +143,7 @@ namespace Vanguards
 
 			path = hashSet.ToList();
 		}
+		//
 
 
 		// Pathing that assumes you've already floodfilled an area
@@ -204,22 +208,48 @@ namespace Vanguards
 				remainingDistance = floodfilled_cells[currentCell];
 			}
 		}
+		//
 
 
 		// Getting Ranges Post-Floodfill
-		static public void RangePostFloodFill(
-			ref Dictionary<Cell, float> cells,
-			float max,
-			float min = 0)
-		{
-			var oldCells = new Dictionary<Cell, float>(cells);
+		public delegate bool PostFloodFillRangeHeuristic(Cell cell);
 
-			if (min != 0)
-				foreach ((Cell cell, float value) in cells)
-				{
-					
-				};
+		static public void PostFloodFillRange(
+			ref Dictionary<Cell, float> cells,
+			ref Dictionary<Cell, float> output,
+			PostFloodFillRangeHeuristic test,
+			int min,
+			int max)
+		{
+			var visited = new HashSet<Cell>();
+			var queue = new Queue<(Cell cell, int depth)>();
+
+			// Start from each input cell at depth 0
+			foreach (var (cell, _) in cells)
+			{
+				queue.Enqueue((cell, 0));
+				visited.Add(cell);
+			};
+
+			while (queue.Count > 0)
+			{
+				var (cell, depth) = queue.Dequeue();
+
+				// Always traverse the cell, but only store it in output if within range
+				if (depth >= min && depth <= max && test(cell))
+					output[cell] = depth;
+
+				// Continue traversing until max range is reached
+				if (depth < max)
+					foreach (var neighbor in new[] { cell.U, cell.D, cell.L, cell.R })
+						if (neighbor != null && !visited.Contains(neighbor))
+						{
+							visited.Add(neighbor);
+							queue.Enqueue((neighbor, depth + 1));
+						};
+			};
 		}
+		//
 
 
 		// Copies class A int B given B inherits from A
@@ -233,5 +263,6 @@ namespace Vanguards
 				field.SetValue(target, field.GetValue(source));
 			};
 		}
+		//
 	};
 };

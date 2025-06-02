@@ -10,4 +10,25 @@ namespace Vanguards
 		public St_EnemyState(Unit currentUnit) : base()
 			=> this.currentUnit = currentUnit;
 	};
+
+	public class St_En_BeginTurn : St_EnemyState
+	{
+		public St_En_BeginTurn() : base(null)
+		{ }
+
+		public override void OnEnter()
+		{
+
+		}
+
+		public override void OnUpdate()
+		{
+			SetState(new St_Mp_InitialState());
+		}
+
+		public override void OnLeave()
+		{
+
+		}
+	};
 };

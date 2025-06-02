@@ -28,12 +28,12 @@ namespace Vanguards
 
 			state.type = typeof(_State);
 
+			if (oldState != null)
+				oldState.OnLeave();
+
 			state.OnEnter();
 
 			stateStack.Push(state);
-
-			if (oldState != null)
-				oldState.OnLeave();
 		}
 
 		static public void FallBack<_State>(bool undo = false)
