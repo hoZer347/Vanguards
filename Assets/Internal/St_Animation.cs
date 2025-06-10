@@ -24,13 +24,11 @@ namespace Vanguards
 		}
 
 		override public void OnEnter()
-		{
-			
-		}
+		{ }
 
 		override public void OnUpdate()
 		{
-
+			State.SetState(new St_Mp_InitialState());
 		}
 	};
 };

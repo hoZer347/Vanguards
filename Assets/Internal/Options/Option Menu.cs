@@ -1,21 +1,17 @@
 using System;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 namespace Vanguards
 {
-	public class OptionMenu : MonoBehaviour
+	public class OptionMenu : Menu
 	{
-		[SerializeField]
-		OptionButton optionButtonTemplate;
+		static OptionMenu instance;
 
-		[SerializeField]
-		float indentSize = 25.0f;
+		private void Start()
+			=> instance = this;
 
-		float yTranslation = 0.0f;
-		int indentLevel = 0;
+		#region Unit Option Handling
 
 		public void SetOptions(Unit unit)
 		{
@@ -26,9 +22,7 @@ namespace Vanguards
 			MakeButton("General: ", null);
 			indentLevel++;
 			MakeButton("Wait", () => State.SetState(new Op_Wait(unit)));
-
-			indentLevel = 0;
-			yTranslation = 0;
+			indentLevel--;
 		}
 
 		private void HandleItemCategory<_ItemType, _OptionType>(Unit unit)
@@ -37,6 +31,7 @@ namespace Vanguards
 		{
 			_ItemType[] items = unit.GetComponentsInChildren<_ItemType>();
 			Array.Reverse(items);
+			MenuButton optionButton;
 
 			if (items.Length > 0)
 			{
@@ -44,6 +39,7 @@ namespace Vanguards
 				indentLevel++;
 
 				foreach (_ItemType item in items)
+				{
 					if (item is Equippable)
 					{
 						string displayPrefix = "";
@@ -51,28 +47,19 @@ namespace Vanguards
 
 						if (item == unit.equipped)
 						{
-							displayPrefix += "Use:   ";
-							onClick =
-								() =>
-								{
-									_OptionType option = (_OptionType)Activator.CreateInstance(
-										typeof(_OptionType),
-										unit,
-										item);
-
-									State.SetState(option);
-								};
+							displayPrefix += "Unequip: ";
+							onClick = () => State.SetState(new Op_Equip(unit, null));
 						}
 						else
 						{
-							displayPrefix += "Equip: ";
+							displayPrefix += "Equip:   ";
 							onClick = () => State.SetState(new Op_Equip(unit, item as Equippable));
 						};
 
-						MakeButton(displayPrefix + item.NAME.Value, onClick);
+						optionButton = MakeButton(displayPrefix + item.NAME.Value, onClick);
 					}
 					else
-						MakeButton("Use:   " + item.NAME.Value, () =>
+						optionButton = MakeButton("Use:   " + item.NAME.Value, () =>
 						{
 							_OptionType option = (_OptionType)Activator.CreateInstance(
 								typeof(_OptionType),
@@ -82,41 +69,14 @@ namespace Vanguards
 							State.SetState(option);
 						});
 
+					optionButton.onHover = () => TopLeftMenu.DisplayItem(item);
+					optionButton.onUnHover = () => ClearOptions(MenuButton.TYPE.TEMPORARY);
+				};
+
 				indentLevel--;
 			};
 		}
 
-		private void MakeButton(
-			string name,
-			Action onClick)
-		{
-			float effectiveIndent = indentLevel * indentSize;
-
-			GameObject go = Instantiate(optionButtonTemplate.gameObject, transform);
-			go.name = name;
-
-			RectTransform rectTransform = go.GetComponent<RectTransform>();
-			rectTransform.Translate(new Vector3(effectiveIndent, yTranslation, 0));
-
-			TextMeshProUGUI textMesh = go.GetComponentInChildren<TextMeshProUGUI>();
-			textMesh.text = name;
-			textMesh.ForceMeshUpdate();
-
-			Button button = go.GetComponentInChildren<Button>();
-
-			if (onClick != null)
-				button.onClick.AddListener(() => onClick());
-			else button.enabled = false;
-
-			yTranslation -= rectTransform.rect.height;
-		}
-
-		public void ClearOptions()
-		{
-			OptionButton[] optionButtons = GetComponentsInChildren<OptionButton>();
-
-			foreach (OptionButton optionButton in optionButtons)
-				Destroy(optionButton.gameObject);
-		}
+		#endregion
 	};
 };

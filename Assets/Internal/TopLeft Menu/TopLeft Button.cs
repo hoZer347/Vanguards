@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class ObjectDisplayer : MonoBehaviour
+	public class TopLeftButton : MenuButton
 	{
-		
+
 	};
 };

@@ -334,15 +334,15 @@ namespace Vanguards
 		Dictionary<Cell, float> staffRange;
 
 		Unit selectedUnit;
-		OptionMenu optionMenu = GameObject.FindAnyObjectByType<OptionMenu>();
+		OptionMenu optionDisplayer = GameObject.FindAnyObjectByType<OptionMenu>();
 
 		public St_Mp_ChooseAnOption(Unit selectedUnit)
 			=> this.selectedUnit = selectedUnit;
 
 		public override void OnEnter()
 		{
-			if (optionMenu != null)
-				optionMenu.SetOptions(selectedUnit);
+			optionDisplayer.ClearOptions();
+			optionDisplayer.SetOptions(selectedUnit);
 
 			// Getting Attack Range
 			var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();
@@ -432,34 +432,34 @@ namespace Vanguards
 					if (unit.Team == Unit.eTeam.Enemy &&
 						attackRange.ContainsKey(cell))
 					{
-						if (selectedUnit.equipped is Weapon weapon)
+						if (selectedUnit.GetComponentInChildren<Weapon>() != null)
 							SetState(new Op_Attack(
 								selectedUnit,
-								weapon));
+								unit));
 					}
 					else
 					if ((unit.Team == Unit.eTeam.Player || unit.Team == Unit.eTeam.Ally) &&
 						staffRange.ContainsKey(cell))
-						if (selectedUnit.equipped is Staff staff)
-							SetState(new Op_Staff(selectedUnit, staff));
+						if (selectedUnit.GetComponentInChildren<Staff>() != null)
+							SetState(new Op_Staff(selectedUnit, unit));
 				};
 			};
 
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
 				FallBack<St_Mp_InitialState>();
-				optionMenu.ClearOptions();
+				optionDisplayer.ClearOptions();
 			};
 
 			if (Input.GetMouseButtonDown((int)MouseButton.Right))
 			{
 				FallBack<St_Mp_ChooseAPosition>();
-				optionMenu.ClearOptions();
+				optionDisplayer.ClearOptions();
 			};
 		}
 
 		public override void OnLeave()
-			=> optionMenu.ClearOptions();
+			=> optionDisplayer.ClearOptions();
 	};
 
 	public class St_Mp_End : St_MapState

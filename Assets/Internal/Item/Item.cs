@@ -27,13 +27,6 @@ namespace Vanguards
 
 		[HideInInspector] public Attribute<string> NAME;
 		[HideInInspector] public Attribute<Class> CLASS;
-
-		private void OnValidate()
-		{
-			name = NAME.Value;
-		
-			
-		}
 	};
 
 #if UNITY_EDITOR
@@ -47,6 +40,8 @@ namespace Vanguards
 			Item item = (Item)target;
 
 			AttributeGUI.DoAttributesGUI(item);
+
+			item.name = item.NAME.Base;
 		}
 	};
 #endif

@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class OptionButton : MonoBehaviour
+	public class OptionButton : MenuButton
 	{
-		// This does nothing except act as a marking for the option menu buttons
+
 	};
 };

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 
@@ -13,20 +12,25 @@ namespace Vanguards
 
 		protected string displayName;
 		protected Unit selectedUnit;
-
+		protected OptionMenu unitDisplayer = GameObject.FindAnyObjectByType<OptionMenu>();
+		
 		public override void OnUpdate()
 		{
 			if (Input.GetMouseButtonDown(1))
-				FallBack<St_Mp_ChooseAnOption>();
+			{
+				unitDisplayer.ClearOptions();
+				FallBack<St_Mp_ChooseAnOption>();	
+			};
 
 			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				unitDisplayer.ClearOptions();
 				FallBack<St_Mp_InitialState>();
+			};
 		}
 
 		override public void OnLeave()
-		{
-
-		}
+		{ }
 	};
 
 	public class Op_Wait : St_Option
@@ -58,19 +62,25 @@ namespace Vanguards
 	public class Op_Attack : St_Option
 	{
 		static Dictionary<Cell, float> attackRange;
-		Weapon weapon;
 
-		public Op_Attack(Unit unit, Weapon weapon) : base(unit)
-			=> this.weapon = weapon;
+		Unit receiver;
+
+		public Op_Attack(Unit attacker, Unit receiver) : base(attacker)
+		{
+			selectedUnit = attacker;
+			this.receiver = receiver;
+		}
 
 		public override void OnEnter()
 		{
 			var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();
 
+			(int, int) range = selectedUnit.GetAttackRange();
+
 			attackRange =
 				new Dictionary<Cell, float>
 				{
-					{ Map.main[selectedUnit.transform.position], weapon.RNG.Value + 1 }
+					{ Map.main[selectedUnit.transform.position], range.Item2 + 1 }
 				};
 
 			Algorithm.PostFloodFillRange(
@@ -103,6 +113,13 @@ namespace Vanguards
 			meshFilter.sharedMesh.colors = colors;
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
+
+			TopLeftMenu.instance.DisplayAttack(selectedUnit, receiver);
+		}
+
+		public override void OnLeave()
+		{
+			
 		}
 	};
 
@@ -110,10 +127,10 @@ namespace Vanguards
 	{
 		static Dictionary<Cell, float> staffRange;
 
-		Staff staff;
+		Unit receiver;
 
-		public Op_Staff(Unit unit, Staff staff) : base(unit)
-			=> this.staff = staff;
+		public Op_Staff(Unit unit, Unit receiver) : base(unit)
+			=> this.receiver = receiver;
 		
 		public override void OnEnter()
 		{
@@ -168,7 +185,10 @@ namespace Vanguards
 		public override void OnUpdate()
 		{
 			selectedUnit.equipped = equippable;
-			equippable.transform.SetAsLastSibling();
+
+			if (equippable != null)
+				equippable.transform.SetAsLastSibling();
+
 			FallBack<St_Mp_ChooseAnOption>();
 		}
 	};
