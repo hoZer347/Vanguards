@@ -12,19 +12,22 @@ namespace Vanguards
 
 		protected string displayName;
 		protected Unit selectedUnit;
-		protected OptionMenu unitDisplayer = GameObject.FindAnyObjectByType<OptionMenu>();
 		
 		public override void OnUpdate()
 		{
 			if (Input.GetMouseButtonDown(1))
 			{
-				unitDisplayer.ClearOptions();
+				Menu[] menus = GameObject.FindObjectsByType<Menu>(FindObjectsSortMode.None);
+				foreach (Menu optionMenu in menus)
+					optionMenu.ClearOptions();
 				FallBack<St_Mp_ChooseAnOption>();	
 			};
 
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
-				unitDisplayer.ClearOptions();
+				Menu[] menus = GameObject.FindObjectsByType<Menu>(FindObjectsSortMode.None);
+				foreach (Menu optionMenu in menus)
+					optionMenu.ClearOptions();
 				FallBack<St_Mp_InitialState>();
 			};
 		}
@@ -114,13 +117,11 @@ namespace Vanguards
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
 
-			TopLeftMenu.instance.DisplayAttack(selectedUnit, receiver);
+			WeaponSelectionMenu.instance.DisplayWeaponOptions(selectedUnit, receiver);
 		}
 
 		public override void OnLeave()
-		{
-			
-		}
+			=> WeaponSelectionMenu.instance.ClearOptions();
 	};
 
 	public class Op_Staff : St_Option

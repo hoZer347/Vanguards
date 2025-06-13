@@ -283,11 +283,8 @@ namespace Vanguards
 		Algorithm.FloodFillHeuristic ff_Kernel =
 			(Cell cell, float amount) =>
 			{
-				if (cell.Unit != null)
-					if (cell.Unit.Team == eTeam.Enemy)
-					{
+				if (cell.Unit != null && cell.Unit.Team == eTeam.Enemy)
 						return 0.0f;
-					};
 
 				return amount - cell.Difficulty;
 			};

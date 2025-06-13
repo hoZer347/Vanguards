@@ -4,46 +4,21 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class TopLeftMenu : Menu
+	public class WeaponSelectionMenu : Menu
 	{
-		static public TopLeftMenu instance;
+		static public WeaponSelectionMenu instance;
 
 		private void Start()
 			=> instance = this;
 
 		#region Item Displaying
 
-		static public void DisplayItem<_ItemType>(_ItemType item)
-			where _ItemType : Item
+		public void DisplayWeaponOptions(Unit attacker, Unit receiver)
 		{
-			if (item is Consumable consumable)
-				DisplayConsumable(consumable);
-			else if (item is Weapon weapon)
-				DisplayWeapon(weapon);
-			else if (item is Staff staff)
-				DisplayStaff(staff);
-			else
-				Debug.LogWarning($"ObjectDisplayer: DisplayItem called with unsupported item type {typeof(_ItemType).Name}");
-		}
+			yTranslation -= optionButtonTemplate.GetComponent<RectTransform>().rect.height;
 
-		static public void DisplayWeapon(Weapon weapon)
-		{
-			
-		}
-
-		static public void DisplayStaff(Staff staff)
-		{
-
-		}
-
-		static public void DisplayConsumable(Consumable consumable)
-		{
-
-		}
-
-		public void DisplayAttack(Unit attacker, Unit receiver)
-		{
 			MakeButton("Attack", null);
+
 			indentLevel++;
 
 			int gridDistance =
@@ -72,8 +47,10 @@ namespace Vanguards
 
 							indentLevel++;
 
-							foreach (var item in weapons)
-								MakeButton(item.NAME.Value, () => { }, MenuButton.TYPE.TEMPORARY);
+							foreach (Weapon weapon in weapons)
+								if (weapon.MIN_RNG.Value >= gridDistance &&
+									weapon.RNG.Value <= gridDistance)
+										DisplayWeaponOption(attacker, receiver, weapon);
 
 							indentLevel--;
 						};
@@ -81,6 +58,29 @@ namespace Vanguards
 					optionButton.onUnHover =
 						() => ClearOptions(MenuButton.TYPE.TEMPORARY);
 				};
+
+			indentLevel--;
+		}
+
+		private void DisplayWeaponOption(
+			Unit attacker,
+			Unit attackee,
+			Weapon weapon)
+		{
+			int defenderDefense = attackee.DEF.Value;
+			int attackerStrength = attacker.STR.Value;
+			int weaponPower = weapon.PWR.Value;
+			
+			int totalDmg =
+				weaponPower +
+				attackerStrength -
+				defenderDefense;
+
+			string display = $"Using { weapon.NAME.Value }, Damage: { totalDmg }";
+
+			indentLevel++;
+
+			MenuButton menuButton = MakeButton(display, null, MenuButton.TYPE.TEMPORARY);
 
 			indentLevel--;
 		}

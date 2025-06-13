@@ -11,7 +11,7 @@ namespace Vanguards
 		#region Core Functionality
 
 		[SerializeField]
-		MenuButton optionButtonTemplate;
+		protected MenuButton optionButtonTemplate;
 
 		[SerializeField]
 		protected float indentSize = 25.0f;

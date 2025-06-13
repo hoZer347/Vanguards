@@ -127,7 +127,7 @@ namespace Vanguards
 				(Cell cell, float amount) =>
 				{
 					if (cell.Unit != null &&
-						cell.Unit.Team == Unit.eTeam.Enemy)
+						cell.Unit.Team != selectedUnit.Team)
 						return 0;
 
 					return amount - cell.Difficulty;
@@ -300,13 +300,15 @@ namespace Vanguards
 							(Cell f, Cell t) =>
 							{
 								if (!moveRange.ContainsKey(f) ||
-									(f.Unit != null && f.Unit.Team == Unit.eTeam.Enemy))
+									(f.Unit != null && f.Unit.Team != selectedUnit.Team))
 									return float.PositiveInfinity;
 
 								return Vector3.Distance(f.Position, t.Position);
 							});
 
 						Algorithm.SmoothAStar(ref path);
+
+						Debug.Log(path.Count);
 
 						if (path.Count > 1)
 							path.RemoveAt(0);
@@ -334,7 +336,7 @@ namespace Vanguards
 		Dictionary<Cell, float> staffRange;
 
 		Unit selectedUnit;
-		OptionMenu optionDisplayer = GameObject.FindAnyObjectByType<OptionMenu>();
+		UnitOptionMenu optionDisplayer = GameObject.FindAnyObjectByType<UnitOptionMenu>();
 
 		public St_Mp_ChooseAnOption(Unit selectedUnit)
 			=> this.selectedUnit = selectedUnit;

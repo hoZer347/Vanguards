@@ -196,9 +196,9 @@ namespace Vanguards
 							maxDistance = neighborDistance;
 							minGoalDistance = goalDistance;
 							nextCell = neighbor;
-						}
-					}
-				}
+						};
+					};
+				};
 
 				if (nextCell == null)
 					break;
@@ -206,7 +206,7 @@ namespace Vanguards
 				path.Add(nextCell);
 				currentCell = nextCell;
 				remainingDistance = floodfilled_cells[currentCell];
-			}
+			};
 		}
 		//
 

@@ -47,6 +47,7 @@ namespace Vanguards
 					return;
 				};
 
+				stateStack.Peek().OnUndo();
 				stateStack.Pop();
 			};
 		}
@@ -70,6 +71,9 @@ namespace Vanguards
 		virtual public void OnEnter() { }
 		virtual public void OnUpdate() { }
 		virtual public void OnLeave() { }
+
+		virtual public void OnUndo() { }
+		virtual public void OnRedo() { }
 	};
 
 #if UNITY_EDITOR

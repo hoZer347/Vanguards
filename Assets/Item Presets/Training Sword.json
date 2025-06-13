@@ -26,5 +26,9 @@
     "PWR": {
         "name": "",
         "base": 12
+    },
+    "DMG_TYPE": {
+        "name": "",
+        "base": 0
     }
 }

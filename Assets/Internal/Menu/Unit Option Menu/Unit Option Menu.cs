@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class OptionMenu : Menu
+	public class UnitOptionMenu : Menu
 	{
-		static OptionMenu instance;
+		static UnitOptionMenu instance;
 
 		private void Start()
 			=> instance = this;
@@ -68,9 +68,6 @@ namespace Vanguards
 
 							State.SetState(option);
 						});
-
-					optionButton.onHover = () => TopLeftMenu.DisplayItem(item);
-					optionButton.onUnHover = () => ClearOptions(MenuButton.TYPE.TEMPORARY);
 				};
 
 				indentLevel--;
