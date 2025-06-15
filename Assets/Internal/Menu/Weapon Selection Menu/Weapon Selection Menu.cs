@@ -36,8 +36,9 @@ namespace Vanguards
 						{
 							attacker.equipped = weapon;
 							weapon.transform.SetAsLastSibling();
-							State.SetState(new An_Attack(attacker, receiver));
 							ClearOptions();
+							receiver.HP.RmvModifier("Damage Preview");
+							State.SetState(new An_Attack(attacker, receiver));
 						});
 
 					optionButton.onHover =
@@ -52,11 +53,23 @@ namespace Vanguards
 									weapon.RNG.Value <= gridDistance)
 										DisplayWeaponOption(attacker, receiver, weapon);
 
+							receiver.HP.SetModifier("Damage Preview",
+								(ref int hp) =>
+								{
+									hp -= weapon.CalculateDamage(attacker, receiver);
+								});
+							receiver.GetComponentInChildren<HealthBar>().Refresh();
+
 							indentLevel--;
 						};
 
 					optionButton.onUnHover =
-						() => ClearOptions(MenuButton.TYPE.TEMPORARY);
+						() =>
+						{
+							receiver.HP.RmvModifier("Damage Preview");
+							receiver.GetComponentInChildren<HealthBar>().Refresh();
+							ClearOptions(MenuButton.TYPE.TEMPORARY);
+						};
 				};
 
 			indentLevel--;
@@ -64,10 +77,10 @@ namespace Vanguards
 
 		private void DisplayWeaponOption(
 			Unit attacker,
-			Unit attackee,
+			Unit receiver,
 			Weapon weapon)
 		{
-			int defenderDefense = attackee.DEF.Value;
+			int defenderDefense = receiver.DEF.Value;
 			int attackerStrength = attacker.STR.Value;
 			int weaponPower = weapon.PWR.Value;
 			

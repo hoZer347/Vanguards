@@ -56,7 +56,10 @@ namespace Vanguards
 		#endregion
 
 		public void SetOffset(int newOffset)
-			=> spriteSetOffset = newOffset;
+		{
+			spriteSetOffset = newOffset;
+			Refresh();
+		}
 
 		void UpdateSpriteIndex()
 		{

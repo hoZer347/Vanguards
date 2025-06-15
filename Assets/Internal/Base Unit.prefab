@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2818254510639288947}
   - component: {fileID: 3953845999268761055}
   m_Layer: 9
-  m_Name: 
+  m_Name: Base Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,39 +49,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NAME:
-    name: 
     base: 
   HP:
-    name: 
     base: 0
   STR:
-    name: 
     base: 0
   MAG:
-    name: 
     base: 0
   SPD:
-    name: 
     base: 0
   SKL:
-    name: 
     base: 0
   LCK:
-    name: 
     base: 0
   DEF:
-    name: 
     base: 0
   RES:
-    name: 
     base: 0
   MOV:
-    name: 
     base: 5
   equipped: {fileID: 0}
   state: 0
   animationState: 0
-  team: 1
   movementType: 0
   path: []
   speed: 7
@@ -100,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: 37c84856ee446ca40bcec65196139554, type: 3}
   spriteSetSize: 4
-  spriteSetOffset: 1
+  spriteSetOffset: 0
   frameRate: 4
   sprites:
   - {fileID: -505021373, guid: 37c84856ee446ca40bcec65196139554, type: 3}
@@ -1344,7 +1333,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1501638943, guid: 37c84856ee446ca40bcec65196139554, type: 3}
+  m_Sprite: {fileID: -505021373, guid: 37c84856ee446ca40bcec65196139554, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

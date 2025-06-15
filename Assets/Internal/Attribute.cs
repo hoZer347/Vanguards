@@ -13,29 +13,33 @@ using UnityEditor;
 
 namespace Vanguards
 {
+	/// <summary>
+	/// Represents a method that modifies a value of the specified type.
+	/// </summary>
+	/// <typeparam name="ValueType">The type of the value to be modified.</typeparam>
+	/// <param name="value">A reference to the value to be modified.</param>
 	public delegate void Modifier<ValueType>(ref ValueType value);
 
+	/// <summary>
+	/// Holds a base value and a set of modifiers that can modify the base value.
+	/// <typeparamref name="ValueType"/> is the type of the attribute's value, which can be int, float, string, or an enum type.
+	/// </summary>
 	[Serializable]
 	public class Attribute<ValueType>
 #if UNITY_EDITOR
 		: AttributeGUI
 #endif
 	{
-		[SerializeField]
-		private string name;
+		string name;
 
-		[SerializeField]
-		private ValueType @base;
-
-		private Dictionary<string, Modifier<ValueType>> modifiers = new();
-
-#if UNITY_EDITOR
-		protected bool showModifiers = false;
-#endif
-
-		public string Name => name;
+		/// <summary>
+		/// Represents the base value of the attribute.
+		/// </summary>
 		public ValueType Base => @base;
 
+		/// <summary>
+		/// Gets the computed value after applying all active modifiers.
+		/// </summary>
 		public ValueType Value
 		{
 			get
@@ -47,15 +51,52 @@ namespace Vanguards
 			}
 		}
 
+		/// <summary>
+		/// Sets the base value of the attribute.
+		/// </summary>
+		/// <param name="newBase">The new base</param>
 		public void SetBase(ValueType newBase) => @base = newBase;
 
-		public void SetModifier(string name, Modifier<ValueType> modifier)
-			=> modifiers[name] = modifier;
+		/// <summary>
+		/// Sets a modifier for this attribute.
+		/// On returning the "Value" property, the base value will be modified by all modifiers.
+		/// </summary>
+		/// <param name="identifier">String ID for referencing the modifier later</param>
+		/// <param name="modifier">Lambda that changes the modifier in some way</param>
+		public void SetModifier(string identifier, Modifier<ValueType> modifier)
+			=> modifiers[identifier] = modifier;
 
-		public void RmvModifier(string name) => modifiers.Remove(name);
+		/// <summary>
+		/// Sets a modifier for this attribute. Returns a unique ID for the modifier.
+		/// On returning the "Value" property, the base value will be modified by all modifiers.
+		/// </summary>
+		/// <param name="modifier">Lambda that changes the modifier in some way</param>
+		/// <returns>A unique identifier for referencing the modifier later</returns>
+		public string SetModifier(Modifier<ValueType> modifier)
+		{
+			string name = Guid.NewGuid().ToString("N");
+			SetModifier(name, modifier);
+			return name;
+		}
+
+		/// <summary>
+		/// Removes a modifier by its name.
+		/// </summary>
+		/// <param name="identifier">String ID of the modifier</param>
+		public void RmvModifier(string identifier) => modifiers.Remove(identifier);
+
+		#region Private Functionality
+
+		Dictionary<string, Modifier<ValueType>> modifiers = new();
 
 #if UNITY_EDITOR
-		public override void DoGUI(string label)
+		protected bool showModifiers = false;
+#endif
+		[SerializeField]
+		ValueType @base;
+
+#if UNITY_EDITOR
+		override public void DoGUI(string label)
 		{
 			EditorGUIUtility.labelWidth = 50;
 
@@ -107,21 +148,23 @@ namespace Vanguards
 				EditorGUI.indentLevel--;
 			}
 		}
+
 #endif
+		#endregion
 	}
 
 #if UNITY_EDITOR
 
 	[Serializable]
 	public abstract class AttributeGUI
-	{	
-		public virtual void DoGUI(string label) { }
+	{
+		virtual public void DoGUI(string label) { }
 
-		public static object CurrentTarget { get; private set; }
+		static public object CurrentTarget { get; private set; }
 
 		static public bool loadedAttributeHolderFoldoutToggle = false;
 
-		public static void DoAttributesGUI<_AttributeHolderType>(_AttributeHolderType obj)
+		static public void DoAttributesGUI<_AttributeHolderType>(_AttributeHolderType obj)
 			where _AttributeHolderType : MonoBehaviour
 		{
 			CurrentTarget = obj;
@@ -205,7 +248,7 @@ namespace Vanguards
 			CurrentTarget = null;
 		}
 
-		private static string ConvertToReadableFormat(string name)
+		static private string ConvertToReadableFormat(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return string.Empty;
@@ -214,6 +257,10 @@ namespace Vanguards
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(readableName);
 		}
 
+		/// <summary>
+		/// Saves the attribute holder to a JSON file at the specified path.
+		/// Path: Assets/{ AttributeHolderType } Presets/{ AttributeHolderType }.json
+		/// </summary>
 		static void Save<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
 		{
 			string json = JsonUtility.ToJson(attributeHolder, true);
@@ -221,6 +268,9 @@ namespace Vanguards
 			File.WriteAllText(path, json);
 		}
 
+		/// <summary>
+		/// Loads the attribute holder from a JSON file at the specified path.
+		/// </summary>
 		static void Load<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
 		{
 			if (!File.Exists(path))

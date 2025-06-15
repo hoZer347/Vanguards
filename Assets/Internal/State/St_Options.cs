@@ -13,7 +13,7 @@ namespace Vanguards
 		protected string displayName;
 		protected Unit selectedUnit;
 		
-		public override void OnUpdate()
+		override public void OnUpdate()
 		{
 			if (Input.GetMouseButtonDown(1))
 			{
@@ -41,7 +41,7 @@ namespace Vanguards
 		public Op_Wait(Unit unit) : base(unit)
 		{ }
 
-		public override void OnEnter()
+		override public void OnEnter()
 		{
 			Color[] colors = meshFilter.sharedMesh.colors;
 
@@ -58,7 +58,7 @@ namespace Vanguards
 			meshFilter.sharedMesh.RecalculateNormals();
 		}
 
-		public override void OnUpdate()
+		override public void OnUpdate()
 			=> SetState(new St_Mp_End(selectedUnit));
 	};
 
@@ -74,7 +74,7 @@ namespace Vanguards
 			this.receiver = receiver;
 		}
 
-		public override void OnEnter()
+		override public void OnEnter()
 		{
 			var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();
 
@@ -120,7 +120,10 @@ namespace Vanguards
 			WeaponSelectionMenu.instance.DisplayWeaponOptions(selectedUnit, receiver);
 		}
 
-		public override void OnLeave()
+		override public void OnLeave()
+			=> WeaponSelectionMenu.instance.ClearOptions();
+
+		override public void OnUndo()
 			=> WeaponSelectionMenu.instance.ClearOptions();
 	};
 
@@ -132,8 +135,8 @@ namespace Vanguards
 
 		public Op_Staff(Unit unit, Unit receiver) : base(unit)
 			=> this.receiver = receiver;
-		
-		public override void OnEnter()
+
+		override public void OnEnter()
 		{
 			var (minStaffRange, maxStaffRange) = selectedUnit.GetStaffRange();
 
@@ -182,8 +185,8 @@ namespace Vanguards
 
 		public Op_Equip(Unit unit, Equippable equippable) : base(unit)
 			=> this.equippable = equippable;
-		
-		public override void OnUpdate()
+
+		override public void OnUpdate()
 		{
 			selectedUnit.equipped = equippable;
 

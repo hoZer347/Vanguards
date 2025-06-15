@@ -78,7 +78,7 @@ namespace Vanguards
 	{
 		DialogueBox dialogueBox;
 
-		public override void OnInspectorGUI()
+		override public void OnInspectorGUI()
 		{
 			dialogueBox = (DialogueBox)target;
 

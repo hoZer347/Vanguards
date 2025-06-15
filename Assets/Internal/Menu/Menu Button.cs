@@ -23,6 +23,9 @@ namespace Vanguards
 		public Action onHover	= () => { };
 		public Action onUnHover = () => { };
 
+		void OnDestroy()
+			=> onUnHover();
+
 		public void OnPointerEnter(PointerEventData eData)
 			=> onHover();
 

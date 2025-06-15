@@ -211,7 +211,8 @@ namespace Vanguards
 
 			cellDict = new();
 			foreach (Cell cell in cellList)
-				cellDict[cell.Coords] = cell;
+				if (cell != null)
+					cellDict[cell.Coords] = cell;
 
 			meshFilter = GetComponent<MeshFilter>();
 			meshFilter.sharedMesh = new Mesh();
@@ -348,10 +349,8 @@ namespace Vanguards
 		[CustomEditor(typeof(Map))]
 		public class MapUI : Editor
 		{
-			public override void OnInspectorGUI()
-			{
-				((Map)target).DoGUI();
-			}
+			override public void OnInspectorGUI()
+				=>((Map)target).DoGUI();
 		};
 #endif
 

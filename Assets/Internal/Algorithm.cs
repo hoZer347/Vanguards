@@ -100,7 +100,7 @@ namespace Vanguards
 
 				foreach (var neighbor in new[] { current.U, current.D, current.L, current.R })
 				{
-					if (neighbor == null || heuristic(neighbor, goal) == float.PositiveInfinity)
+					if (neighbor == null)
 						continue;
 
 					float tentativeGScore = gScore[current] + 1;

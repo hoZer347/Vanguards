@@ -26,10 +26,10 @@ namespace Vanguards
 				name = "Health Bar",
 				vertices = new Vector3[]
 						{
-							new Vector3(-0.5f, 0.9f, 0.0f),
-							new Vector3( 0.5f, 0.9f, 0.0f),
-							new Vector3( 0.5f, 1.0f, 0.0f),
-							new Vector3(-0.5f, 1.0f, 0.0f)
+							new Vector3(-0.4f, 0.9f, 0.0f),
+							new Vector3( 0.4f, 0.9f, 0.0f),
+							new Vector3( 0.4f, 1.0f, 0.0f),
+							new Vector3(-0.4f, 1.0f, 0.0f)
 						},
 				triangles = new int[] { 0, 2, 1, 3, 2, 0 },
 				uv = new Vector2[]
@@ -40,11 +40,21 @@ namespace Vanguards
 							new Vector2(1.0f, 1.0f)
 						}
 			};
+
+			Refresh();
 		}
 
 		public void Refresh()
-			=> meshRenderer.material.SetFloat(
+		{
+			float damageRatio = (float)(unit.HP.Base - unit.HP.Value) / Mathf.Max(unit.HP.Base, 1.0f);
+
+			meshRenderer.material.SetFloat(
 				"_DamageRatio",
-				(float)(unit.HP.Base - unit.HP.Value) / Mathf.Max(unit.HP.Base, 1.0f));
+				damageRatio);
+
+			if (damageRatio == 0.0f)
+				meshRenderer.enabled = false;
+			else meshRenderer.enabled = true;
+		}
 	};
 };

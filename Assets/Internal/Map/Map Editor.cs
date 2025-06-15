@@ -140,7 +140,7 @@ namespace Vanguards
 		[CustomEditor(typeof(MapEditor))]
 		public class MapEditorUI : Editor
 		{
-			public override void OnInspectorGUI()
+			override public void OnInspectorGUI()
 				=> ((MapEditor)target).DoGUI();
 		};
 	};

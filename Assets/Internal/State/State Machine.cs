@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +14,7 @@ namespace Vanguards
 		static public State Current => stateStack.Peek();
 
 		static public Stack<State> stateStack = new();
+		static public Stack<State> redoStack = new();
 
 		private void Update()
 			=> Current.OnUpdate();
@@ -34,6 +34,8 @@ namespace Vanguards
 			state.OnEnter();
 
 			stateStack.Push(state);
+
+			redoStack.Clear();
 		}
 
 		static public void FallBack<_State>(bool undo = false)
@@ -47,9 +49,37 @@ namespace Vanguards
 					return;
 				};
 
-				stateStack.Peek().OnUndo();
+				if (undo)
+				{
+					stateStack.Peek().OnUndo();
+					redoStack.Push(stateStack.Peek());
+				};
+
 				stateStack.Pop();
 			};
+		}
+
+		static public void Undo()
+		{
+			if (stateStack.Count == 1)
+				return;
+
+			redoStack.Push(stateStack.Peek());
+			stateStack.Peek().OnUndo();
+			stateStack.Pop();
+			if (stateStack.Count > 0)
+				stateStack.Peek().OnEnter();
+		}
+
+		static public void Redo()
+		{
+			if (redoStack.Count == 0)
+				return;
+
+			redoStack.Peek().OnRedo();
+			State state = redoStack.Pop();
+			stateStack.Push(state);
+			state.OnEnter();
 		}
 	};
 
@@ -63,6 +93,10 @@ namespace Vanguards
 		static public void FallBack<_State>(bool undo = false)
 			where _State : State
 			=> StateMachine.FallBack<_State>(undo);
+
+		static public void Undo() => StateMachine.Undo();
+		
+		static public void Redo() => StateMachine.Redo();
 
 		static public State Current => StateMachine.Current;
 
@@ -80,14 +114,46 @@ namespace Vanguards
 	[CustomEditor(typeof(StateMachine))]
 	public class StateMachineEditor : Editor
 	{
-		public override void OnInspectorGUI()
+		static bool showUndo = true;
+		static bool showRedo = true;
+
+		override public void OnInspectorGUI()
 		{
-			StateMachine stateMachine = ((StateMachine)target);
+			StateMachine stateMachine = (StateMachine)target;
 
 			GUILayout.BeginVertical();
 
-			foreach (State state in StateMachine.stateStack)
-				EditorGUILayout.LabelField(state.type.FullName);
+			EditorGUI.BeginDisabledGroup(!Application.isPlaying);
+
+			GUILayout.BeginHorizontal();
+
+			EditorGUI.BeginDisabledGroup(StateMachine.stateStack.Count < 2);
+			if (GUILayout.Button("Undo"))
+				State.Undo();
+			EditorGUI.EndDisabledGroup();
+
+			EditorGUI.BeginDisabledGroup(StateMachine.redoStack.Count == 0);
+			if (GUILayout.Button("Redo"))
+				State.Redo();
+			EditorGUI.EndDisabledGroup();
+
+			GUILayout.EndHorizontal();
+
+			EditorGUI.EndDisabledGroup();
+
+			if (StateMachine.stateStack.Count > 0 && 
+				(showUndo = EditorGUILayout.Foldout(showUndo, $"Undo: { StateMachine.stateStack.Peek() }")))
+				foreach (State state in StateMachine.stateStack)
+					EditorGUILayout.LabelField(state.type.FullName);
+
+			if (StateMachine.redoStack.Count > 0 &&
+				(showRedo = EditorGUILayout.Foldout(showRedo, $"Redo: { StateMachine.redoStack.Peek() }")))
+				foreach (State state in StateMachine.redoStack)
+					EditorGUILayout.LabelField(state.type.FullName);
+
+			GUILayout.BeginHorizontal();
+
+			GUILayout.EndHorizontal();
 
 			GUILayout.EndVertical();
 		}

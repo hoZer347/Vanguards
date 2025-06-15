@@ -16,17 +16,17 @@ namespace Vanguards
 		public St_En_BeginTurn() : base(null)
 		{ }
 
-		public override void OnEnter()
+		override public void OnEnter()
 		{
 
 		}
 
-		public override void OnUpdate()
+		override public void OnUpdate()
 		{
 			SetState(new St_Mp_InitialState());
 		}
 
-		public override void OnLeave()
+		override public void OnLeave()
 		{
 
 		}

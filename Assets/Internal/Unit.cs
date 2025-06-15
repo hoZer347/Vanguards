@@ -26,7 +26,7 @@ namespace Vanguards
 
 			foreach (Unit unit in units)
 				if (unit.ActionUsed == false &&
-					unit.team == eTeam.Player)
+					unit.Team == eTeam.Player)
 					return false;
 
 			return true;
@@ -113,7 +113,6 @@ namespace Vanguards
 			Attacking,
 		};
 
-		[SerializeField]
 		eState state = eState.Idle;
 		public eState State => state;
 
@@ -142,14 +141,13 @@ namespace Vanguards
 			Moving_Right_Up = 27,
 		};
 
-		[SerializeField]
 		eAnimationState animationState = eAnimationState.Idle;
 		eAnimationState AnimationState => animationState;
 
 		public void SetAnimationState(eAnimationState animationState)
 		{
 			this.animationState = animationState;
-			spriteHost.SetOffset((int)animationState + (int)team);
+			spriteHost.SetOffset((int)animationState + (int)Team);
 		}
 
 		void HandleAnimationState()
@@ -211,12 +209,15 @@ namespace Vanguards
 			Ally = 2,
 		};
 
-		[SerializeField]
-		eTeam team = eTeam.Player;
+		//public Attribute<eTeam> team;
+		eTeam team = eTeam.Enemy;
+
 		public eTeam Team => team;
+		//public eTeam Team => team;
 
 		public void SetTeam(eTeam team)
 		{
+			//this.team.SetBase(team);
 			this.team = team;
 			spriteHost.SetOffset((int)animationState + (int)team);
 		}
@@ -329,7 +330,7 @@ namespace Vanguards
 			
 			SetState(state);
 			SetAnimationState(animationState);
-			SetTeam(team);
+			SetTeam(Team);
 			SetMovementType(movementType);
 
 			name = NAME.Base;
@@ -375,19 +376,16 @@ namespace Vanguards
 			};
 		}
 
-		void DoGUI()
-		{
-			AttributeGUI.DoAttributesGUI(this);
-		}
+		void DoGUI() => AttributeGUI.DoAttributesGUI(this);
 
 		[CustomEditor(typeof(Unit))]
 		public class UnitEditor : Editor
 		{
 			override public void OnInspectorGUI()
 			{
-				base.OnInspectorGUI();
-
 				Unit unit = (Unit)target;
+
+				base.OnInspectorGUI();
 
 				unit.DoGUI();
 			}

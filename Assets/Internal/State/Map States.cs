@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -29,15 +28,29 @@ namespace Vanguards
 			this.originalCell = originalCell;
 		}
 
-		public override void OnEnter()
+		override public void OnEnter()
 		{
+			Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
+			foreach (Unit unit in units)
+				if (unit.Team == Unit.eTeam.Player &&
+					!unit.ActionUsed)
+					goto endPoint;
+
+			foreach (Unit unit in units)
+				unit.ActionUsed = false;
+
+			State.SetState(new St_En_BeginTurn());
+
+		endPoint:
+
 			if (selectedUnit != null)
 			{
 				selectedUnit.ActionUsed = false;
 
 				selectedUnit.SetPath(new List<Vector3> { originalCell.Position });
 				selectedUnit.transform.position = originalCell.Position;
-			};
+			}
+			;
 
 			selectedUnit = null;
 			originalCell = null;
@@ -55,7 +68,7 @@ namespace Vanguards
 			};
 		}
 
-		public override void OnUpdate()
+		override public void OnUpdate()
 		{
 			if (Physics.Raycast(
 					Camera.main.ScreenPointToRay(Input.mousePosition),
@@ -79,6 +92,10 @@ namespace Vanguards
 					};
 				};
 			};
+
+			if (Input.GetMouseButtonDown((int)MouseButton.Right) ||
+				Input.GetKeyDown(KeyCode.Escape))
+				Undo();
 		}
 	};
 
@@ -99,7 +116,7 @@ namespace Vanguards
 			this.originalCell = originalCell;
 		}
 
-		public override void OnEnter()
+		override public void OnEnter()
 		{
 			// Assigning all units to their respective cells
 			foreach (Cell cell in Map.main.Cells)
@@ -203,21 +220,9 @@ namespace Vanguards
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
 			//
-
-			Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
-			foreach (Unit unit in units)
-			{
-				if (unit == selectedUnit)
-					continue;
-
-				Cell cell = Map.main[unit.transform.position];
-				if (cell != null &&
-					moveRange.ContainsKey(cell))
-					moveRange.Remove(cell);
-			};
 		}
 
-		public override void OnUpdate()
+		override public void OnUpdate()
 		{
 			RaycastHit[] hits =
 				Physics.RaycastAll(
@@ -287,6 +292,7 @@ namespace Vanguards
 					// Generating path to cursor RaycastHit
 					if (hoveredCell != null &&
 						hoveredCell != goal &&
+						(hoveredCell.Unit == null || hoveredCell.Unit == selectedUnit) &&
 						moveRange.ContainsKey(hoveredCell))
 					{
 						goal = hoveredCell;
@@ -308,8 +314,6 @@ namespace Vanguards
 
 						Algorithm.SmoothAStar(ref path);
 
-						Debug.Log(path.Count);
-
 						if (path.Count > 1)
 							path.RemoveAt(0);
 
@@ -326,7 +330,7 @@ namespace Vanguards
 			// TODO: Change this to a generic "back" option
 			if (Input.GetKeyDown(KeyCode.Escape) ||
 				Input.GetMouseButtonDown((int)MouseButton.Right))
-				FallBack<St_Mp_InitialState>();
+				Undo();
 		}
 	};
 
@@ -341,7 +345,7 @@ namespace Vanguards
 		public St_Mp_ChooseAnOption(Unit selectedUnit)
 			=> this.selectedUnit = selectedUnit;
 
-		public override void OnEnter()
+		override public void OnEnter()
 		{
 			optionDisplayer.ClearOptions();
 			optionDisplayer.SetOptions(selectedUnit);
@@ -419,7 +423,7 @@ namespace Vanguards
 			//
 		}
 
-		public override void OnUpdate()
+		override public void OnUpdate()
 		{
 			if (Input.GetMouseButtonDown(0) &&
 				Physics.Raycast(
@@ -455,12 +459,12 @@ namespace Vanguards
 
 			if (Input.GetMouseButtonDown((int)MouseButton.Right))
 			{
-				FallBack<St_Mp_ChooseAPosition>();
+				Undo();
 				optionDisplayer.ClearOptions();
 			};
 		}
 
-		public override void OnLeave()
+		override public void OnLeave()
 			=> optionDisplayer.ClearOptions();
 	};
 
@@ -471,7 +475,7 @@ namespace Vanguards
 		public St_Mp_End(Unit selectedUnit)
 			=> this.selectedUnit = selectedUnit;
 		
-		public override void OnUpdate()
+		override public void OnUpdate()
 		{
 			selectedUnit.ActionUsed = true;
 			Map.main[selectedUnit.transform.position].Unit = selectedUnit;
@@ -487,5 +491,8 @@ namespace Vanguards
 			}
 			else SetState(new St_Mp_InitialState());
 		}
+
+		override public void OnUndo()
+			=> selectedUnit.ActionUsed = false;		
 	};
 };

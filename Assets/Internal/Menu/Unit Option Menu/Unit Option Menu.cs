@@ -8,8 +8,7 @@ namespace Vanguards
 	{
 		static UnitOptionMenu instance;
 
-		private void Start()
-			=> instance = this;
+		private void Start() => instance = this;
 
 		#region Unit Option Handling
 

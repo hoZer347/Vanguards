@@ -1,0 +1,34 @@
+{
+    "fileOrigin": "",
+    "icon": {
+        "instanceID": 0
+    },
+    "NAME": {
+        "name": "",
+        "base": "Training Sword II"
+    },
+    "CLASS": {
+        "name": "",
+        "base": 0
+    },
+    "RNG": {
+        "name": "",
+        "base": 1
+    },
+    "MIN_RNG": {
+        "name": "",
+        "base": 1
+    },
+    "TYPE": {
+        "name": "",
+        "base": ""
+    },
+    "PWR": {
+        "name": "",
+        "base": 15
+    },
+    "DMG_TYPE": {
+        "name": "",
+        "base": 0
+    }
+}

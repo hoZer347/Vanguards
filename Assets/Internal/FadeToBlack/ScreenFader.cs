@@ -97,9 +97,9 @@ namespace Vanguards
 			this.args = args;
 		}
 
-		public override void OnEnter() { }
+		override public void OnEnter() { }
 
-		public override void OnUpdate()
+		override public void OnUpdate()
 		{
 			// Set anchors to stretch in all directions (full screen)
 			RectTransform rectTransform = rawImage.rectTransform;
@@ -117,7 +117,7 @@ namespace Vanguards
 			};
 		}
 
-		public override void OnLeave() { }
+		override public void OnLeave() { }
 	};
 
 	#region GUI
