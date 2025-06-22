@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using System.IO;
+using NUnit.Compatibility;
+
 
 
 #if UNITY_EDITOR
@@ -123,12 +125,12 @@ namespace Vanguards
 			{
 				@base = newBase;
 
-				if (AttributeGUI.CurrentTarget is UnityEngine.Object uo)
+				if (AttributeGUI.CurrentTarget is UnityEngine.Object obj)
 				{
-					Undo.RecordObject(uo, "Modify Attribute");
-					EditorUtility.SetDirty(uo);
-				}
-			}
+					Undo.RecordObject(obj, "Modify Attribute");
+					(obj as MonoBehaviour)?.Invoke("OnValidate", 0f);
+				};
+			};
 
 			GUILayout.Label("Value: " + Value?.ToString(), GUILayout.Width(150));
 
@@ -142,11 +144,10 @@ namespace Vanguards
 			{
 				EditorGUI.indentLevel++;
 				foreach (var modifier in modifiers)
-				{
 					EditorGUILayout.LabelField($"• {modifier.Key}");
-				}
+				
 				EditorGUI.indentLevel--;
-			}
+			};
 		}
 
 #endif
@@ -213,10 +214,14 @@ namespace Vanguards
 					if (attributeHolder.gameObject.name == gameObject.name &&
 						attributeHolder.gameObject != gameObject)
 						Load(attributeHolder, path);
-			};
+			}
+			;
 
 			if (GUILayout.Button("Duplicate"))
+			{
 				GameObject.Instantiate(gameObject, gameObject.transform.parent).name = gameObject.name;
+				EditorUtility.SetDirty(obj);
+			};
 
 			GUILayout.EndHorizontal();
 
@@ -262,6 +267,7 @@ namespace Vanguards
 		/// Path: Assets/{ AttributeHolderType } Presets/{ AttributeHolderType }.json
 		/// </summary>
 		static void Save<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
+			where _AttributeHolderType : MonoBehaviour
 		{
 			string json = JsonUtility.ToJson(attributeHolder, true);
 
@@ -272,12 +278,15 @@ namespace Vanguards
 		/// Loads the attribute holder from a JSON file at the specified path.
 		/// </summary>
 		static void Load<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
+			where _AttributeHolderType : MonoBehaviour
 		{
 			if (!File.Exists(path))
 				return;
 			
 			string json = File.ReadAllText(path);
 			JsonUtility.FromJsonOverwrite(json, attributeHolder);
+
+			(attributeHolder as MonoBehaviour)?.Invoke("OnValidate", 0f);
 		}
 	};
 

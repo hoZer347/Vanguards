@@ -228,6 +228,9 @@ namespace Vanguards
 				Physics.RaycastAll(
 					Camera.main.ScreenPointToRay(Input.mousePosition));
 
+			selectedUnit.HandleAnimationState();
+			selectedUnit.UpdateSpriteIndex();
+
 			if (hits.Length > 0)
 			{
 				Cell hoveredCell = null;
@@ -349,6 +352,9 @@ namespace Vanguards
 		{
 			optionDisplayer.ClearOptions();
 			optionDisplayer.SetOptions(selectedUnit);
+
+			selectedUnit.SetPath(null);
+			selectedUnit.HandleAnimationState();
 
 			// Getting Attack Range
 			var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();

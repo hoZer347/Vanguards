@@ -30,19 +30,19 @@ namespace Vanguards
 	};
 
 #if UNITY_EDITOR
-	[CustomEditor(typeof(Item), true)]
-	public class ItemEditor : Editor
-	{
-		override public void OnInspectorGUI()
-		{
-			base.OnInspectorGUI();
+	//[CustomEditor(typeof(Item), true)]
+	//public class ItemEditor : Editor
+	//{
+	//	override public void OnInspectorGUI()
+	//	{
+	//		base.OnInspectorGUI();
 
-			Item item = (Item)target;
+	//		Item item = (Item)target;
 
-			AttributeGUI.DoAttributesGUI(item);
+	//		AttributeGUI.DoAttributesGUI(item);
 
-			item.name = item.NAME.Base;
-		}
-	};
+	//		item.name = item.NAME.Base;
+	//	}
+	//};
 #endif
 };

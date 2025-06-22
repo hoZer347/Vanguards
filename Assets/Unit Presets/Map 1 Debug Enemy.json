@@ -1,63 +1,39 @@
 {
     "NAME": {
-        "base": "Map 1 Debug Enemy",
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": "Map 1 Debug Enemy"
     },
     "HP": {
-        "base": 50,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 50
     },
     "STR": {
-        "base": 25,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 25
     },
     "MAG": {
-        "base": 25,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 25
     },
     "SPD": {
-        "base": 25,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 25
     },
     "SKL": {
-        "base": 25,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 25
     },
     "LCK": {
-        "base": 25,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 25
     },
     "DEF": {
-        "base": 25,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 25
     },
     "RES": {
-        "base": 25,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 25
     },
     "MOV": {
-        "base": 5,
-        "enumBackingValue": 0,
-        "enumTypeName": ""
+        "base": 5
     },
     "equipped": {
         "instanceID": 0
     },
-    "state": 0,
-    "animationState": 0,
     "team": {
-        "base": 0,
-        "enumBackingValue": 0,
-        "enumTypeName": "Vanguards.Unit+eTeam, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+        "base": 1
     },
     "movementType": 0,
     "path": [],

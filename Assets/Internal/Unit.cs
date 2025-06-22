@@ -10,13 +10,16 @@ namespace Vanguards
 {
 	public class Unit : MonoBehaviour
 	{
+		#region Game Logic
+
 		public bool ActionUsed
 		{
-			get => spriteHost.IsGrayScale;
+			//get => spriteHost.IsGrayScale;
+			get => false;
 			set
 			{
-				spriteHost.IsGrayScale = value;
-				spriteHost.SetFrameRate(value ? 2 : 4);
+				//if (material == null)
+				//	material = GetComponent<Material>();
 			}
 		}
 
@@ -32,10 +35,25 @@ namespace Vanguards
 			return true;
 		}
 
+		#endregion
+
 		#region Attributes
 
-		public int MaxHP => HP.Base;
-		public int CurrentHP => HP.Value;
+		[HideInInspector] public Attribute<int> HP = new();
+		[HideInInspector] public Attribute<int> STR = new();
+		[HideInInspector] public Attribute<int> MAG = new();
+		[HideInInspector] public Attribute<int> SPD = new();
+		[HideInInspector] public Attribute<int> SKL = new();
+		[HideInInspector] public Attribute<int> LCK = new();
+		[HideInInspector] public Attribute<int> DEF = new();
+		[HideInInspector] public Attribute<int> RES = new();
+		[HideInInspector] public Attribute<int> MOV = new();
+
+		public Equippable equipped = null;
+
+		#endregion
+
+		#region Equipment Management
 
 		public (int, int) GetAttackRange()
 		{
@@ -71,86 +89,63 @@ namespace Vanguards
 		public bool hasStaff => GetComponentInChildren<Staff>() != null;
 		public bool hasAttack => GetComponentInChildren<Weapon>() != null;
 
-		[HideInInspector] public Attribute<string> NAME = new();
-		[HideInInspector] public Attribute<int> HP = new();
-		[HideInInspector] public Attribute<int> STR = new();
-		[HideInInspector] public Attribute<int> MAG = new();
-		[HideInInspector] public Attribute<int> SPD = new();
-		[HideInInspector] public Attribute<int> SKL = new();
-		[HideInInspector] public Attribute<int> LCK = new();
-		[HideInInspector] public Attribute<int> DEF = new();
-		[HideInInspector] public Attribute<int> RES = new();
-		[HideInInspector] public Attribute<int> MOV = new();
-
-		public Equippable equipped = null;
-
 		#endregion
-
-		public void AddToPath(Vector3 position)
-		{
-			path.Add(position);
-		}
-
-		public void SetPath(IEnumerable<Vector3> path)
-		{
-			this.path.Clear();
-			this.path.AddRange(path);
-		}
-
-		public Vector2Int coords =>
-			new Vector2Int(
-				(int)transform.position.x,
-				(int)transform.position.z);
-
-		SpriteHost spriteHost;
 
         #region Animation State Management
 
-        public enum eState
-		{
-			Idle,
-			Moving,
-			Attacking,
-		};
-
-		eState state = eState.Idle;
-		public eState State => state;
-
-		public void SetState(eState state)
-		{
-			this.state = state;
-			switch (state)
-			{
-				case eState.Idle:
-					SetAnimationState(eAnimationState.Idle);
-					break;
-			};
-		}
-
 		public enum eAnimationState
 		{
-			Idle = 0,
-			Attacking = 3,
-			Moving_Left = 6,
-			Moving_Right = 9,
-			Moving_Down = 12,
-			Moving_Up = 15,
-			Moving_Left_Down = 18,
-			Moving_Right_Down = 21,
-			Moving_Left_Up = 24,
-			Moving_Right_Up = 27,
+			Idle,
+			Attacking,
+			Moving_Left,
+			Moving_Right,
+			Moving_Down,
+			Moving_Up,
+			Moving_Left_Down,
+			Moving_Right_Down,
+			Moving_Left_Up,
+			Moving_Right_Up,
 		};
 
+		[SerializeField]
 		eAnimationState animationState = eAnimationState.Idle;
-		eAnimationState AnimationState => animationState;
+
+		MeshRenderer meshRenderer;
+
+		public void UpdateSpriteIndex()
+		{
+			Vector2 index = new Vector2(
+				(int)team,
+				(int)animationState + 1);
+
+			MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+
+			if (meshRenderer == null)
+				return;
+
+			if (Application.isPlaying)
+				meshRenderer.material.SetVector("_Index", index);
+			
+			else
+			{
+				Material mat = meshRenderer.sharedMaterial;
+				if (mat != null)
+				{
+#if UNITY_EDITOR
+					Undo.RecordObject(mat, "Set Sprite Index");
+#endif
+					mat.SetVector("_Index", index);
+				};
+			};
+		}
 
 		public void SetAnimationState(eAnimationState animationState)
 		{
 			this.animationState = animationState;
-			spriteHost.SetOffset((int)animationState + (int)Team);
+			//UpdateSpriteIndex();
 		}
 
-		void HandleAnimationState()
+		public void HandleAnimationState()
 		{
 			if (path.Count > 0)
 			{
@@ -196,9 +191,12 @@ namespace Vanguards
 				};
 			}
 			else SetAnimationState(eAnimationState.Idle);
+			
+			UpdateSpriteIndex();
 		}
 
 		#endregion
+
 
 		#region Team Management
 
@@ -209,17 +207,15 @@ namespace Vanguards
 			Ally = 2,
 		};
 
-		//public Attribute<eTeam> team;
-		eTeam team = eTeam.Enemy;
+		[SerializeField]
+		eTeam team;
 
 		public eTeam Team => team;
-		//public eTeam Team => team;
 
 		public void SetTeam(eTeam team)
 		{
-			//this.team.SetBase(team);
 			this.team = team;
-			spriteHost.SetOffset((int)animationState + (int)team);
+			//UpdateSpriteIndex();
 		}
 
 		#endregion
@@ -237,60 +233,44 @@ namespace Vanguards
 		eMovementType movementType = eMovementType.Land;
 		public eMovementType MovementType => movementType;
 
-		void SetMovementType(eMovementType movementType)
-		{
-			//switch (movementType)
-			//{
-			//	case eMovementType.Land:
-			//		ff_Kernel = (Cell cell, float amount, out bool shouldAdd) =>
-			//		{
-			//			if (MoveRange <= amount)
-			//			{
-			//				shouldAdd = true;
-
-			//				return amount -= cell.Difficulty;
-			//			}
-			//			else if (amount - MoveRange < AttackRange)
-			//			{
-			//				shouldAdd = true;
-
-			//				return amount - 1;
-			//			}
-			//			else if (amount - MoveRange < StaffRange)
-			//			{
-			//				shouldAdd = true;
-
-			//				return amount - 1;
-			//			};
-
-			//			shouldAdd = false;
-
-			//			return amount - 1;
-			//		};
-
-			//		break;
-			//	case eMovementType.Flying:
-			//		ff_Kernel =
-			//			(Cell cell, float amount, out bool shouldAdd) =>
-			//			{
-			//				shouldAdd = true;
-
-			//				return amount -= cell.Difficulty;
-			//			};
-			//		break;
-			//};
-		}
-
 		Algorithm.FloodFillHeuristic ff_Kernel =
 			(Cell cell, float amount) =>
 			{
 				if (cell.Unit != null && cell.Unit.Team == eTeam.Enemy)
-						return 0.0f;
+					return 0.0f;
 
 				return amount - cell.Difficulty;
 			};
 
 		public Algorithm.FloodFillHeuristic FF_Kernel => ff_Kernel;
+
+		List<Vector3> path = new();
+		public List<Vector3> Path => path;
+
+		[SerializeField]
+		float speed = 1;
+
+		[SerializeField]
+		float turnThreshold = 0.5f;
+
+		public void AddToPath(Vector3 position)
+			=> path.Add(position);
+
+		public void SetPath(IEnumerable<Vector3> path)
+		{
+			this.path.Clear();
+			this.path.AddRange(path);
+		}
+
+		public Vector2Int coords =>
+			new Vector2Int(
+				(int)transform.position.x,
+				(int)transform.position.z);
+
+		void SetMovementType(eMovementType movementType)
+		{
+
+		}
 
 		public void LockToCell()
 		{
@@ -313,10 +293,6 @@ namespace Vanguards
 						transform.position.z);
 		}
 
-		[SerializeField]
-		List<Vector3> path = new();
-		public List<Vector3> Path => path;
-
 		#endregion
 
 		#region Refresh
@@ -326,39 +302,19 @@ namespace Vanguards
 
 		void Refresh()
 		{
-			spriteHost = GetComponent<SpriteHost>();
-			
-			SetState(state);
 			SetAnimationState(animationState);
-			SetTeam(Team);
 			SetMovementType(movementType);
-
-			name = NAME.Base;
+			SetTeam(Team);
 
 			if (equipped != null)
 				equipped.transform.SetAsLastSibling();
+
+			UpdateSpriteIndex();
 		}
 
 		#endregion
 
-		[SerializeField]
-		float speed = 1;
-
-		[SerializeField]
-		float turnThreshold = 0.5f;
-
-		private void Update()
-		{
-			HandleAnimationState();
-
-			transform.rotation =
-				Quaternion.LookRotation(
-					Quaternion.Euler(
-						Camera.main.transform.eulerAngles) * Vector3.forward,
-				Vector3.up);
-		}
-
-		#region GUI
+		#region Editor GUI
 
 #if UNITY_EDITOR
 

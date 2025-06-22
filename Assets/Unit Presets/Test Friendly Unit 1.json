@@ -1,6 +1,6 @@
 {
     "NAME": {
-        "base": "Test Friendly Unit 1"
+        "base": "Test dd Unit 1"
     },
     "HP": {
         "base": 50
@@ -32,13 +32,9 @@
     "equipped": {
         "instanceID": 0
     },
-    "state": 0,
-    "animationState": 0,
-    "team": {
-        "base": 1
-    },
+    "animationState": 2,
+    "team": 1,
     "movementType": 0,
-    "path": [],
     "speed": 7.0,
     "turnThreshold": 0.5
 }
