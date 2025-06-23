@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using System.IO;
-using NUnit.Compatibility;
+
 
 
 
@@ -15,280 +11,118 @@ using UnityEditor;
 
 namespace Vanguards
 {
-	/// <summary>
-	/// Represents a method that modifies a value of the specified type.
-	/// </summary>
-	/// <typeparam name="ValueType">The type of the value to be modified.</typeparam>
-	/// <param name="value">A reference to the value to be modified.</param>
-	public delegate void Modifier<ValueType>(ref ValueType value);
+	public delegate void Modifier<_ValueType>(ref _ValueType value);
 
-	/// <summary>
-	/// Holds a base value and a set of modifiers that can modify the base value.
-	/// <typeparamref name="ValueType"/> is the type of the attribute's value, which can be int, float, string, or an enum type.
-	/// </summary>
 	[Serializable]
-	public class Attribute<ValueType>
-#if UNITY_EDITOR
-		: AttributeGUI
-#endif
+	public class Attribute<_ValueType> : AttributeBase
 	{
-		string name;
+		[SerializeField]
+		_ValueType @base;
 
-		/// <summary>
-		/// Represents the base value of the attribute.
-		/// </summary>
-		public ValueType Base => @base;
+		public _ValueType Base => @base;
 
-		/// <summary>
-		/// Gets the computed value after applying all active modifiers.
-		/// </summary>
-		public ValueType Value
+		public _ValueType Value
 		{
 			get
 			{
-				ValueType value = @base;
-				foreach (var modifier in modifiers.Values)
+				_ValueType value = @base;
+
+				foreach ((string _, Modifier<_ValueType> modifier) in modifiers)
 					modifier(ref value);
+
 				return value;
 			}
 		}
 
-		/// <summary>
-		/// Sets the base value of the attribute.
-		/// </summary>
-		/// <param name="newBase">The new base</param>
-		public void SetBase(ValueType newBase) => @base = newBase;
-
-		/// <summary>
-		/// Sets a modifier for this attribute.
-		/// On returning the "Value" property, the base value will be modified by all modifiers.
-		/// </summary>
-		/// <param name="identifier">String ID for referencing the modifier later</param>
-		/// <param name="modifier">Lambda that changes the modifier in some way</param>
-		public void SetModifier(string identifier, Modifier<ValueType> modifier)
-			=> modifiers[identifier] = modifier;
-
-		/// <summary>
-		/// Sets a modifier for this attribute. Returns a unique ID for the modifier.
-		/// On returning the "Value" property, the base value will be modified by all modifiers.
-		/// </summary>
-		/// <param name="modifier">Lambda that changes the modifier in some way</param>
-		/// <returns>A unique identifier for referencing the modifier later</returns>
-		public string SetModifier(Modifier<ValueType> modifier)
+		public void SetBase(_ValueType value)
+			=> @base = value;
+		
+		public void SetModifier(string name, Modifier<_ValueType> modifier)
 		{
-			string name = Guid.NewGuid().ToString("N");
-			SetModifier(name, modifier);
-			return name;
+			if (modifier == null)
+				throw new ArgumentNullException(nameof(modifier));
+			modifiers.Add(name, modifier);
 		}
 
-		/// <summary>
-		/// Removes a modifier by its name.
-		/// </summary>
-		/// <param name="identifier">String ID of the modifier</param>
-		public void RmvModifier(string identifier) => modifiers.Remove(identifier);
-
-		#region Private Functionality
-
-		Dictionary<string, Modifier<ValueType>> modifiers = new();
-
-#if UNITY_EDITOR
-		protected bool showModifiers = false;
-#endif
-		[SerializeField]
-		ValueType @base;
-
-#if UNITY_EDITOR
-		override public void DoGUI(string label)
+		public string SetModifier(Modifier<_ValueType> modifier)
 		{
-			EditorGUIUtility.labelWidth = 50;
+			if (modifier == null)
+				throw new ArgumentNullException(nameof(modifier));
 
-			EditorGUILayout.BeginHorizontal();
+			string ID = GUID.Generate().ToString();
 
-			GUILayout.Label(label, GUILayout.Width(120));
+			modifiers.Add(ID, modifier);
 
-			// Change check
-			EditorGUI.BeginChangeCheck();
-
-			ValueType newBase = @base;
-
-			if (typeof(ValueType) == typeof(int))
-				newBase = (ValueType)(object)EditorGUILayout.IntField("Base", (int)(object)@base, GUILayout.Width(150));
-			else if (typeof(ValueType) == typeof(float))
-				newBase = (ValueType)(object)EditorGUILayout.FloatField("Base", (float)(object)@base, GUILayout.Width(150));
-			else if (typeof(ValueType) == typeof(string))
-				newBase = (ValueType)(object)EditorGUILayout.TextField("Base", (string)(object)@base, GUILayout.Width(200));
-			else if (typeof(ValueType).IsEnum)
-				newBase = (ValueType)(object)EditorGUILayout.EnumPopup("Base", (Enum)(object)@base, GUILayout.Width(200));
-			else EditorGUILayout.LabelField($"Unsupported: {typeof(ValueType).Name}", GUILayout.Width(200));
-
-			if (EditorGUI.EndChangeCheck())
-			{
-				@base = newBase;
-
-				if (AttributeGUI.CurrentTarget is UnityEngine.Object obj)
-				{
-					Undo.RecordObject(obj, "Modify Attribute");
-					(obj as MonoBehaviour)?.Invoke("OnValidate", 0f);
-				};
-			};
-
-			GUILayout.Label("Value: " + Value?.ToString(), GUILayout.Width(150));
-
-			// Inline foldout at end of line
-			Rect foldoutRect = GUILayoutUtility.GetRect(15, EditorGUIUtility.singleLineHeight);
-			showModifiers = EditorGUI.Foldout(foldoutRect, showModifiers, GUIContent.none);
-
-			EditorGUILayout.EndHorizontal();
-
-			if (showModifiers)
-			{
-				EditorGUI.indentLevel++;
-				foreach (var modifier in modifiers)
-					EditorGUILayout.LabelField($"• {modifier.Key}");
-				
-				EditorGUI.indentLevel--;
-			};
+			return ID;
 		}
 
-#endif
-		#endregion
-	}
-
-#if UNITY_EDITOR
-
-	[Serializable]
-	public abstract class AttributeGUI
-	{
-		virtual public void DoGUI(string label) { }
-
-		static public object CurrentTarget { get; private set; }
-
-		static public bool loadedAttributeHolderFoldoutToggle = false;
-
-		static public void DoAttributesGUI<_AttributeHolderType>(_AttributeHolderType obj)
-			where _AttributeHolderType : MonoBehaviour
-		{
-			CurrentTarget = obj;
-
-			EditorGUILayout.BeginVertical();
-
-			// Looping through all attached Attributes and making them editable
-
-			Type objType = obj.GetType();
-
-			foreach (var member in objType.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-			{
-				object value = null;
-
-				if (member is FieldInfo field && typeof(AttributeGUI).IsAssignableFrom(field.FieldType))
-					value = field.GetValue(obj);
-				else if (member is PropertyInfo property && typeof(AttributeGUI).IsAssignableFrom(property.PropertyType))
-					value = property.GetValue(obj);
-
-				if (value is AttributeGUI attribute)
-					attribute.DoGUI(ConvertToReadableFormat(member.Name));
-			};
-
-			//
-
-
-			// Saving, Loading, and Duplicating Attribute Presets
-
-			GUILayout.BeginHorizontal();
-
-			GameObject gameObject = (obj as MonoBehaviour).gameObject;
-
-			string dir = Path.Combine(Application.dataPath, $"{typeof(_AttributeHolderType).Name} Presets");
-			string path = Path.Combine(dir, gameObject.name + ".json");
-
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-
-			if (GUILayout.Button("Save"))
-			{
-				Save(obj, path);
-
-				_AttributeHolderType[] attributeHolders = GameObject.FindObjectsByType<_AttributeHolderType>(FindObjectsSortMode.None);
-
-				foreach (_AttributeHolderType attributeHolder in attributeHolders)
-					if (attributeHolder.gameObject.name == gameObject.name &&
-						attributeHolder.gameObject != gameObject)
-						Load(attributeHolder, path);
-			}
-			;
-
-			if (GUILayout.Button("Duplicate"))
-			{
-				GameObject.Instantiate(gameObject, gameObject.transform.parent).name = gameObject.name;
-				EditorUtility.SetDirty(obj);
-			};
-
-			GUILayout.EndHorizontal();
-
-			if (loadedAttributeHolderFoldoutToggle = EditorGUILayout.Foldout(loadedAttributeHolderFoldoutToggle, "Saved Presets"))
-			{
-				foreach (string file in Directory.GetFiles(dir))
-					if (!file.EndsWith(".meta"))
-					{
-						GUILayout.BeginHorizontal();
-
-						GUILayout.TextField(Path.GetFileName(file));
-
-						if (GUILayout.Button("Load", GUILayout.Width(100)))
-							Load(obj, file);
-
-						if (GUILayout.Button("X", GUILayout.Width(25)))
-						{
-							File.Delete(file);
-							File.Delete(file.Replace(".json", ".meta"));
-						};
-
-						GUILayout.EndHorizontal();
-					};
-			};
-
-			//
-
-			EditorGUILayout.EndVertical();
-			CurrentTarget = null;
-		}
-
-		static private string ConvertToReadableFormat(string name)
+		public void RmvModifier(string name)
 		{
 			if (string.IsNullOrEmpty(name))
-				return string.Empty;
-
-			var readableName = Regex.Replace(name, "(?<=[a-z])([A-Z])", " $1");
-			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(readableName);
+				throw new ArgumentException("Modifier name cannot be null or empty.", nameof(name));
+			modifiers.Remove(name);
 		}
 
-		/// <summary>
-		/// Saves the attribute holder to a JSON file at the specified path.
-		/// Path: Assets/{ AttributeHolderType } Presets/{ AttributeHolderType }.json
-		/// </summary>
-		static void Save<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
-			where _AttributeHolderType : MonoBehaviour
-		{
-			string json = JsonUtility.ToJson(attributeHolder, true);
+		public void ClearModifiers()
+			=> modifiers.Clear();
 
-			File.WriteAllText(path, json);
-		}
-
-		/// <summary>
-		/// Loads the attribute holder from a JSON file at the specified path.
-		/// </summary>
-		static void Load<_AttributeHolderType>(_AttributeHolderType attributeHolder, string path)
-			where _AttributeHolderType : MonoBehaviour
-		{
-			if (!File.Exists(path))
-				return;
-			
-			string json = File.ReadAllText(path);
-			JsonUtility.FromJsonOverwrite(json, attributeHolder);
-
-			(attributeHolder as MonoBehaviour)?.Invoke("OnValidate", 0f);
-		}
+		[SerializeField]
+#if UNITY_EDITOR
+		public
+#endif
+			Dictionary<string, Modifier<_ValueType>> modifiers = new();
 	};
 
+	public class AttributeBase
+	{ };
+
+#if UNITY_EDITOR
+
+	[CustomPropertyDrawer(typeof(AttributeBase), true)]
+	public class AttributeDrawer : PropertyDrawer
+	{
+		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+		{
+			float labelWidth = EditorGUIUtility.labelWidth; // Removed 'const' keyword to fix CS0133
+
+			const float foldoutWidth = 16f;
+			const float spacing = 4f;
+
+			// Define individual rects
+			Rect labelRect = new Rect(position.x, position.y, labelWidth, position.height);
+			Rect fieldRect = new Rect(position.x + labelWidth - 10, position.y, position.width - labelWidth - foldoutWidth - spacing, position.height);
+			Rect foldoutRect = new Rect(position.x + position.width - foldoutWidth, position.y, foldoutWidth, position.height);
+
+			var baseProp = property.FindPropertyRelative("base");
+
+			if (baseProp != null)
+			{
+				EditorGUI.LabelField(labelRect, label); // Draw label manually
+
+				switch (baseProp.propertyType)
+				{
+					case SerializedPropertyType.Integer:
+						baseProp.intValue = EditorGUI.IntField(fieldRect, GUIContent.none, baseProp.intValue);
+						break;
+					case SerializedPropertyType.Float:
+						baseProp.floatValue = EditorGUI.FloatField(fieldRect, GUIContent.none, baseProp.floatValue);
+						break;
+					case SerializedPropertyType.String:
+						baseProp.stringValue = EditorGUI.TextField(fieldRect, GUIContent.none, baseProp.stringValue);
+						break;
+					case SerializedPropertyType.Enum:
+						baseProp.enumValueIndex = EditorGUI.Popup(fieldRect, baseProp.enumValueIndex, baseProp.enumDisplayNames);
+						break;
+					default:
+						EditorGUI.PropertyField(fieldRect, baseProp, GUIContent.none);
+						break;
+				};
+			}
+			else EditorGUI.LabelField(fieldRect, label.text, "Field not found");
+
+			property.isExpanded = EditorGUI.Foldout(foldoutRect, property.isExpanded, GUIContent.none);
+		}
+
+	};
 #endif
 };

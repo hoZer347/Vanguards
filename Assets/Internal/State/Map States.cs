@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TestTools;
+using static UnityEngine.UI.CanvasScaler;
 
 
 namespace Vanguards
@@ -30,16 +32,29 @@ namespace Vanguards
 
 		override public void OnEnter()
 		{
-			Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
-			foreach (Unit unit in units)
-				if (unit.Team == Unit.eTeam.Player &&
-					!unit.ActionUsed)
-					goto endPoint;
+			//Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
+			//foreach (Unit unit in units)
+			//	if (unit.Team == Unit.eTeam.Player &&
+			//		!unit.ActionUsed)
+			//		goto endPoint;
 
-			foreach (Unit unit in units)
-				unit.ActionUsed = false;
+			//foreach (Unit unit in units)
+			//	unit.ActionUsed = false;
 
-			State.SetState(new St_En_BeginTurn());
+			//State.SetState(new St_En_BeginTurn());
+
+			// Assigning all units to their respective cells
+			foreach (Cell cell in Map.main.Cells)
+				if (cell != null)
+					cell.Unit = null;
+
+			foreach (Unit unit in GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None))
+			{
+				Cell cell = Map.main[unit.transform.position];
+				if (cell != null)
+					cell.Unit = unit;
+			};
+			//
 
 		endPoint:
 
@@ -49,8 +64,7 @@ namespace Vanguards
 
 				selectedUnit.SetPath(new List<Vector3> { originalCell.Position });
 				selectedUnit.transform.position = originalCell.Position;
-			}
-			;
+			};
 
 			selectedUnit = null;
 			originalCell = null;
@@ -76,18 +90,13 @@ namespace Vanguards
 			{
 				if (Input.GetMouseButtonDown(0))
 				{
-					Cell cell = Map.main[hit.point];
-					if (cell != null)
-						selectedUnit = cell.Unit;
-
 					Unit unit = hit.collider.GetComponent<Unit>();
 					if (unit != null &&
 						!unit.ActionUsed &&
 						unit.Team == Unit.eTeam.Player)
 					{
 						selectedUnit = unit;
-						originalCell = Map.main[unit.transform.position];
-
+						originalCell = Map.main[selectedUnit.transform.position];
 						SetState(new St_Mp_ChooseAPosition(selectedUnit, originalCell));
 					};
 				};
@@ -229,7 +238,6 @@ namespace Vanguards
 					Camera.main.ScreenPointToRay(Input.mousePosition));
 
 			selectedUnit.HandleAnimationState();
-			selectedUnit.UpdateSpriteIndex();
 
 			if (hits.Length > 0)
 			{
@@ -335,6 +343,12 @@ namespace Vanguards
 				Input.GetMouseButtonDown((int)MouseButton.Right))
 				Undo();
 		}
+
+		public override void OnLeave()
+			=> selectedUnit.SetAnimationState(Unit.eAnimationState.Attacking);
+
+		public override void OnUndo()
+			=> selectedUnit.SetAnimationState(Unit.eAnimationState.Idle);
 	};
 
 	public class St_Mp_ChooseAnOption : St_MapState
@@ -354,7 +368,7 @@ namespace Vanguards
 			optionDisplayer.SetOptions(selectedUnit);
 
 			selectedUnit.SetPath(null);
-			selectedUnit.HandleAnimationState();
+			selectedUnit.SetAnimationState(Unit.eAnimationState.Idle);
 
 			// Getting Attack Range
 			var (minAttackRange, maxAttackRange) = selectedUnit.GetAttackRange();

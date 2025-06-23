@@ -1,7 +1,4 @@
 {
-    "NAME": {
-        "base": "Test dd Unit 1"
-    },
     "HP": {
         "base": 50
     },
@@ -32,7 +29,7 @@
     "equipped": {
         "instanceID": 0
     },
-    "animationState": 2,
+    "animationState": 0,
     "team": 1,
     "movementType": 0,
     "speed": 7.0,

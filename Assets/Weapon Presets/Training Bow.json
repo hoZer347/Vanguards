@@ -4,27 +4,24 @@
         "instanceID": 0
     },
     "NAME": {
-        "name": "",
-        "base": "Training Bow"
+        "base": ""
     },
     "CLASS": {
-        "name": "",
         "base": 1
     },
     "RNG": {
-        "name": "",
-        "base": 1
+        "base": 2
     },
     "MIN_RNG": {
-        "name": "",
-        "base": 1
+        "base": 2
     },
     "TYPE": {
-        "name": "",
         "base": ""
     },
     "PWR": {
-        "name": "",
-        "base": 12
+        "base": 10
+    },
+    "DMG_TYPE": {
+        "base": 0
     }
 }

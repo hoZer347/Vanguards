@@ -8,18 +8,30 @@ using UnityEditor;
 
 namespace Vanguards
 {
-	public class Unit : MonoBehaviour
+	public class Unit : Saveable
 	{
 		#region Game Logic
 
+		[SerializeField]
+		bool isGrayScaled = false;
+
 		public bool ActionUsed
 		{
-			//get => spriteHost.IsGrayScale;
-			get => false;
+			get => isGrayScaled;
 			set
 			{
-				//if (material == null)
-				//	material = GetComponent<Material>();
+				isGrayScaled = value;
+
+				if (meshRenderer == null)
+					meshRenderer = GetComponent<MeshRenderer>();
+
+				meshRenderer.material.SetFloat(
+					"_GrayScale",
+					value ? 1.0f : 0.0f);
+
+				meshRenderer.material.SetFloat(
+					"_FPS",
+					value ? 2f : 4f);
 			}
 		}
 
@@ -39,17 +51,15 @@ namespace Vanguards
 
 		#region Attributes
 
-		[HideInInspector] public Attribute<int> HP = new();
-		[HideInInspector] public Attribute<int> STR = new();
-		[HideInInspector] public Attribute<int> MAG = new();
-		[HideInInspector] public Attribute<int> SPD = new();
-		[HideInInspector] public Attribute<int> SKL = new();
-		[HideInInspector] public Attribute<int> LCK = new();
-		[HideInInspector] public Attribute<int> DEF = new();
-		[HideInInspector] public Attribute<int> RES = new();
-		[HideInInspector] public Attribute<int> MOV = new();
-
-		public Equippable equipped = null;
+		public Attribute<int> HP = new();
+		public Attribute<int> STR = new();
+		public Attribute<int> MAG = new();
+		public Attribute<int> SPD = new();
+		public Attribute<int> SKL = new();
+		public Attribute<int> LCK = new();
+		public Attribute<int> DEF = new();
+		public Attribute<int> RES = new();
+		public Attribute<int> MOV = new();
 
 		#endregion
 
@@ -89,9 +99,11 @@ namespace Vanguards
 		public bool hasStaff => GetComponentInChildren<Staff>() != null;
 		public bool hasAttack => GetComponentInChildren<Weapon>() != null;
 
+		public Equippable equipped = null;
+
 		#endregion
 
-        #region Animation State Management
+		#region Animation State Management
 
 		public enum eAnimationState
 		{
@@ -110,39 +122,31 @@ namespace Vanguards
 		[SerializeField]
 		eAnimationState animationState = eAnimationState.Idle;
 
-		MeshRenderer meshRenderer;
-
 		public void UpdateSpriteIndex()
 		{
 			Vector2 index = new Vector2(
 				(int)team,
 				(int)animationState + 1);
 
-			MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-
-			if (meshRenderer == null)
+			if (!Application.isPlaying)
 				return;
 
-			if (Application.isPlaying)
-				meshRenderer.material.SetVector("_Index", index);
-			
-			else
-			{
-				Material mat = meshRenderer.sharedMaterial;
-				if (mat != null)
-				{
-#if UNITY_EDITOR
-					Undo.RecordObject(mat, "Set Sprite Index");
-#endif
-					mat.SetVector("_Index", index);
-				};
-			};
+			if (meshRenderer == null)
+				meshRenderer = GetComponent<MeshRenderer>();
+
+			meshRenderer.material.SetFloat("_GrayScale", isGrayScaled ? 1.0f : 0.0f);
+
+			meshRenderer.material.SetVector(
+				"_Index",
+				new Vector2(
+					(int)team,
+					(int)animationState + 1));
 		}
 
 		public void SetAnimationState(eAnimationState animationState)
 		{
 			this.animationState = animationState;
-			//UpdateSpriteIndex();
+			UpdateSpriteIndex();
 		}
 
 		public void HandleAnimationState()
@@ -197,7 +201,6 @@ namespace Vanguards
 
 		#endregion
 
-
 		#region Team Management
 
 		public enum eTeam
@@ -215,7 +218,7 @@ namespace Vanguards
 		public void SetTeam(eTeam team)
 		{
 			this.team = team;
-			//UpdateSpriteIndex();
+			UpdateSpriteIndex();
 		}
 
 		#endregion
@@ -259,6 +262,10 @@ namespace Vanguards
 		public void SetPath(IEnumerable<Vector3> path)
 		{
 			this.path.Clear();
+			
+			if (path == null)
+				return;
+
 			this.path.AddRange(path);
 		}
 
@@ -300,6 +307,8 @@ namespace Vanguards
 		private void Start() => Refresh();
 		private void OnValidate() => Refresh();
 
+		MeshRenderer meshRenderer;
+
 		void Refresh()
 		{
 			SetAnimationState(animationState);
@@ -319,6 +328,7 @@ namespace Vanguards
 #if UNITY_EDITOR
 
 		bool showPath = true;
+
 		private void OnDrawGizmos()
 		{
 			if (showPath)
@@ -330,21 +340,6 @@ namespace Vanguards
 						position,
 						0.4f);
 			};
-		}
-
-		void DoGUI() => AttributeGUI.DoAttributesGUI(this);
-
-		[CustomEditor(typeof(Unit))]
-		public class UnitEditor : Editor
-		{
-			override public void OnInspectorGUI()
-			{
-				Unit unit = (Unit)target;
-
-				base.OnInspectorGUI();
-
-				unit.DoGUI();
-			}
 		}
 
 #endif

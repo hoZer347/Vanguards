@@ -4,27 +4,24 @@
         "instanceID": 0
     },
     "NAME": {
-        "name": "",
-        "base": "Training Dagger"
+        "base": "Training Sword"
     },
     "CLASS": {
-        "name": "",
         "base": 0
     },
     "RNG": {
-        "name": "",
         "base": 1
     },
     "MIN_RNG": {
-        "name": "",
         "base": 1
     },
     "TYPE": {
-        "name": "",
         "base": ""
     },
     "PWR": {
-        "name": "",
-        "base": 3
+        "base": 10
+    },
+    "DMG_TYPE": {
+        "base": 0
     }
 }

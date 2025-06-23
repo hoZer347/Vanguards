@@ -17,7 +17,12 @@ namespace Vanguards
 		static public Stack<State> redoStack = new();
 
 		private void Update()
-			=> Current.OnUpdate();
+		{
+			if (stateStack.Count == 0)
+				return;
+
+			Current.OnUpdate();
+		}
 
 		static public void SetState<_State>(_State state)
 			where _State : State

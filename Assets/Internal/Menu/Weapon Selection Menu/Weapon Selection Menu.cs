@@ -45,13 +45,14 @@ namespace Vanguards
 						() =>
 						{
 							// TODO: Replace with stats
+							attacker.SetAnimationState(Unit.eAnimationState.Attacking);
 
 							indentLevel++;
 
-							foreach (Weapon weapon in weapons)
-								if (weapon.MIN_RNG.Value >= gridDistance &&
-									weapon.RNG.Value <= gridDistance)
-										DisplayWeaponOption(attacker, receiver, weapon);
+							//foreach (Weapon weapon in weapons)
+							//	if (weapon.MIN_RNG.Value >= gridDistance &&
+							//		weapon.RNG.Value <= gridDistance)
+							//			DisplayWeaponOption(attacker, receiver, weapon);
 
 							receiver.HP.SetModifier("Damage Preview",
 								(ref int hp) =>
@@ -66,6 +67,7 @@ namespace Vanguards
 					optionButton.onUnHover =
 						() =>
 						{
+							attacker.SetAnimationState(Unit.eAnimationState.Idle);
 							receiver.HP.RmvModifier("Damage Preview");
 							receiver.GetComponentInChildren<HealthBar>().Refresh();
 							ClearOptions(MenuButton.TYPE.TEMPORARY);

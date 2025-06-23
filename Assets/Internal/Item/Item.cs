@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class Item : MonoBehaviour
+	public class Item : Saveable
 	{
 		public enum Class
 		{
@@ -25,24 +25,10 @@ namespace Vanguards
 		[SerializeField]
 		Texture2D icon;
 
-		[HideInInspector] public Attribute<string> NAME;
-		[HideInInspector] public Attribute<Class> CLASS;
+		public Attribute<string> NAME;
+		public Attribute<Class> CLASS;
+
+		private void OnValidate()
+			=> NAME.SetBase(name);
 	};
-
-#if UNITY_EDITOR
-	//[CustomEditor(typeof(Item), true)]
-	//public class ItemEditor : Editor
-	//{
-	//	override public void OnInspectorGUI()
-	//	{
-	//		base.OnInspectorGUI();
-
-	//		Item item = (Item)target;
-
-	//		AttributeGUI.DoAttributesGUI(item);
-
-	//		item.name = item.NAME.Base;
-	//	}
-	//};
-#endif
 };

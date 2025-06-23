@@ -21,11 +21,10 @@ namespace Vanguards
 		{
 			PHYSICAL = 0,
 			MAGICAL = 1,
-
 		};
 
-		[HideInInspector] public Attribute<int> PWR;
-		[HideInInspector] public Attribute<WeaponDMGType> DMG_TYPE;
+		public Attribute<int> PWR;
+		public Attribute<WeaponDMGType> DMG_TYPE;
 
 		Func<Weapon, Unit, Unit, int> damageCalculation =
 			(Weapon weapon, Unit attacker, Unit receiver) =>

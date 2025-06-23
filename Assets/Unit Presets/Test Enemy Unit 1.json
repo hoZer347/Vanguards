@@ -1,7 +1,4 @@
 {
-    "NAME": {
-        "base": "Map 1 Debug Enemy"
-    },
     "HP": {
         "base": 50
     },
@@ -32,11 +29,9 @@
     "equipped": {
         "instanceID": 0
     },
-    "team": {
-        "base": 1
-    },
+    "animationState": 0,
+    "team": 0,
     "movementType": 0,
-    "path": [],
     "speed": 7.0,
     "turnThreshold": 0.5
 }

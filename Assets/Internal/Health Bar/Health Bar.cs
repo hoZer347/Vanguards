@@ -25,20 +25,20 @@ namespace Vanguards
 			{
 				name = "Health Bar",
 				vertices = new Vector3[]
-						{
-							new Vector3(-0.4f, 0.9f, 0.0f),
-							new Vector3( 0.4f, 0.9f, 0.0f),
-							new Vector3( 0.4f, 1.0f, 0.0f),
-							new Vector3(-0.4f, 1.0f, 0.0f)
-						},
+				{
+					new Vector3(-0.4f, 0.9f, 0.0f),
+					new Vector3( 0.4f, 0.9f, 0.0f),
+					new Vector3( 0.4f, 1.0f, 0.0f),
+					new Vector3(-0.4f, 1.0f, 0.0f)
+				},
 				triangles = new int[] { 0, 2, 1, 3, 2, 0 },
 				uv = new Vector2[]
-						{
-							new Vector2(1.0f, 0.0f),
-							new Vector2(0.0f, 0.0f),
-							new Vector2(0.0f, 1.0f),
-							new Vector2(1.0f, 1.0f)
-						}
+				{
+					new Vector2(1.0f, 0.0f),
+					new Vector2(0.0f, 0.0f),
+					new Vector2(0.0f, 1.0f),
+					new Vector2(1.0f, 1.0f)
+				}
 			};
 
 			Refresh();
