@@ -111,7 +111,7 @@ namespace Vanguards
 		virtual public void OnUpdate() { }
 		virtual public void OnLeave() { }
 
-		virtual public void OnUndo() { }
+		virtual public void OnUndo() => OnLeave();
 		virtual public void OnRedo() { }
 	};
 

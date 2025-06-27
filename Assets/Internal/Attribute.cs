@@ -19,6 +19,8 @@ namespace Vanguards
 		[SerializeField]
 		_ValueType @base;
 
+		static int ID = 0;
+
 		public _ValueType Base => @base;
 
 		public _ValueType Value
@@ -49,11 +51,11 @@ namespace Vanguards
 			if (modifier == null)
 				throw new ArgumentNullException(nameof(modifier));
 
-			string ID = GUID.Generate().ToString();
+			string rID = $"{ ++ID }";
 
-			modifiers.Add(ID, modifier);
+			modifiers.Add(rID, modifier);
 
-			return ID;
+			return rID;
 		}
 
 		public void RmvModifier(string name)

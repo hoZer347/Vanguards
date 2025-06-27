@@ -19,7 +19,7 @@ namespace Vanguards
 		HealthBar receiverHealthBar = null;
 
 		string modifierID;
-		int totalDamage = 0;
+		int totalDamage = -1;
 		
 		System.Random random = new System.Random();
 		int randomSeed;
@@ -34,65 +34,24 @@ namespace Vanguards
 			randomSeed = random.Next(0, 1000);
 		}
 
-		override public void OnEnter()
-			=> attacker.HP.RmvModifier("Damage Preview");
-
 		override public void OnUpdate()
 		{
-			if (!shouldAnimate)
+			if (totalDamage == -1)
 			{
-				shouldAnimate = !shouldAnimate;
-				Undo();
-				return;
-			};
+				totalDamage = (attacker.equipped as Weapon).CalculateDamage(attacker, receiver);
+				modifierID = receiver.HP.SetModifier((ref int hp) => hp -= totalDamage);
+			}
+			else receiver.HP.SetModifier(modifierID, (ref int hp) => hp -= totalDamage);
 
-			if (savedAttacks.TryGetValue(
-				(attacker, receiver),
-				out An_Attack attack) &&
-				this != attack)
-			{
-				attack.OnUpdate();
-				return;
-			};
-
-			shouldAnimate = !shouldAnimate;
-
-			totalDamage = (attacker.equipped as Weapon).CalculateDamage(attacker, receiver);
-
-			modifierID = receiver.HP.SetModifier((ref int hp) => { hp -= totalDamage; });
-			attacker.ActionUsed = true;
-			SetState(new St_Mp_InitialState());
 			receiverHealthBar.Refresh();
 
-			savedAttacks.Add((attacker, receiver), this);
-
-			if (receiver.HP.Value <= 0)
-				receiver.transform.gameObject.SetActive(false); // TODO: Handle death animation
+			SetState(new St_Mp_InitialState());
 		}
 
-		override public void OnLeave()
+		public override void OnUndo()
 		{
-			var key = (attacker, receiver);
-
-			if (savedAttacks.ContainsKey(key))
-				savedAttacks.Remove(key);
-		}
-
-		override public void OnUndo()
-		{
-			if (savedAttacks.TryGetValue(
-				(attacker, receiver),
-				out An_Attack attack) &&
-				this != attack)
-			{
-				attack.OnUndo();
-				return;
-			};
-
 			receiver.HP.RmvModifier(modifierID);
 			receiverHealthBar.Refresh();
-			receiver.transform.gameObject.SetActive(true);
-			attacker.ActionUsed = false;
 		}
 	};
 };

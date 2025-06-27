@@ -32,16 +32,18 @@ namespace Vanguards
 
 		override public void OnEnter()
 		{
-			//Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
-			//foreach (Unit unit in units)
-			//	if (unit.Team == Unit.eTeam.Player &&
-			//		!unit.ActionUsed)
-			//		goto endPoint;
+			Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
+			foreach (Unit unit in units)
+				if (unit.Team == Unit.eTeam.Player &&
+					!unit.ActionUsed)
+					goto endPoint;
 
-			//foreach (Unit unit in units)
-			//	unit.ActionUsed = false;
+			foreach (Unit unit in units)
+				unit.ActionUsed = false;
 
-			//State.SetState(new St_En_BeginTurn());
+			State.SetState(new St_En_BeginTurn());
+
+		endPoint:
 
 			// Assigning all units to their respective cells
 			foreach (Cell cell in Map.main.Cells)
@@ -55,8 +57,6 @@ namespace Vanguards
 					cell.Unit = unit;
 			};
 			//
-
-		endPoint:
 
 			if (selectedUnit != null)
 			{

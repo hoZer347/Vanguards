@@ -11,8 +11,6 @@ namespace Vanguards
 		private void Start()
 			=> instance = this;
 
-		#region Item Displaying
-
 		public void DisplayWeaponOptions(Unit attacker, Unit receiver)
 		{
 			yTranslation -= optionButtonTemplate.GetComponent<RectTransform>().rect.height;
@@ -44,17 +42,17 @@ namespace Vanguards
 					optionButton.onHover =
 						() =>
 						{
-							// TODO: Replace with stats
 							attacker.SetAnimationState(Unit.eAnimationState.Attacking);
 
 							indentLevel++;
 
-							//foreach (Weapon weapon in weapons)
-							//	if (weapon.MIN_RNG.Value >= gridDistance &&
-							//		weapon.RNG.Value <= gridDistance)
-							//			DisplayWeaponOption(attacker, receiver, weapon);
+							foreach (Weapon weapon in weapons)
+								if (weapon.MIN_RNG.Value >= gridDistance &&
+									weapon.RNG.Value <= gridDistance)
+									DisplayWeaponOption(attacker, receiver, weapon);
 
-							receiver.HP.SetModifier("Damage Preview",
+							receiver.HP.SetModifier(
+								"Damage Preview",
 								(ref int hp) =>
 								{
 									hp -= weapon.CalculateDamage(attacker, receiver);
@@ -99,7 +97,5 @@ namespace Vanguards
 
 			indentLevel--;
 		}
-
-		#endregion
 	};
 };
