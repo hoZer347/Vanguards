@@ -1,9 +1,10 @@
 {
+    "isGrayScaled": false,
     "HP": {
         "base": 50
     },
     "STR": {
-        "base": 25
+        "base": 30
     },
     "MAG": {
         "base": 25

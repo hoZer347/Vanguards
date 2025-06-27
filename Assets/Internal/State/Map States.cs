@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TestTools;
-using static UnityEngine.UI.CanvasScaler;
 
 
 namespace Vanguards
@@ -60,8 +58,6 @@ namespace Vanguards
 
 			if (selectedUnit != null)
 			{
-				selectedUnit.ActionUsed = false;
-
 				selectedUnit.SetPath(new List<Vector3> { originalCell.Position });
 				selectedUnit.transform.position = originalCell.Position;
 			};
@@ -102,9 +98,11 @@ namespace Vanguards
 				};
 			};
 
-			if (Input.GetMouseButtonDown((int)MouseButton.Right) ||
-				Input.GetKeyDown(KeyCode.Escape))
+			if (Input.GetMouseButtonDown((int)MouseButton.Right))
 				Undo();
+
+			if (Input.GetKeyDown(KeyCode.Escape))
+				FallBack<St_Mp_InitialState>();
 		}
 	};
 
@@ -341,14 +339,17 @@ namespace Vanguards
 			// TODO: Change this to a generic "back" option
 			if (Input.GetKeyDown(KeyCode.Escape) ||
 				Input.GetMouseButtonDown((int)MouseButton.Right))
-				Undo();
+				FallBack<St_Mp_InitialState>();
 		}
 
 		public override void OnLeave()
 			=> selectedUnit.SetAnimationState(Unit.eAnimationState.Attacking);
 
 		public override void OnUndo()
-			=> selectedUnit.SetAnimationState(Unit.eAnimationState.Idle);
+		{
+			selectedUnit.SetAnimationState(Unit.eAnimationState.Idle);
+			selectedUnit.transform.position = originalCell.Position;
+		}
 	};
 
 	public class St_Mp_ChooseAnOption : St_MapState
@@ -486,33 +487,8 @@ namespace Vanguards
 
 		override public void OnLeave()
 			=> optionDisplayer.ClearOptions();
-	};
-
-	public class St_Mp_End : St_MapState
-	{
-		Unit selectedUnit;
-
-		public St_Mp_End(Unit selectedUnit)
-			=> this.selectedUnit = selectedUnit;
-		
-		override public void OnUpdate()
-		{
-			selectedUnit.ActionUsed = true;
-			Map.main[selectedUnit.transform.position].Unit = selectedUnit;
-
-			if (Unit.CheckForTurnEnd())
-			{
-				Unit[] units = GameObject.FindObjectsByType<Unit>(FindObjectsSortMode.None);
-
-				foreach (Unit unit in units)
-					unit.ActionUsed = false;
-
-				SetState(new St_En_BeginTurn());
-			}
-			else SetState(new St_Mp_InitialState());
-		}
 
 		override public void OnUndo()
-			=> selectedUnit.ActionUsed = false;		
+			=> optionDisplayer.ClearOptions();
 	};
 };

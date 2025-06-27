@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+
 
 namespace Vanguards
 {
@@ -43,7 +41,7 @@ namespace Vanguards
 		{
 			if (modifier == null)
 				throw new ArgumentNullException(nameof(modifier));
-			modifiers.Add(name, modifier);
+			modifiers.TryAdd(name, modifier);
 		}
 
 		public string SetModifier(Modifier<_ValueType> modifier)
@@ -124,7 +122,7 @@ namespace Vanguards
 
 			property.isExpanded = EditorGUI.Foldout(foldoutRect, property.isExpanded, GUIContent.none);
 		}
-
 	};
+
 #endif
 };

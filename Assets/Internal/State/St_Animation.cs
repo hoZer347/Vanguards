@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace Vanguards
 {
-	public class St_Animation : State
-	{
-		protected bool shouldAnimate = true;
-	};
+	public class St_Animation : WeakState
+	{ };
 
 	public class An_Attack : St_Animation
 	{
@@ -21,9 +19,6 @@ namespace Vanguards
 		string modifierID;
 		int totalDamage = -1;
 		
-		System.Random random = new System.Random();
-		int randomSeed;
-
 		public An_Attack(
 			Unit attacker,
 			Unit receiver)
@@ -31,7 +26,7 @@ namespace Vanguards
 			this.attacker = attacker;
 			this.receiver = receiver;
 			receiverHealthBar = this.receiver.GetComponentInChildren<HealthBar>();
-			randomSeed = random.Next(0, 1000);
+			//randomSeed = random.Next(0, 1000);
 		}
 
 		override public void OnUpdate()
@@ -45,13 +40,23 @@ namespace Vanguards
 
 			receiverHealthBar.Refresh();
 
+			if (receiver.HP.Value <= 0)
+				receiver.transform.gameObject.SetActive(false);
+
 			SetState(new St_Mp_InitialState());
+
+			attacker.ActionUsed = true;
 		}
 
-		public override void OnUndo()
+		override public void OnUndo()
 		{
 			receiver.HP.RmvModifier(modifierID);
 			receiverHealthBar.Refresh();
+
+			if (receiver.HP.Value > 0)
+				receiver.transform.gameObject.SetActive(true);
+
+			attacker.ActionUsed = false;
 		}
 	};
 };

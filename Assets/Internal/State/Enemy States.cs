@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Vanguards
 {
-	public class St_EnemyState : State
+	public class St_EnemyState : WeakState
 	{
 		Unit currentUnit;
 
@@ -16,19 +16,7 @@ namespace Vanguards
 		public St_En_BeginTurn() : base(null)
 		{ }
 
-		override public void OnEnter()
-		{
-
-		}
-
 		override public void OnUpdate()
-		{
-			SetState(new St_Mp_InitialState());
-		}
-
-		override public void OnLeave()
-		{
-
-		}
+			=> SetState(new St_Mp_InitialState());
 	};
 };

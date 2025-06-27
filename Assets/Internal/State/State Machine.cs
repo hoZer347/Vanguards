@@ -43,24 +43,20 @@ namespace Vanguards
 			redoStack.Clear();
 		}
 
-		static public void FallBack<_State>(bool undo = false)
+		static public void FallBack<_State>()
 			where _State : State
 		{
-			while (stateStack.Count > 0)
+			while (stateStack.Count > 1)
 			{
+				redoStack.Push(stateStack.Peek());
+				stateStack.Peek().OnUndo();
+				stateStack.Pop();
+
 				if (stateStack.Peek().type == typeof(_State))
 				{
 					Current.OnEnter();
 					return;
 				};
-
-				if (undo)
-				{
-					stateStack.Peek().OnUndo();
-					redoStack.Push(stateStack.Peek());
-				};
-
-				stateStack.Pop();
 			};
 		}
 
@@ -69,23 +65,27 @@ namespace Vanguards
 			if (stateStack.Count == 1)
 				return;
 
-			redoStack.Push(stateStack.Peek());
-			stateStack.Peek().OnUndo();
-			stateStack.Pop();
-			if (stateStack.Count > 0)
-				stateStack.Peek().OnEnter();
+			do
+			{
+				redoStack.Push(stateStack.Peek());
+				stateStack.Peek().OnUndo();
+				stateStack.Pop();
+			}
+			while (stateStack.Peek() is WeakState);
+
+			stateStack.Peek().OnEnter();
 		}
 
-		static public void Redo()
-		{
-			if (redoStack.Count == 0)
-				return;
+		//static public void Redo()
+		//{
+		//	if (redoStack.Count == 0)
+		//		return;
 
-			redoStack.Peek().OnRedo();
-			State state = redoStack.Pop();
-			stateStack.Push(state);
-			state.OnEnter();
-		}
+		//	redoStack.Peek().OnRedo();
+		//	State state = redoStack.Pop();
+		//	stateStack.Push(state);
+		//	state.OnEnter();
+		//}
 	};
 
 	[Serializable]
@@ -95,13 +95,13 @@ namespace Vanguards
 			where _State : State
 				=> StateMachine.SetState<_State>(state);
 
-		static public void FallBack<_State>(bool undo = false)
+		static public void FallBack<_State>()
 			where _State : State
-			=> StateMachine.FallBack<_State>(undo);
+			=> StateMachine.FallBack<_State>();
 
 		static public void Undo() => StateMachine.Undo();
 		
-		static public void Redo() => StateMachine.Redo();
+		//static public void Redo() => StateMachine.Redo();
 
 		static public State Current => StateMachine.Current;
 
@@ -111,11 +111,15 @@ namespace Vanguards
 		virtual public void OnUpdate() { }
 		virtual public void OnLeave() { }
 
-		virtual public void OnUndo() => OnLeave();
+		virtual public void OnUndo() { }
 		virtual public void OnRedo() { }
 	};
 
+	public class WeakState : State
+	{ }
+
 #if UNITY_EDITOR
+	
 	[CustomEditor(typeof(StateMachine))]
 	public class StateMachineEditor : Editor
 	{
@@ -138,8 +142,8 @@ namespace Vanguards
 			EditorGUI.EndDisabledGroup();
 
 			EditorGUI.BeginDisabledGroup(StateMachine.redoStack.Count == 0);
-			if (GUILayout.Button("Redo"))
-				State.Redo();
+			//if (GUILayout.Button("Redo"))
+			//	State.Redo();
 			EditorGUI.EndDisabledGroup();
 
 			GUILayout.EndHorizontal();
@@ -163,5 +167,6 @@ namespace Vanguards
 			GUILayout.EndVertical();
 		}
 	};
+
 #endif
 };

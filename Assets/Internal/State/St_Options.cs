@@ -8,7 +8,7 @@ namespace Vanguards
 	public class St_Option : St_MapState
 	{
 		public St_Option(Unit unit)
-			=> this.selectedUnit = unit;
+			=> selectedUnit = unit;
 
 		protected string displayName;
 		protected Unit selectedUnit;
@@ -20,7 +20,7 @@ namespace Vanguards
 				Menu[] menus = GameObject.FindObjectsByType<Menu>(FindObjectsSortMode.None);
 				foreach (Menu optionMenu in menus)
 					optionMenu.ClearOptions();
-				FallBack<St_Mp_ChooseAnOption>();	
+				Undo();	
 			};
 
 			if (Input.GetKeyDown(KeyCode.Escape))
@@ -56,10 +56,12 @@ namespace Vanguards
 			meshFilter.sharedMesh.colors = colors;
 			meshFilter.sharedMesh.RecalculateBounds();
 			meshFilter.sharedMesh.RecalculateNormals();
+
+			selectedUnit.ActionUsed = true;
 		}
 
-		override public void OnUpdate()
-			=> SetState(new St_Mp_End(selectedUnit));
+		override public void OnUndo()
+			=> selectedUnit.ActionUsed = false;
 	};
 
 	public class Op_Attack : St_Option
