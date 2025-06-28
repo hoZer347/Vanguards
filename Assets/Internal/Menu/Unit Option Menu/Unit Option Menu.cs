@@ -17,6 +17,7 @@ namespace Vanguards
 			HandleItemCategory<Weapon, Op_Attack>(unit);
 			HandleItemCategory<Staff, Op_Staff>(unit);
 			HandleItemCategory<Consumable, Op_Consumable>(unit);
+			HandleItemCategory<Spell, Op_Spell>(unit);
 
 			MakeButton("General: ", null);
 			indentLevel++;

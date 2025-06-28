@@ -1,0 +1,21 @@
+{
+    "fileOrigin": "",
+    "icon": {
+        "instanceID": 0
+    },
+    "NAME": {
+        "base": "Training Spell"
+    },
+    "CLASS": {
+        "base": 3
+    },
+    "RNG": {
+        "base": 5
+    },
+    "DAMAGE": {
+        "base": 15
+    },
+    "ELEMENT": {
+        "base": 0
+    }
+}

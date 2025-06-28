@@ -304,12 +304,7 @@ namespace Vanguards
 
 		#region Refresh
 
-		private void Start() => Refresh();
-		private void OnValidate() => Refresh();
-
-		MeshRenderer meshRenderer;
-
-		void Refresh()
+		private void Start()
 		{
 			SetAnimationState(animationState);
 			SetMovementType(movementType);
@@ -320,6 +315,8 @@ namespace Vanguards
 
 			UpdateSpriteIndex();
 		}
+
+		MeshRenderer meshRenderer;
 
 		#endregion
 

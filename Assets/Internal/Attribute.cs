@@ -83,43 +83,31 @@ namespace Vanguards
 	{
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
-			float labelWidth = EditorGUIUtility.labelWidth; // Removed 'const' keyword to fix CS0133
-
+			float labelWidth = EditorGUIUtility.labelWidth;
 			const float foldoutWidth = 16f;
 			const float spacing = 4f;
 
-			// Define individual rects
 			Rect labelRect = new Rect(position.x, position.y, labelWidth, position.height);
 			Rect fieldRect = new Rect(position.x + labelWidth - 10, position.y, position.width - labelWidth - foldoutWidth - spacing, position.height);
 			Rect foldoutRect = new Rect(position.x + position.width - foldoutWidth, position.y, foldoutWidth, position.height);
 
-			var baseProp = property.FindPropertyRelative("base");
+			SerializedProperty baseProp = property.FindPropertyRelative("base");
+
+			EditorGUI.LabelField(labelRect, label);
 
 			if (baseProp != null)
 			{
-				EditorGUI.LabelField(labelRect, label); // Draw label manually
+				EditorGUI.showMixedValue = baseProp.hasMultipleDifferentValues;
 
-				switch (baseProp.propertyType)
-				{
-					case SerializedPropertyType.Integer:
-						baseProp.intValue = EditorGUI.IntField(fieldRect, GUIContent.none, baseProp.intValue);
-						break;
-					case SerializedPropertyType.Float:
-						baseProp.floatValue = EditorGUI.FloatField(fieldRect, GUIContent.none, baseProp.floatValue);
-						break;
-					case SerializedPropertyType.String:
-						baseProp.stringValue = EditorGUI.TextField(fieldRect, GUIContent.none, baseProp.stringValue);
-						break;
-					case SerializedPropertyType.Enum:
-						baseProp.enumValueIndex = EditorGUI.Popup(fieldRect, baseProp.enumValueIndex, baseProp.enumDisplayNames);
-						break;
-					default:
-						EditorGUI.PropertyField(fieldRect, baseProp, GUIContent.none);
-						break;
-				};
+				EditorGUI.BeginChangeCheck();
+				EditorGUI.PropertyField(fieldRect, baseProp, GUIContent.none, true);
+				if (EditorGUI.EndChangeCheck())
+					baseProp.serializedObject.ApplyModifiedProperties();
+
+				EditorGUI.showMixedValue = false;
 			}
-			else EditorGUI.LabelField(fieldRect, label.text, "Field not found");
-
+			else EditorGUI.LabelField(fieldRect, "base", "Field not found");
+			
 			property.isExpanded = EditorGUI.Foldout(foldoutRect, property.isExpanded, GUIContent.none);
 		}
 	};

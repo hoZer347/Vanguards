@@ -306,7 +306,7 @@ namespace Vanguards
 					{
 						goal = hoveredCell;
 
-						List<Cell> path = new List<Cell> { Map.main[selectedUnit.transform.position] };
+						List<Cell> path = new List<Cell> { Map.main[selectedUnit.coords] };
 
 						Algorithm.AStar(
 							Map.main[selectedUnit.transform.position],

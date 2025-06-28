@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,6 +58,9 @@ namespace Vanguards
 
 			selectedUnit.ActionUsed = true;
 		}
+
+		override public void OnUpdate()
+			=> SetState(new St_Mp_InitialState());
 
 		override public void OnUndo()
 			=> selectedUnit.ActionUsed = false;
@@ -181,6 +183,138 @@ namespace Vanguards
 		}
 	};
 
+	public class Op_Spell : St_Option
+	{
+		Spell spell;
+		Cell hoveredCell;
+		Dictionary<Unit, string> receivers = new();
+		
+		public Op_Spell(Unit unit, Spell spell) : base(unit)
+			=> this.spell = spell;
+
+		override public void OnEnter()
+		{
+			selectedUnit.SetAnimationState(Unit.eAnimationState.Attacking);
+		}
+
+		override public void OnUpdate()
+		{
+			if (Physics.Raycast(
+				Camera.main.ScreenPointToRay(Input.mousePosition),
+				out RaycastHit hit))
+			{
+				Cell checkCell = Map.main[hit.point];
+
+				if (hoveredCell != checkCell &&
+					checkCell != null)
+				{
+					hoveredCell = checkCell;
+
+					Dictionary<Cell, float> cells = new();
+					cells.Add(hoveredCell, spell.RNG.Value);
+
+					Algorithm.FloodFill(
+						ref cells,
+						(cell, amount) =>
+						{
+							if (cell.Difficulty == float.MinValue)
+								return 0.0f;
+
+							return amount - 1;
+						});
+
+					Color[] colors = meshFilter.sharedMesh.colors;
+
+					foreach ((Unit unit, string modifierID) in receivers)
+					{
+						unit.HP.RmvModifier(modifierID);
+						unit.GetComponentInChildren<HealthBar>().Refresh();
+					};
+
+					receivers.Clear();
+
+					foreach (Cell cell in Map.main.CellList)
+						if (cells.ContainsKey(cell))
+						{
+							colors[cell.MeshIndex + 0] = new Color(1, 0, 0, 0.5f);
+							colors[cell.MeshIndex + 1] = new Color(1, 0, 0, 0.5f);
+							colors[cell.MeshIndex + 2] = new Color(1, 0, 0, 0.5f);
+							colors[cell.MeshIndex + 3] = new Color(1, 0, 0, 0.5f);
+
+							if (cell.Unit != null &&
+								cell.Unit.Team == Unit.eTeam.Enemy)
+							{
+								receivers[cell.Unit] =
+									cell.Unit.HP.SetModifier(
+										(ref int hp) => hp -= spell.DAMAGE.Value);
+
+								cell.Unit.GetComponentInChildren<HealthBar>().Refresh();
+							};
+						}
+						else
+						{
+							colors[cell.MeshIndex + 0] = new();
+							colors[cell.MeshIndex + 1] = new();
+							colors[cell.MeshIndex + 2] = new();
+							colors[cell.MeshIndex + 3] = new();
+
+							//if (cell.Unit != null &&
+							//	cell.Unit.Team == Unit.eTeam.Enemy &&
+							//	receivers.TryGetValue(cell.Unit, out string value))
+							//	{
+							//		cell.Unit.HP.RmvModifier(value);
+							//		receivers.Remove(cell.Unit);
+									
+							//		cell.Unit.GetComponentInChildren<HealthBar>().Refresh();
+							//	};
+						};
+
+					meshFilter.sharedMesh.colors = colors;
+					meshFilter.sharedMesh.RecalculateBounds();
+					meshFilter.sharedMesh.RecalculateNormals();
+				};
+			};
+
+			if (Input.GetMouseButton(0))
+				SetState(new St_Mp_InitialState());
+
+			if (Input.GetMouseButton(1))
+				Undo();
+		}
+
+		override public void OnLeave()
+		{
+			Color[] colors = meshFilter.sharedMesh.colors;
+
+			foreach (Cell cell in Map.main.CellList)
+			{
+				colors[cell.MeshIndex + 0] = new();
+				colors[cell.MeshIndex + 1] = new();
+				colors[cell.MeshIndex + 2] = new();
+				colors[cell.MeshIndex + 3] = new();
+			};
+
+			meshFilter.sharedMesh.colors = colors;
+			meshFilter.sharedMesh.RecalculateBounds();
+			meshFilter.sharedMesh.RecalculateNormals();
+
+			selectedUnit.ActionUsed = true;
+
+			selectedUnit.SetAnimationState(Unit.eAnimationState.Idle);
+		}
+
+		override public void OnUndo()
+		{
+			foreach ((Unit unit, string modifierID) in receivers)
+			{
+				unit.HP.RmvModifier(modifierID);
+				unit.GetComponentInChildren<HealthBar>().Refresh();
+			};
+
+			selectedUnit.ActionUsed = false;
+		}
+	};
+
 	public class Op_Equip : St_Option
 	{
 		Equippable equippable;
@@ -195,7 +329,7 @@ namespace Vanguards
 			if (equippable != null)
 				equippable.transform.SetAsLastSibling();
 
-			FallBack<St_Mp_ChooseAnOption>();
+			Undo();
 		}
 	};
 

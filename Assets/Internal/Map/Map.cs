@@ -93,6 +93,12 @@ namespace Vanguards
 
 			//State.SetState(new St_Dialogue("", new St_Mp_InitialState()));
 			State.SetState(new St_Mp_InitialState());
+			//ScreenFader.FadeFromBlack(new St_Mp_InitialState());
+
+			Obstacle[] obstacles = GetComponentsInChildren<Obstacle>();
+
+			foreach (Obstacle obstacle in obstacles)
+				obstacle.GetComponent<Collider>().enabled = false;
 		}
 		private void OnValidate() => Refresh();
 

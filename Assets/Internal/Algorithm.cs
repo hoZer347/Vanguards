@@ -125,23 +125,26 @@ namespace Vanguards
 		public static void SmoothAStar(
 			ref List<Cell> path)
 		{
-			HashSet<Cell> hashSet = path.ToHashSet();
+			// TODO: Fix this so it doesn't cause a null position when
+			//       pathing diagonally between spells
 
-			foreach (Cell cell in path)
-			{
-				if (cell == path.Last()) break;
+			//HashSet<Cell> hashSet = path.ToHashSet();
 
-				int counter = 0;
-				if (hashSet.Contains(cell.U)) counter++;
-				if (hashSet.Contains(cell.D)) counter++;
-				if (hashSet.Contains(cell.L)) counter++;
-				if (hashSet.Contains(cell.R)) counter++;
+			//foreach (Cell cell in path)
+			//{
+			//	if (cell == path.Last()) break;
 
-				if (counter >= 2)
-					hashSet.Remove(cell);
-			};
+			//	int counter = 0;
+			//	if (hashSet.Contains(cell.U)) counter++;
+			//	if (hashSet.Contains(cell.D)) counter++;
+			//	if (hashSet.Contains(cell.L)) counter++;
+			//	if (hashSet.Contains(cell.R)) counter++;
 
-			path = hashSet.ToList();
+			//	if (counter >= 2)
+			//		hashSet.Remove(cell);
+			//};
+
+			//path = hashSet.ToList();
 		}
 		//
 

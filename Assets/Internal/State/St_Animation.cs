@@ -59,4 +59,9 @@ namespace Vanguards
 			attacker.ActionUsed = false;
 		}
 	};
+
+	public class An_Spell : St_Animation
+	{
+
+	}
 };
