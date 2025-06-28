@@ -58,6 +58,9 @@ namespace Vanguards
 					return;
 				};
 			};
+
+			if (stateStack.Count == 0)
+				SetState(new St_Mp_InitialState());
 		}
 
 		static public void Undo()

@@ -1,8 +1,4 @@
-<color=#000000>
-<align=center>
-Gump
-<color=#FF0000>Colored Text</color> 
+<color=#000000><align=center>Gump
+<color=#FF0000>Colored Text</color>
 Text
-Gump
-</align>
-</color>
+Gump</align></color>

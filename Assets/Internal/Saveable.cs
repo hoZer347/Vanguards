@@ -59,6 +59,9 @@ namespace Vanguards
 			if (GUILayout.Button("Save"))
 				((Saveable)target).Save(path);
 
+			if (!Directory.Exists(directory))
+				Directory.CreateDirectory(directory);
+
 			if (showFiles = EditorGUILayout.Foldout(showFiles, "Saved Presets"))
 				foreach (string file in Directory.GetFiles(directory, "*.json"))
 				{

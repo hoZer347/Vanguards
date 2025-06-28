@@ -91,6 +91,7 @@ namespace Vanguards
 			Refresh();
 			Build();
 
+			//State.SetState(new St_Dialogue("", new St_Mp_InitialState()));
 			State.SetState(new St_Mp_InitialState());
 		}
 		private void OnValidate() => Refresh();

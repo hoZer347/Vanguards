@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,57 +13,84 @@ namespace Vanguards
 {
 	public class DialogueBox : MonoBehaviour
 	{
-		[SerializeField] public float textSpeed;
-		[SerializeField, Range(0.5f, 1)] float xRatio;
-		[SerializeField, Range(0.1f, 0.5f)] float yRatio;
-
-		TextMeshProUGUI textMesh;
-		Queue<string> charQueue = new();
-
-#if UNITY_EDITOR
-
 		[SerializeField]
-		public TextAsset textAsset;
+		TextAsset textAsset;
+
+		[SerializeField, Range(0.001f, 10)]
+		float textSpeed;
+		float timeElapsed;
+
+		int charIndex;
+		TextMeshProUGUI textMesh;
 
 		private void OnValidate()
-		{
-			textMesh = GetComponentInChildren<TextMeshProUGUI>();
+			=> textMesh = GetComponentInChildren<TextMeshProUGUI>();
 
-			EditorApplication.delayCall +=
-				() =>
-				{
-					RectTransform rectTransform = textMesh.rectTransform;
-					rectTransform.sizeDelta =
-						new Vector2(
-							Screen.width * xRatio,
-							Screen.height * yRatio);
-				};
+		private void Update()
+		{
+			if (timeElapsed > textSpeed)
+			{
+				Advance();
+				timeElapsed -= textSpeed;
+			};
+
+			timeElapsed += Time.deltaTime * 100;
 		}
 
-#endif
-
-		private void Start()
+		public void Load(string path)
 		{
-			textMesh = GetComponentInChildren<TextMeshProUGUI>();
+
 		}
 
-		public void Push(string text)
+		public void Skip()
 		{
-			textMesh.text += text;
+
 		}
 
+		public bool IsDone()
+			=> charIndex < textAsset.text.Length;
 
 		public void Clear()
 		{
-			textMesh.text = "";
-
-			charQueue.Clear();
+			charIndex = 0;
+			textMesh.SetText("");
 		}
 
-
-		static public void End()
+		public void Advance()
 		{
+			if (textAsset == null || charIndex >= textAsset.text.Length)
+				return;
 
+			int start = charIndex;
+
+			if (textAsset.text[charIndex] == '<')
+			{
+				while (charIndex < textAsset.text.Length &&
+					textAsset.text[charIndex] != '>')
+					charIndex++;
+
+				if (charIndex < textAsset.text.Length)
+					charIndex++;
+			}
+			else charIndex++;
+
+			if (charIndex > textAsset.text.Length)
+				textMesh.SetText("");
+
+			if (charIndex <= textAsset.text.Length)
+				textMesh.SetText(textAsset.text.Substring(0, charIndex));
+		}
+
+		public void Play()
+		{
+			charIndex = 0;
+			textMesh.SetText("");
+		}
+
+		public void Stop()
+		{
+			charIndex = textAsset.text.Length;
+			textMesh.SetText("");
 		}
 	};
 
@@ -76,43 +101,21 @@ namespace Vanguards
 	[CustomEditor(typeof(DialogueBox))]
 	public class DialogueBoxEditor : Editor
 	{
-		DialogueBox dialogueBox;
-
 		override public void OnInspectorGUI()
 		{
-			dialogueBox = (DialogueBox)target;
+			base.OnInspectorGUI();
 
-			DrawDefaultInspector();
+			DialogueBox dialogueBox = (DialogueBox)target;
 
-			EditorGUI.BeginDisabledGroup(
-				!Application.isPlaying &&
-				dialogueBox.textAsset != null);
-
-			EditorGUILayout.BeginHorizontal();
+			GUILayout.BeginHorizontal();
 
 			if (GUILayout.Button("Play"))
-				Play();
+				dialogueBox.Play();
 
 			if (GUILayout.Button("Stop"))
-				Stop();
+				dialogueBox.Stop();
 
-			EditorGUILayout.EndHorizontal();
-
-			EditorGUI.EndDisabledGroup();
-		}
-
-		void Play()
-		{
-			State.SetState(new Dialogue(
-				AssetDatabase.GetAssetPath(dialogueBox.textAsset),
-				new Action(() => State.SetState(new St_Mp_InitialState()))));
-		}
-
-		void Stop()
-		{
-			DialogueBox.End();
-
-			State.SetState(new St_Mp_InitialState());
+			GUILayout.EndHorizontal();
 		}
 	};
 
