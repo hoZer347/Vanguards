@@ -91,6 +91,7 @@ namespace Vanguards
 			Refresh();
 			Build();
 
+			if (StateMachine.Current == null)
 			//State.SetState(new St_Dialogue("", new St_Mp_InitialState()));
 			State.SetState(new St_Mp_InitialState());
 			//ScreenFader.FadeFromBlack(new St_Mp_InitialState());

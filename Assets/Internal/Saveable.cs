@@ -1,7 +1,10 @@
 using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 
 namespace Vanguards
@@ -10,6 +13,8 @@ namespace Vanguards
 	{
 		public void Load(string file)
 		{
+#if UNITY_EDITOR
+
 			string fileName = Path.GetFileNameWithoutExtension(file);
 
 			string data = File.ReadAllText(file);
@@ -19,10 +24,12 @@ namespace Vanguards
 			gameObject.name = fileName;
 
 			EditorUtility.SetDirty(this);
+#endif
 		}
 
 		public void Save(string file)
 		{
+#if UNITY_EDITOR
 			string path = $"{Application.dataPath}/{ GetType().Name.Split('.').Last()} Presets/{ name }.json";
 			string directory = Path.GetDirectoryName(path);
 
@@ -39,8 +46,11 @@ namespace Vanguards
 				if (saveable.gameObject.name == name &&
 					saveable != this)
 					saveable.Load(file);
+#endif
 		}
 	};
+
+#if UNITY_EDITOR
 
 	[CustomEditor(typeof(Saveable), true)]
 	public class SaveableEditor : Editor
@@ -81,4 +91,6 @@ namespace Vanguards
 			GUILayout.EndVertical();
 		}
 	};
+
+#endif
 };

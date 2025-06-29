@@ -1,6 +1,6 @@
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 namespace Vanguards
@@ -25,14 +25,15 @@ namespace Vanguards
 		AsyncOperation asyncOperation;
 
 		public override void OnEnter()
-		{
-			asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Assets/Scenes/Test Scene.unity");
-		}
+			=> asyncOperation = SceneManager.LoadSceneAsync("Test Scene");		
 
 		override public void OnUpdate()
 		{
 			if (asyncOperation.isDone)
+			{
+				StateMachine.stateStack.Clear();
 				SetState(new St_Mp_InitialState());
+			};
 		}
 	}
 };
