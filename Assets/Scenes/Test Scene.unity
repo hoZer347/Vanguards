@@ -279,6 +279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gump
       objectReference: {fileID: 0}
+    - target: {fileID: 2628899805773671433, guid: 6e61f184a0307d64a8aac3690e36a2ed, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8bffc3cfcebb13e469094b35a4b7d30d, type: 2}
     - target: {fileID: 3668519110773715362, guid: 6e61f184a0307d64a8aac3690e36a2ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -319,6 +323,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4800906271144621903, guid: 6e61f184a0307d64a8aac3690e36a2ed, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8bffc3cfcebb13e469094b35a4b7d30d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -530,7 +538,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 4207217806759832598}
   - {fileID: 5916663487694994484}
-  - {fileID: 959138701}
   - {fileID: 874738950}
   - {fileID: 354358972}
   - {fileID: 2030611685}
+  - {fileID: 959138701}

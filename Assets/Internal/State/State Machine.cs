@@ -11,8 +11,16 @@ namespace Vanguards
 {
 	public class StateMachine : MonoBehaviour
 	{
-		static public State Current => stateStack.Peek();
+		static public State Current
+		{
+			get
+			{
+				if (stateStack.Count > 0)	
+					return stateStack.Peek();
 
+				return null;
+			}
+		}
 		static public Stack<State> stateStack = new();
 		static public Stack<State> redoStack = new();
 
