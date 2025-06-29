@@ -7,17 +7,13 @@ namespace Vanguards
 {
 	public class CameraControl : MonoBehaviour
 	{
-		enum Mode
+		public enum Mode
 		{
 			FREECAM,
+			DIALOGUE,
 		};
 
-		Mode mode = Mode.FREECAM;
-
-		private void Start()
-		{
-			
-		}
+		static public Mode mode = Mode.FREECAM;
 
 		private void Update()
 		{
@@ -26,12 +22,17 @@ namespace Vanguards
 				case Mode.FREECAM:
 					FreeCam();
 					break;
-			};
+
+				case Mode.DIALOGUE:
+					DialogueCam();
+					break;
+			}
+			;
 		}
 
-		private Vector2 prevMousePosition;
-		private Vector2 currMousePosition;
-		private Vector2 delta;
+		//private Vector2 prevMousePosition;
+		//private Vector2 currMousePosition;
+		//private Vector2 delta;
 
 		void FreeCam()
 		{
@@ -41,25 +42,25 @@ namespace Vanguards
 			if (Input.GetKey(KeyCode.S)) movement += Vector3.back;
 			if (Input.GetKey(KeyCode.A)) movement += Vector3.left;
 			if (Input.GetKey(KeyCode.D)) movement += Vector3.right;
-			if (Input.GetKey(KeyCode.Q)) movement += Vector3.down;
-			if (Input.GetKey(KeyCode.E)) movement += Vector3.up;
+			//if (Input.GetKey(KeyCode.Q)) movement += Vector3.down;
+			//if (Input.GetKey(KeyCode.E)) movement += Vector3.up;
 
-			if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
-				prevMousePosition = Input.mousePosition;
+			//if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+			//	prevMousePosition = Input.mousePosition;
 
-			else if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
-			{
-				currMousePosition = Input.mousePosition;
+			//else if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
+			//{
+			//	currMousePosition = Input.mousePosition;
 
-				delta = currMousePosition - prevMousePosition;
+			//	delta = currMousePosition - prevMousePosition;
 
-				transform.rotation = Quaternion.Euler(
-					transform.rotation.eulerAngles.x - delta.y * Time.deltaTime * 100,			
-					transform.rotation.eulerAngles.y + delta.x * Time.deltaTime * 100,
-					transform.rotation.eulerAngles.z);
+			//	transform.rotation = Quaternion.Euler(
+			//		transform.rotation.eulerAngles.x - delta.y * Time.deltaTime * 100,			
+			//		transform.rotation.eulerAngles.y + delta.x * Time.deltaTime * 100,
+			//		transform.rotation.eulerAngles.z);
 
-				prevMousePosition = currMousePosition;
-			};
+			//	prevMousePosition = currMousePosition;
+			//};
 
 			transform.position +=
 				Quaternion.Euler(
@@ -67,5 +68,8 @@ namespace Vanguards
 					transform.rotation.eulerAngles.y,
 					0) * movement * Time.deltaTime * 10.0f;
 		}
+	
+		void DialogueCam()
+		{ }
 	};
 };

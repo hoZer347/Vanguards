@@ -21,7 +21,7 @@ namespace Vanguards
 		override public void OnEnter()
 		{
 			dialogueBox = GameObject.FindFirstObjectByType<DialogueBox>();
-			dialogueBox.Load(path);
+			CameraControl.mode = CameraControl.Mode.DIALOGUE;
 		}
 
 		override public void OnUpdate()
@@ -33,6 +33,12 @@ namespace Vanguards
 				dialogueBox.Clear();
 				SetState(stateAfter);
 			};
+		}
+
+		override public void OnLeave()
+		{
+			CameraControl.mode = CameraControl.Mode.FREECAM;
+			dialogueBox.Clear();
 		}
 
 		override public void OnUndo()

@@ -117,7 +117,10 @@ namespace Vanguards
 			return Mathf.Abs(d.x) + Mathf.Abs(d.y);
 		}
 
+		[SerializeField, SerializeReference]
 		private Vector2Int coords;
+		
+		[SerializeField]
 		private Vector3 position;
 
 		public Vector2Int Coords => coords;

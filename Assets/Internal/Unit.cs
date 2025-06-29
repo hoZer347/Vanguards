@@ -316,6 +316,18 @@ namespace Vanguards
 			UpdateSpriteIndex();
 		}
 
+		private void OnValidate()
+		{
+			var block= new MaterialPropertyBlock();
+			block.SetFloat("_GrayScale", isGrayScaled ? 1.0f : 0.0f);
+			block.SetFloat("_FPS", isGrayScaled ? 2f : 4f);
+			
+			if (meshRenderer == null)
+				meshRenderer = GetComponent<MeshRenderer>();
+			
+			meshRenderer.SetPropertyBlock(block);
+		}
+
 		MeshRenderer meshRenderer;
 
 		#endregion

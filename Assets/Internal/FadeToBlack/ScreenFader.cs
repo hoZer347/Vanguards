@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -70,7 +69,6 @@ namespace Vanguards
 
 	public class St_Fade : State
 	{
-
 		RawImage rawImage;
 		Color from, to;
 		float speed;
@@ -108,7 +106,7 @@ namespace Vanguards
 			rectTransform.offsetMin = Vector2.zero;   // Remove padding (left/bottom)
 			rectTransform.offsetMax = Vector2.zero;   // Remove padding (right/top)
 
-			if (from == to)
+			if (Math.Abs(from.a - to.a) < 0.1f)
 				SetState(afterState);
 			else
 			{

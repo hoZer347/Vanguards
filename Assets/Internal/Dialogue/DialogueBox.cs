@@ -37,11 +37,6 @@ namespace Vanguards
 			timeElapsed += Time.deltaTime * 100;
 		}
 
-		public void Load(string path)
-		{
-
-		}
-
 		public void Skip()
 		{
 
@@ -81,16 +76,20 @@ namespace Vanguards
 				textMesh.SetText(textAsset.text.Substring(0, charIndex));
 		}
 
-		public void Play()
+		static public void Play()
 		{
-			charIndex = 0;
-			textMesh.SetText("");
+			DialogueBox dialogueBox = GameObject.FindFirstObjectByType<DialogueBox>();
+			dialogueBox.charIndex = 0;
+			dialogueBox.textMesh.SetText("");
+			State.SetState(new St_Dialogue("", StateMachine.Current));
 		}
 
-		public void Stop()
+		static public void Stop()
 		{
-			charIndex = textAsset.text.Length;
-			textMesh.SetText("");
+			DialogueBox dialogueBox = GameObject.FindFirstObjectByType<DialogueBox>();
+			dialogueBox.charIndex = dialogueBox.textAsset.text.Length;
+			dialogueBox.textMesh.SetText("");
+			State.SetState(new St_Dialogue("", StateMachine.Current));
 		}
 	};
 
@@ -105,15 +104,15 @@ namespace Vanguards
 		{
 			base.OnInspectorGUI();
 
-			DialogueBox dialogueBox = (DialogueBox)target;
+			//DialogueBox dialogueBox = (DialogueBox)target;
 
 			GUILayout.BeginHorizontal();
 
 			if (GUILayout.Button("Play"))
-				dialogueBox.Play();
+				DialogueBox.Play();
 
 			if (GUILayout.Button("Stop"))
-				dialogueBox.Stop();
+				DialogueBox.Stop();
 
 			GUILayout.EndHorizontal();
 		}
